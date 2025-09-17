@@ -12,6 +12,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: var(--font-family);
+            color: var(--dark-color);
+            background-color: var(--white-color);
+        }
+
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
         /* CSS RESET & GLOBAL STYLES */
         :root {
             --primary-color: #FFC700;
@@ -578,13 +599,13 @@
                     <div class="happy-client-badge">
                         <p><strong>30K +</strong><span>happy client</span></p>
                     </div>
-                    <img src="https://placehold.co/600x400/cccccc/333333?text=Happy+Learner+1" alt="Happy Driver 1" class="hero-img-1">
-                    <img src="https://placehold.co/400x300/cccccc/333333?text=Happy+Learner+2" alt="Happy Driver 2" class="hero-img-2">
+                    <img src="istockphoto-1490391507-612x612.jpg" alt="Happy Driver 1" class="hero-img-1">
+                    <img src="istockphoto-1462539852-612x612.jpg" alt="Happy Driver 2" class="hero-img-2">
                 </div>
             </main>
             
             <div class="road-footer">
-                <img src="https://www.vhv.rs/dpng/f/453-4532395_car-on-road-png.png" alt="Yellow Sports Car" class="car-graphic">
+                <img src="291429995_48aa561c-0fb7-4de1-8956-55dac2201764 1.png" alt="Yellow Sports Car" class="car-graphic">
             </div>
         </div>
     </div>
@@ -598,7 +619,7 @@
                     <p>DRIVE RIGHT</p>
                 </div>
                 <div class="road-footer">
-                    <img src="https://www.vhv.rs/dpng/f/453-4532395_car-on-road-png.png" alt="Yellow Sports Car" class="car-graphic">
+                    <img src="291429995_48aa561c-0fb7-4de1-8956-55dac2201764 1.png" alt="Yellow Sports Car" class="car-graphic">
                 </div>
             </div>
             <div class="login-form-container">
@@ -622,9 +643,74 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-full">Login</button>
                     <p id="error-message" class="error-text"></p>
-                    <p class="signup-link">Don't Have An Account? <a href="#">Signup Now</a></p>
+    <p class="signup-link">Don't Have An Account? <a href="#" id="go-to-signup">Signup Now</a></p>
+
                     <p class="signup-link" style="margin-top: 10px;"><a href="#" onclick="showPage('landing-page')">&larr; Back to Home</a></p>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div id="signup-page" class="page">
+        <div class="login-page">
+            <div class="login-art">
+                <div class="logo-large">
+                    <img src="https://placehold.co/150x150/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h2>SAFE LEARNERS</h2>
+                    <p>DRIVE RIGHT</p>
+                </div>
+                <div class="road-footer">
+                    <img src="291429995_48aa561c-0fb7-4de1-8956-55dac2201764 1.png" alt="Yellow Sports Car" class="car-graphic">
+                </div>
+            </div>
+            <div class="login-form-container">
+                <form id="signup-form">
+    <h2>Learner <span class="text-primary">Signup</span></h2>
+
+    <div class="form-row">
+        <div class="input-group">
+            <label for="signup-firstname">First Name</label>
+            <input type="text" id="signup-firstname" name="firstName" required>
+        </div>
+        <div class="input-group">
+            <label for="signup-surname">Surname</label>
+            <input type="text" id="signup-surname" name="surname" required>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="signup-email">Email Address</label>
+        <input type="email" id="signup-email" name="email" required>
+    </div>
+    <div class="input-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" minlength="6" required>
+    </div>
+
+    <div class="form-row">
+        <div class="input-group">
+            <label for="signup-mobile">Mobile Number</label>
+            <input type="tel" id="signup-mobile" name="mobile" required>
+        </div>
+        <div class="input-group">
+            <label for="signup-dob">Date Of Birth</label>
+            <input type="date" id="signup-dob" name="dob" required>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label for="signup-gender">Gender</label>
+        <select id="signup-gender" name="gender" required>
+            <option value="" disabled selected>Select gender...</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+    <p id="signup-error-message" class="error-text"></p>
+    <p class="signup-link">Already Have An Account? <a href="#" id="go-to-login">Login Now</a></p>
+</form>
             </div>
         </div>
     </div>
@@ -750,13 +836,13 @@
     <script>
         // PASTE YOUR FIREBASE CONFIG OBJECT HERE
         const firebaseConfig = {
-          apiKey: "AIzaSy...YOUR_API_KEY",
-          authDomain: "your-project-id.firebaseapp.com",
-          projectId: "your-project-id",
-          storageBucket: "your-project-id.appspot.com",
-          messagingSenderId: "YOUR_SENDER_ID",
-          appId: "YOUR_APP_ID"
-        };
+  apiKey: "AIzaSyB-8AmUdYHW6-UVc0ax09K9nuxI4x11iRs",
+  authDomain: "australiadrivingproj.firebaseapp.com",
+  projectId: "australiadrivingproj",
+  storageBucket: "australiadrivingproj.firebasestorage.app",
+  messagingSenderId: "906653434498",
+  appId: "1:906653434498:web:6f382d3c20113e0966ea9b"
+};
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -765,7 +851,18 @@
 
         // --- PAGE NAVIGATION LOGIC ---
         const pages = document.querySelectorAll('.page');
-        
+        const goToSignupLink = document.getElementById('go-to-signup');
+const goToLoginLink = document.getElementById('go-to-login');
+
+goToSignupLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    showPage('signup-page');
+});
+
+goToLoginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    showPage('login-page');
+});
         function showPage(pageId) {
             pages.forEach(page => {
                 if (page.id === pageId) {
@@ -889,7 +986,52 @@
                 console.log("Error getting document:", error);
             });
         }
+// --- SIGNUP LOGIC ---
+const signupForm = document.getElementById('signup-form');
+const signupErrorMessage = document.getElementById('signup-error-message');
 
+if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        signupErrorMessage.textContent = '';
+
+        // Get user info from the signup form
+        const firstName = signupForm.firstName.value;
+        const email = signupForm.email.value;
+        const password = signupForm.password.value;
+// Add these variables and event listeners
+
+        // Use Firebase Auth to create a new user
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log('New user created:', user.uid);
+
+                // Now, save the user's first name to Firestore
+                // This is crucial for your `fetchUserData` function to work
+                return db.collection('users').doc(user.uid).set({
+                    firstName: firstName,
+                    email: email
+                });
+            })
+            .then(() => {
+                console.log('User data saved to Firestore.');
+                // The `onAuthStateChanged` observer will automatically handle
+                // switching to the dashboard page after successful signup.
+            })
+            .catch((error) => {
+                // Display friendly error messages
+                if (error.code == 'auth/weak-password') {
+                    signupErrorMessage.textContent = 'Password should be at least 6 characters.';
+                } else if (error.code == 'auth/email-already-in-use') {
+                    signupErrorMessage.textContent = 'This email is already registered.';
+                } else {
+                    signupErrorMessage.textContent = 'An error occurred. Please try again.';
+                }
+                console.error('Signup Error:', error);
+            });
+    });
+}
     </script>
 </body>
 </html>
