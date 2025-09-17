@@ -558,8 +558,8 @@
                     </div>
                     <div class="nav-links">
                         <a href="#">Sydney ▾</a>
-                        <a href="#" onclick="showPage('login-page')" class="btn btn-secondary">Instructor Login</a>
-                        <a href="#" onclick="showPage('login-page')" class="btn btn-primary">Learner Login</a>
+                        <a href="#" id="instructor-login-btn-1" class="btn btn-secondary">Instructor Login</a>
+                        <a href="#" id="learner-login-btn-1" class="btn btn-primary">Learner Login</a>
                     </div>
                 </nav>
             </header>
@@ -570,8 +570,8 @@
                     <h1>Find the Right Fit from <br>1000+ Trusted Driving <br><span>Instructors</span></h1>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                     <div class="hero-buttons">
-                        <a href="#" onclick="showPage('login-page')" class="btn btn-primary">Learner Login</a>
-                        <a href="#" onclick="showPage('login-page')" class="btn btn-secondary">Instructor Login</a>
+                        <a href="#" id="learner-login-btn-2" class="btn btn-primary">Learner Login</a>
+                        <a href="#" id="instructor-login-btn-2" class="btn btn-secondary">Instructor Login</a>
                     </div>
                 </div>
                 <div class="hero-images">
@@ -603,7 +603,7 @@
             </div>
             <div class="login-form-container">
                 <form id="login-form">
-                    <h2>Instructor <span class="text-primary">Login</span></h2>
+                    <h2 id="login-title">Instructor <span class="text-primary">Login</span></h2>
                     <div class="input-group">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" required>
@@ -780,6 +780,24 @@
         const loginForm = document.getElementById('login-form');
         const errorMessage = document.getElementById('error-message');
         const logoutButton = document.getElementById('logout-button');
+        
+        const loginTitle = document.getElementById('login-title');
+        
+        // Get all four login buttons
+        const instructorLoginBtn1 = document.getElementById('instructor-login-btn-1');
+        const learnerLoginBtn1 = document.getElementById('learner-login-btn-1');
+        const instructorLoginBtn2 = document.getElementById('instructor-login-btn-2');
+        const learnerLoginBtn2 = document.getElementById('learner-login-btn-2');
+
+        function setLoginTitle(userType) {
+            loginTitle.innerHTML = `${userType} <span class="text-primary">Login</span>`;
+            showPage('login-page');
+        }
+
+        instructorLoginBtn1.addEventListener('click', () => setLoginTitle('Instructor'));
+        instructorLoginBtn2.addEventListener('click', () => setLoginTitle('Instructor'));
+        learnerLoginBtn1.addEventListener('click', () => setLoginTitle('Learner'));
+        learnerLoginBtn2.addEventListener('click', () => setLoginTitle('Learner'));
 
         // Login event listener
         if (loginForm) {
@@ -789,16 +807,32 @@
                 
                 const email = loginForm.email.value;
                 const password = loginForm.password.value;
+                
+                // --- DUMMY LOGIN LOGIC ---
+                if (email === 'test@test.com' && password === 'password123') {
+                    console.log('Dummy user logged in');
+                    
+                    // 1. Manually show the dashboard page
+                    showPage('dashboard-page'); 
+                    
+                    // 2. Manually populate dashboard with dummy data
+                    document.getElementById('welcome-message').textContent = 'Welcome back, Shikhar!';
+                    document.getElementById('user-name').textContent = 'Jhon';
+                    
+                    // 3. Stop the function here so it doesn't try to use Firebase
+                    return; 
+                }
+                // --- END DUMMY LOGIN ---
 
+                // Original Firebase login for any other credentials
                 auth.signInWithEmailAndPassword(email, password)
                     .then((userCredential) => {
                         // Signed in
                         const user = userCredential.user;
                         console.log('User signed in:', user.uid);
-                        // The onAuthStateChanged observer will handle the page switch
                     })
                     .catch((error) => {
-                        errorMessage.textContent = error.message;
+                        errorMessage.textContent = "Invalid credentials or Firebase error.";
                     });
             });
         }
@@ -844,12 +878,7 @@
                     welcomeMessage.textContent = `Welcome back, ${displayName}!`;
                     userName.textContent = displayName;
 
-                    // Update other dashboard elements here (e.g., wallet balance)
-                    // const walletBalance = document.querySelector('.wallet-balance');
-                    // walletBalance.textContent = `$ ${userData.walletBalance || 0}`;
-
                 } else {
-                    // doc.data() will be undefined in this case
                     console.log("No such document in Firestore!");
                      // Use default values if no Firestore doc exists
                     const displayName = user.email.split('@')[0];
