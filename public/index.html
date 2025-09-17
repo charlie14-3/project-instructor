@@ -12,6 +12,113 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* --- WALLET PAGE STYLES --- */
+        .breadcrumbs {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        .breadcrumbs span:first-child {
+            font-weight: 500;
+        }
+
+        .wallet-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .wallet-main h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .wallet-main .subtitle {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+
+        .credit-options .credit-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .credit-options .credit-option:hover {
+            border-color: #ccc;
+        }
+        .credit-options .credit-option.selected {
+            border-color: var(--primary-color);
+            background-color: #FFFDF5;
+        }
+
+        .credit-option input[type="radio"] {
+            margin-top: 5px;
+            margin-right: 15px;
+            accent-color: var(--primary-color); /* Modern way to color radios/checkboxes */
+        }
+        
+        .credit-option .option-details {
+            width: 100%;
+            cursor: pointer;
+        }
+        .option-details .option-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .option-details h4 { font-size: 16px; font-weight: 600; }
+        .option-details p { font-size: 14px; color: var(--gray-color); }
+        
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .discount-tag {
+            background-color: #E6F4EA;
+            color: #4CAF50;
+        }
+        .discount-tag-alt {
+            background-color: #FFF4E5;
+            color: #FF9800;
+        }
+        .custom-hours i { color: var(--gray-color); }
+
+        .order-summary, .bnp-card {
+            padding: 20px;
+        }
+        .order-summary .summary-item, .order-summary .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .order-summary .summary-total {
+            font-weight: 600;
+            font-size: 18px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+        .order-summary .btn { margin-top: 10px; }
+
+        .bnp-card p {
+            margin: 10px 0;
+            color: var(--gray-color);
+        }
+        .bnp-card .payment-logos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .bnp-card .payment-logos img {
+            height: 20px;
+            width: auto;
+        }
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -565,6 +672,243 @@
             color: var(--gray-color);
         }
 
+
+        /* --- BOOKING PAGE STYLES --- */
+        .booking-content {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .booking-main h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .booking-type-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .booking-type-tabs .tab-link {
+            padding-bottom: 10px;
+        }
+        .warning-box {
+            background-color: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            color: #92400E;
+            margin-bottom: 20px;
+        }
+        .booking-form { margin-top: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: var(--white-color);
+        }
+        .form-group-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-note {
+            font-size: 13px;
+            color: var(--gray-color);
+            margin: -10px 0 20px 0;
+        }
+        .location-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .edit-btn i { margin-right: 5px; }
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+        .btn-disabled {
+            background-color: var(--light-gray-color) !important;
+            color: var(--gray-color) !important;
+            cursor: not-allowed;
+            opacity: 0.8;
+            border-color: var(--border-color) !important;
+        }
+        .booking-sidebar .order-summary .btn {
+            margin-top: 15px;
+        }
+
+        /* --- SWITCH INSTRUCTOR PAGE STYLES --- */
+        .instructor-filters {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .filter-group { display: flex; align-items: center; gap: 10px; }
+        .filter-group label { font-size: 14px; font-weight: 500; color: var(--gray-color); }
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--white-color);
+            cursor: pointer;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            border-color: var(--dark-color);
+        }
+        .filter-sort {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-left: auto; /* Pushes sort to the right */
+        }
+
+        .instructor-page-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+        }
+        .instructor-list-container h3 { font-size: 22px; font-weight: 600; }
+        
+       .instructor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates a 2-column grid */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.instructor-card-new {
+    display: grid;
+    grid-template-columns: 100px 1fr; /* Column for photo and a column for details */
+    grid-template-rows: auto auto; /* Two rows for content */
+    gap: 0 20px; /* 0px row gap, 20px column gap */
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.instructor-photo-new {
+    grid-row: 1 / span 2; /* Make photo span both rows */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f0f0f0; /* Placeholder color */
+    border: 1px solid var(--border-color);
+}
+
+.instructor-details-new {
+    grid-column: 2; /* Details are in the second column */
+    grid-row: 1; /* Details are in the first row */
+}
+
+.instructor-details-new h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.instructor-details-new .instructor-meta {
+    font-size: 13px;
+    color: var(--gray-color);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.instructor-details-new .instructor-meta i {
+    margin-right: 8px; /* Space between icon and text */
+    width: 16px; /* Align icons */
+    text-align: center;
+}
+
+.instructor-details-new .availability-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-color);
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.instructor-actions-new {
+    grid-column: 1 / -1; /* Make action buttons span all columns */
+    grid-row: 2;
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+    align-self: end; /* Pushes to the bottom of the details section */
+}
+
+.instructor-actions-new .btn-secondary {
+    background-color: #4A4A4A; /* Dark gray button */
+    color: var(--white-color);
+    border: none;
+}
+        .instructor-info h4 { font-size: 20px; font-weight: 600; margin-bottom: 5px; }
+        .instructor-meta {
+            font-size: 13px;
+            color: var(--gray-color);
+            margin-bottom: 3px;
+        }
+        .instructor-meta .fa-star { color: var(--primary-color); }
+        .instructor-meta .fa-check-circle { color: #4CAF50; }
+        .instructor-meta.price { font-weight: 500; color: var(--dark-color); }
+        .availability-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-color);
+            text-decoration: underline;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        .instructor-actions {
+            grid-column: 1 / -1; /* Span full width */
+            display: flex;
+            gap: 10px;
+        }
+        .instructor-search-sidebar .form-group { margin-bottom: 15px; }
+        .instructor-search-sidebar select { width: 100%; }
+
+
+.content-view {
+    display: none;
+}
+.content-view.active {
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -722,13 +1066,16 @@
                     <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
                     <h3>SAFE LEARNERS</h3>
                 </div>
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li class="active"><a href="#">Dashboard</a></li>
-                        <li><a href="#">Wallet</a></li>
-                        <li><a href="#">Invite Friends</a></li>
-                    </ul>
-                </nav>
+                
+
+
+<nav class="sidebar-nav">
+    <ul>
+        <li class="active"><a href="#" id="nav-dashboard-main">Dashboard</a></li>
+        <li><a href="#" id="nav-wallet-main">Wallet</a></li>
+        <li><a href="#">Invite Friends</a></li>
+    </ul>
+</nav>
                 <div class="sidebar-footer">
                     <ul>
                         <li><a href="#">Give Feedback</a></li>
@@ -739,95 +1086,435 @@
                 </div>
             </aside>
             <main class="main-content">
+    <header class="dashboard-header">
+        <h3>Dashboard</h3>
+        <div class="user-info">
+            <i class="fas fa-bell"></i>
+            <div class="user-profile">
+                <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar">
+                <span id="user-name">Jhon</span> ▾
+            </div>
+        </div>
+    </header>
+
+    <section id="dashboard-main-content" class="dashboard-body content-view active">
+        <h2 id="welcome-message">Welcome back, Shikhar!</h2>
+        <div class="cards-grid">
+            <div class="card instructor-card">
+                <div class="card-header">
+                    <h4>My Instructor</h4>
+                    <button class="btn btn-primary btn-small">Book Now</button>
+                </div>
+                <div class="card-body instructor-details">
+                    <div class="instructor-info">
+                        <img src="https://placehold.co/120x120?text=Fazley" alt="Instructor Fazley">
+                        <div>
+                            <h5>Fazley</h5>
+                            <p>$70/Hr</p>
+                        </div>
+                    </div>
+                    <div class="vehicle-info">
+                        <img src="https://placehold.co/120x120/cccccc/000000?text=Car" alt="Toyota Corolla">
+                        <div>
+                            <h5>Toyota Corolla 2021</h5>
+                            <p>5-Star ANCAP Rating<br>Dual Controls Fitted</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" id="switch-instructor-link">Switch Instructor &rarr;</a>
+                </div>
+            </div>
+            <div class="card wallet-card">
+                <div class="card-header">
+                    <h4>My Wallet</h4>
+                    <button class="btn btn-secondary btn-small">Add Credit</button>
+                </div>
+                <div class="card-body">
+                    <h2 class="wallet-balance">$ 30</h2>
+                    <p class="wallet-note">Includes $ 30 Of Non Refundable Credit</p>
+                </div>
+                 <div class="card-footer">
+                    <a href="#">View Details &rarr;</a>
+                </div>
+            </div>
+        </div>
+        <div class="card test-package-card">
+             <div class="test-package-details">
+                <div class="package-icon"><span>P</span></div>
+                <div class="package-info">
+                    <h4>Driving Test Package</h4>
+                    <ul>
+                        <li>2.5hr Test Package</li>
+                        <li>Use Instructor's Vehicle for Test</li>
+                        <li>Pick Up & Drop Off Included</li>
+                        <li>45 Minute Pre-Test Warm Up Lesson</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="test-package-action">
+                <span class="price">$ 200</span>
+                <button class="btn btn-primary" id="book-test-package-btn">Book Now</button>
+            </div>
+        </div>
+        <div class="booking-section">
+            <h3>Booking</h3>
+            <div class="tabs">
+                <button class="tab-link active">Upcoming</button>
+                <button class="tab-link">Service</button>
+                <button class="tab-link">Past</button>
+            </div>
+            <div class="tab-content">
+                <p>You Have No Upcoming Booking To View At This Time</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="switch-instructor-content" class="content-view">
+        <header class="instructor-filters">
+            <div class="filter-group">
+                <label>Time</label>
+                <button class="filter-btn active">Anytime</button>
+                <button class="filter-btn">AM</button>
+                <button class="filter-btn">PM</button>
+            </div>
+            <div class="filter-group">
+                <label>Day</label>
+                <button class="filter-btn">Today - Sun</button>
+                <button class="filter-btn">Mon - Thu</button>
+                <button class="filter-btn">Custom</button>
+            </div>
+            <button class="btn btn-secondary">Clear Filter</button>
+            <select class="filter-sort">
+                <option>Sort</option>
+            </select>
+        </header>
+        <section class="instructor-page-layout">
+            <div class="instructor-list-container">
+                <h3>63 Auto instructors available in the next 7 days</h3>
+                <p class="subtitle">From $60.00/hr</p>
+                <div class="instructor-grid">
+    <div class="instructor-card-new">
+        <div class="instructor-photo-new">
+            </div>
+        <div class="instructor-details-new">
+            <h4>Syed</h4>
+            <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
+            <p class="instructor-meta"><i class="fas fa-star"></i> 4.3 - 3 Ratings</p>
+            <p class="instructor-meta"><i class="fas fa-check-circle"></i> 38 Completed Lessons</p>
+            <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
+        </div>
+        <div class="instructor-actions-new">
+            <button class="btn btn-secondary btn-full">View Profile</button>
+            <button class="btn btn-primary btn-full">Book Online Now</button>
+        </div>
+    </div>
+
+    <div class="instructor-card-new">
+        <div class="instructor-photo-new">
+            </div>
+        <div class="instructor-details-new">
+            <h4>Muhammad</h4>
+            <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
+            <p class="instructor-meta"><i class="fas fa-star"></i> 5.0 - 80 Ratings</p>
+            <p class="instructor-meta"><i class="fas fa-check-circle"></i> 570 Completed Lessons</p>
+            <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
+        </div>
+        <div class="instructor-actions-new">
+            <button class="btn btn-secondary btn-full">View Profile</button>
+            <button class="btn btn-primary btn-full">Book Online Now</button>
+        </div>
+    </div>
+
+    <div class="instructor-card-new">
+        <div class="instructor-photo-new">
+            </div>
+        <div class="instructor-details-new">
+            <h4>Roumyo</h4>
+            <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
+            <p class="instructor-meta"><i class="fas fa-check-circle"></i> Instructed for 3 yr, 4 mo.</p>
+            <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Driving Instructor</p>
+            <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
+        </div>
+        <div class="instructor-actions-new">
+            <button class="btn btn-secondary btn-full">View Profile</button>
+            <button class="btn btn-primary btn-full">Book Online Now</button>
+        </div>
+    </div>
+
+    <div class="instructor-card-new">
+        <div class="instructor-photo-new">
+            </div>
+        <div class="instructor-details-new">
+            <h4>Sitara</h4>
+            <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
+            <p class="instructor-meta"><i class="fas fa-star"></i> 4.8 - 26 Ratings</p>
+            <p class="instructor-meta"><i class="fas fa-check-circle"></i> 262 Completed Lessons</p>
+            <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
+        </div>
+        <div class="instructor-actions-new">
+            <button class="btn btn-secondary btn-full">View Profile</button>
+            <button class="btn btn-primary btn-full">Book Online Now</button>
+        </div>
+    </div>
+</div>
+            </div>
+            <aside class="instructor-search-sidebar">
+                <div class="card">
+                    <div class="form-group">
+                        <select><option>Auto</option></select>
+                    </div>
+                    <div class="form-group">
+                        <select><option>Any spoken languages</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Region</label>
+                        <div class="location-field">
+                            <span>Quickers Hill 2763</span>
+                            <button class="edit-btn">edit</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full">Search</button>
+                </div>
+            </aside>
+        </section>
+    </div>
+</main>
+           
+        </div>
+    </div>
+    
+    <div id="wallet-page" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h3>SAFE LEARNERS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" id="nav-dashboard-wallet">Dashboard</a></li>
+                        <li class="active"><a href="#" id="nav-wallet-wallet">Wallet</a></li>
+                        <li><a href="#">Invite Friends</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <ul>
+                        <li><a href="#">Give Feedback</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <button id="logout-button-wallet" class="btn btn-secondary">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
                 <header class="dashboard-header">
-                    <h3>Dashboard</h3>
+                    <div class="breadcrumbs">
+                        <span>My Wallet</span> > <span>Add Credit</span>
+                    </div>
                     <div class="user-info">
                         <i class="fas fa-bell"></i>
                         <div class="user-profile">
-                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar">
-                            <span id="user-name">Jhon</span> ▾
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar-wallet">
+                            <span id="user-name-wallet">Jhon</span> ▾
                         </div>
                     </div>
                 </header>
-                <section class="dashboard-body">
-                    <h2 id="welcome-message">Welcome back, Shikhar!</h2>
-                    <div class="cards-grid">
-                        <div class="card instructor-card">
-                            <div class="card-header">
-                                <h4>My Instructor</h4>
-                                <button class="btn btn-primary btn-small">Book Now</button>
+                
+                <section class="wallet-content">
+                    <div class="wallet-main">
+                        <h2>Add Lesson Credit</h2>
+                        <p class="subtitle">Buy more and save!</p>
+
+                        <div class="credit-options">
+                            <div class="credit-option selected">
+                                <input type="radio" id="hours10" name="credit" value="10" checked>
+                                <label for="hours10" class="option-details">
+                                    <div class="option-title">
+                                        <h4>10 hours</h4>
+                                        <span class="tag discount-tag">10% OFF</span>
+                                    </div>
+                                    <p>Perfect for new learners starting their driving journey from scratch</p>
+                                </label>
                             </div>
-                            <div class="card-body instructor-details">
+                            <div class="credit-option">
+                                <input type="radio" id="hours6" name="credit" value="6">
+                                <label for="hours6" class="option-details">
+                                    <div class="option-title">
+                                        <h4>6 hours</h4>
+                                        <span class="tag discount-tag-alt">5% OFF</span>
+                                    </div>
+                                    <p>Ideal for new learners, overseas license holders, or anyone needing a driving skill refresh.</p>
+                                </label>
+                            </div>
+                            <div class="credit-option custom-hours">
+                                <input type="radio" id="custom" name="credit" value="custom">
+                                <label for="custom" class="option-details">
+                                    <div class="option-title">
+                                        <h4>Select custom hours</h4>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="wallet-sidebar">
+                        <div class="card order-summary">
+                            <h4>Order Summary</h4>
+                            <div class="summary-item">
+                                <span>1 hr Booking Credit</span>
+                                </div>
+                            <div class="summary-total">
+                                <span>Total Payment Due</span>
+                                <span class="total-price">$0.00</span>
+                            </div>
+                            <button class="btn btn-primary btn-full">Continue</button>
+                        </div>
+                        <div class="card bnp-card">
+                             <h4>Buy Now Pay Later</h4>
+                             <p>4 payments of $0.00</p>
+                             <div class="payment-logos">
+                                 Pay in 4
+                                 <img src="https://placehold.co/100x25/00A39A/FFFFFF?text=afterpay" alt="Afterpay">
+                                 <img src="https://placehold.co/100x25/FFB3C7/000000?text=klarna" alt="Klarna">
+                             </div>
+                        </div>
+                    </aside>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="booking-page" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h3>SAFE LEARNERS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="active"><a href="#" id="nav-dashboard-booking">Dashboard</a></li>
+                        <li><a href="#" id="nav-wallet-booking">Wallet</a></li>
+                        <li><a href="#">Invite Friends</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <ul>
+                        <li><a href="#">Give Feedback</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                    <button id="logout-button-booking" class="btn btn-secondary">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <div class="breadcrumbs">
+                        <span>Dashboard</span> > <span>Make a Booking</span>
+                    </div>
+                    <div class="user-info">
+                        <i class="fas fa-bell"></i>
+                        <div class="user-profile">
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar-booking">
+                            <span id="user-name-booking">Jhon</span> ▾
+                        </div>
+                    </div>
+                </header>
+                
+                <section class="booking-content">
+                    <div class="booking-main">
+                        <h2>Make a Booking</h2>
+                        <div class="card">
+                            <h4>My Instructor</h4>
+                            <div class="instructor-details" style="margin-top: 20px;">
                                 <div class="instructor-info">
                                     <img src="https://placehold.co/120x120?text=Fazley" alt="Instructor Fazley">
                                     <div>
                                         <h5>Fazley</h5>
-                                        <p>$70/Hr</p>
+                                        <p>$70/hr<br>Offers 1 & 2hr lessons</p>
                                     </div>
                                 </div>
                                 <div class="vehicle-info">
                                     <img src="https://placehold.co/120x120/cccccc/000000?text=Car" alt="Toyota Corolla">
                                     <div>
-                                        <h5>Toyota Corolla 2021</h5>
-                                        <p>5-Star ANCAP Rating<br>Dual Controls Fitted</p>
+                                        <h5>Toyota Corolla 2011 (Auto)</h5>
+                                        <p>5-star ANCAP rating<br>Dual controls fitted</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <a href="#">Switch Instructor &rarr;</a>
-                            </div>
                         </div>
-                        <div class="card wallet-card">
-                            <div class="card-header">
-                                <h4>My Wallet</h4>
-                                <button class="btn btn-secondary btn-small">Add Credit</button>
+
+                        <div class="card">
+                            <h4>New Booking</h4>
+                            <div class="booking-type-tabs">
+                                <button class="tab-link">1-Hour Lesson</button>
+                                <button class="tab-link">2-Hour Lesson</button>
+                                <button class="tab-link active">Driving Test Package</button>
                             </div>
-                            <div class="card-body">
-                                <h2 class="wallet-balance">$ 30</h2>
-                                <p class="wallet-note">Includes $ 30 Of Non Refundable Credit</p>
+                            <div class="warning-box">
+                                <strong>WARNING:</strong> You must book your own driving test with local roads authority. Our Test Package only books the instructor and vehicle.
                             </div>
-                             <div class="card-footer">
-                                <a href="#">View Details &rarr;</a>
+                            
+                            <div class="booking-form">
+                                <div class="form-group">
+                                    <label for="test-location">Driving test location</label>
+                                    <select id="test-location">
+                                        <option>Select the test location</option>
+                                        </select>
+                                </div>
+                                <div class="form-group-inline">
+                                    <div class="form-group">
+                                        <label for="available-dates">Available Dates</label>
+                                        <select id="available-dates">
+                                            <option>Select a day</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="available-times">Available Times</label>
+                                        <select id="available-times">
+                                            <option>Select test start time</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="form-note">* The pickup time will be 1 hour prior to the test start time.</p>
+                                
+                                <div class="form-group">
+                                    <label>Pick Up Location</label>
+                                    <div class="location-field">
+                                        <span>5 Hogan PL, Quakers Hill NSW 2763</span>
+                                        <button class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Drop Off Location</label>
+                                    <div class="location-field">
+                                        <span>5 Hogan PL, Quakers Hill NSW 2763</span>
+                                        <button class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button class="btn btn-secondary">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-    
-                    <div class="card test-package-card">
-                         <div class="test-package-details">
-                            <div class="package-icon"><span>P</span></div>
-                            <div class="package-info">
-                                <h4>Driving Test Package</h4>
-                                <ul>
-                                    <li>2.5hr Test Package</li>
-                                    <li>Use Instructor's Vehicle for Test</li>
-                                    <li>Pick Up & Drop Off Included</li>
-                                    <li>45 Minute Pre-Test Warm Up Lesson</li>
-                                </ul>
-                            </div>
+                    <aside class="booking-sidebar">
+                        <div class="card order-summary">
+                            <h4>Order Summary</h4>
+                            <button class="btn btn-secondary btn-full btn-disabled" disabled>
+                                <i class="fas fa-plus-circle"></i> Add Another Booking
+                            </button>
+                            <button class="btn btn-primary btn-full btn-disabled" disabled>Continue</button>
                         </div>
-                        <div class="test-package-action">
-                            <span class="price">$ 200</span>
-                            <button class="btn btn-primary">Book Now</button>
-                        </div>
-                    </div>
-    
-                    <div class="booking-section">
-                        <h3>Booking</h3>
-                        <div class="tabs">
-                            <button class="tab-link active">Upcoming</button>
-                            <button class="tab-link">Service</button>
-                            <button class="tab-link">Past</button>
-                        </div>
-                        <div class="tab-content">
-                            <p>You Have No Upcoming Booking To View At This Time</p>
-                        </div>
-                    </div>
-    
+                    </aside>
                 </section>
+
+                
+
             </main>
         </div>
     </div>
-
 
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
@@ -1031,6 +1718,106 @@ if (signupForm) {
                 console.error('Signup Error:', error);
             });
     });
+}
+
+// --- DASHBOARD/WALLET NAVIGATION ---
+        const navDashboardMain = document.getElementById('nav-dashboard-main');
+        const navWalletMain = document.getElementById('nav-wallet-main');
+        const navDashboardWallet = document.getElementById('nav-dashboard-wallet');
+        const navWalletWallet = document.getElementById('nav-wallet-wallet'); // Wallet link on the wallet page
+
+        function goToDashboard(e) {
+    e.preventDefault();
+    showPage('dashboard-page');
+    showView('dashboard-main-content'); // This new line resets the view
+}
+        function goToWallet(e) {
+            e.preventDefault();
+            showPage('wallet-page');
+        }
+
+        navDashboardMain.addEventListener('click', goToDashboard);
+        navDashboardWallet.addEventListener('click', goToDashboard);
+        navWalletMain.addEventListener('click', goToWallet);
+        navWalletWallet.addEventListener('click', goToWallet);
+        
+        // Also update the logout button on the new wallet page
+        const logoutButtonWallet = document.getElementById('logout-button-wallet');
+        if(logoutButtonWallet) {
+            logoutButtonWallet.addEventListener('click', () => {
+                auth.signOut(); // Existing signout logic
+            });
+        }
+
+
+        // --- WALLET PAGE INTERACTIVITY ---
+        const creditOptions = document.querySelectorAll('.credit-option');
+        
+        creditOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove 'selected' from all options
+                creditOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add 'selected' to the clicked option
+                option.classList.add('selected');
+
+                // Check the radio button inside the clicked option
+                const radio = option.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
+
+                // In a real app, you would update the order summary here
+                // based on the selected radio.value
+                console.log(`Selected value: ${radio.value}`);
+            });
+        });
+
+        // --- BOOKING PAGE NAVIGATION ---
+        const bookTestPackageBtn = document.getElementById('book-test-package-btn');
+        const navDashboardBooking = document.getElementById('nav-dashboard-booking');
+        const navWalletBooking = document.getElementById('nav-wallet-booking');
+
+        if(bookTestPackageBtn) {
+            bookTestPackageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('booking-page');
+            });
+        }
+        
+        // Add event listeners for the new sidebar links
+        if(navDashboardBooking) navDashboardBooking.addEventListener('click', goToDashboard);
+        if(navWalletBooking) navWalletBooking.addEventListener('click', goToWallet);
+
+        // Also add the new logout button
+        const logoutButtonBooking = document.getElementById('logout-button-booking');
+        if(logoutButtonBooking) {
+            logoutButtonBooking.addEventListener('click', () => {
+                auth.signOut();
+            });
+        }
+        // --- Connect "Switch Instructor" link ---
+        const switchInstructorLink = document.getElementById('switch-instructor-link');
+        if(switchInstructorLink) {
+            switchInstructorLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('switch-instructor-content');
+            });
+        }
+
+        function showView(viewId) {
+    // Get all content views within the dashboard's main content area
+    const views = document.querySelectorAll('#dashboard-page .main-content .content-view');
+    views.forEach(view => {
+        // Hide all views by removing the 'active' class
+        view.classList.remove('active');
+    });
+
+    // Find the specific view to show and add the 'active' class
+    const viewToShow = document.getElementById(viewId);
+    if (viewToShow) {
+        viewToShow.classList.add('active');
+    }
 }
     </script>
 </body>
