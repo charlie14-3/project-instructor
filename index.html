@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Learners</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS RESET & GLOBAL STYLES */
+        :root {
+            --primary-color: #FFC700;
+            --secondary-color: #FDF9EB;
+            --dark-color: #1E1E1E;
+            --gray-color: #757575;
+            --light-gray-color: #F7F7F7;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--white-color);
+            color: var(--dark-color);
+        }
+
+        .page {
+            display: none; /* Pages are hidden by default */
+        }
+        
+        .page.active {
+            display: block; /* The active page is shown */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background-color: var(--white-color);
+            color: var(--dark-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light-gray-color);
+        }
+
+        .text-primary {
+            color: var(--primary-color);
+        }
+
+        /* --- LANDING PAGE STYLES --- */
+        .landing-container {
+            background-color: var(--secondary-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .landing-container header {
+            padding: 20px 80px;
+        }
+
+        .landing-container nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .hero {
+            display: flex;
+            padding: 40px 80px;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-content .tag {
+            background-color: var(--white-color);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin: 20px 0;
+            line-height: 1.3;
+        }
+
+        .hero-content h1 span {
+            background-color: var(--primary-color);
+            padding: 0 10px;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: var(--gray-color);
+            max-width: 450px;
+        }
+
+        .hero-buttons {
+            margin-top: 30px;
+        }
+
+        .hero-buttons .btn {
+            margin-right: 15px;
+        }
+
+        .hero-images {
+            flex: 1;
+            position: relative;
+            height: 450px;
+        }
+        
+        .hero-images img {
+            position: absolute;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .hero-img-1 {
+            width: 70%;
+            top: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        .hero-img-2 {
+            width: 50%;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .happy-client-badge {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            padding: 20px;
+            z-index: 3;
+            top: 50px;
+            left: -30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 5px solid var(--secondary-color);
+        }
+        .happy-client-badge p {
+            line-height: 1;
+        }
+        .happy-client-badge span {
+            font-size: 12px;
+            display: block;
+        }
+
+        .road-footer {
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="50" x2="100%" y2="50" stroke-width="4" stroke="white" stroke-dasharray="20 20"/></svg>'), linear-gradient(#444, #333);
+            background-repeat: repeat-x, no-repeat;
+            background-position: center;
+            position: relative;
+        }
+
+        .car-graphic {
+            position: absolute;
+            height: 120px;
+            bottom: 25px;
+            left: 20%;
+        }
+
+
+        /* --- LOGIN PAGE STYLES --- */
+        .login-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100vh;
+        }
+
+        .login-art {
+            background-color: #FFFBF0;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50"><path d="M46.7,33.4c-2.9-2.9-7.5-2.9-10.4,0L29.1,40.6c-2.9,2.9-2.9,7.5,0,10.4c2.9,2.9,7.5,2.9,10.4,0l7.1-7.1C49.5,40.9,49.5,36.2,46.7,33.4z M58.4,45.1L58.4,45.1c2.9-2.9,2.9-7.5,0-10.4c-2.9-2.9-7.5-2.9-10.4,0l-2.8,2.8c-0.8-2.6-2.5-4.8-4.8-6.1l4.9-4.9c4.5-4.5,11.8-4.5,16.3,0l7.1,7.1c4.5,4.5,4.5,11.8,0,16.3l-4.9,4.9C61.3,50,59.6,47.8,58.4,45.1z M41.6,54.9L41.6,54.9c-2.9,2.9-2.9,7.5,0,10.4c2.9,2.9,7.5,2.9,10.4,0l2.8-2.8c0.8,2.6,2.5,4.8,4.8,6.1l-4.9,4.9c-4.5,4.5-11.8,4.5-16.3,0l-7.1-7.1c-4.5-4.5-4.5-11.8,0-16.3l4.9-4.9C38.7,50,40.4,52.2,41.6,54.9z" fill="%23000" fill-opacity="0.05"/></svg>');
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-large {
+            text-align: center;
+            margin-top: 20vh;
+        }
+        .logo-large img { height: 80px; }
+        .logo-large h2 { font-size: 24px; letter-spacing: 5px; margin-top: 15px; }
+        .logo-large p { letter-spacing: 8px; font-size: 12px; color: var(--gray-color); }
+        .login-art .road-footer {
+            height: 120px;
+        }
+         .login-art .car-graphic {
+            height: 140px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .login-form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-form-container form {
+            width: 100%;
+            max-width: 380px;
+        }
+        .login-form-container h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--gray-color);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .checkbox-container input {
+            display: none;
+        }
+        .checkbox-container .checkmark {
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-right: 8px;
+            display: inline-block;
+        }
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .forgot-password {
+            color: var(--gray-color);
+        }
+        .btn-full {
+            width: 100%;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        .signup-link a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        .error-text {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            height: 20px;
+        }
+
+
+        /* --- DASHBOARD STYLES --- */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            background-color: var(--light-gray-color);
+        }
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+        }
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            margin-bottom: 40px;
+        }
+        .sidebar-header img { height: 30px; margin-right: 10px; }
+        .sidebar-header h3 { font-size: 16px; font-weight: 700; }
+        
+        .sidebar-nav ul, .sidebar-footer ul {
+            list-style: none;
+        }
+        .sidebar-nav li a {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .sidebar-nav li.active a, .sidebar-nav li a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+        .sidebar-footer li a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--gray-color);
+            font-size: 14px;
+        }
+        #logout-button {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .main-content {
+            padding: 30px 40px;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-header h3 { font-size: 16px; font-weight: 500; color: var(--gray-color); }
+        .user-info { display: flex; align-items: center; }
+        .user-info .fa-bell { font-size: 20px; margin-right: 25px; cursor: pointer; }
+        .user-profile { display: flex; align-items: center; cursor: pointer; }
+        .user-profile img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        .user-profile span { font-weight: 500; }
+        
+        .dashboard-body h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-header h4 { font-weight: 600; }
+        .btn-small { padding: 8px 16px; font-size: 14px; }
+        .card-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        .card-footer a {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .instructor-details {
+            display: flex;
+            gap: 20px;
+        }
+        .instructor-info, .vehicle-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .instructor-info img, .vehicle-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .instructor-info h5, .vehicle-info h5 { font-size: 16px; font-weight: 600; }
+        .instructor-info p, .vehicle-info p { font-size: 14px; color: var(--gray-color); }
+
+        .wallet-balance { font-size: 36px; font-weight: 700; }
+        .wallet-note { font-size: 12px; color: var(--gray-color); }
+
+        .test-package-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .test-package-details { display: flex; align-items: center; gap: 20px; }
+        .package-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #E3F2FD;
+            color: #2196F3;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .package-info h4 { margin-bottom: 10px; }
+        .package-info ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+         .package-info ul li::before {
+            content: '✓';
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        .test-package-action {
+            text-align: right;
+        }
+        .test-package-action .price {
+            display: block;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .booking-section { margin-top: 30px; }
+        .booking-section h3 { font-size: 20px; margin-bottom: 15px; }
+        .tabs { border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .tab-link {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            color: var(--gray-color);
+        }
+        .tab-link.active {
+            color: var(--dark-color);
+        }
+        .tab-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        .tab-content {
+            background-color: var(--white-color);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--gray-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="landing-page" class="page active">
+        <div class="landing-container">
+            <header>
+                <nav>
+                    <div class="logo">
+                        <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                        <span>SAFE LEARNERS</span>
+                    </div>
+                    <div class="nav-links">
+                        <a href="#">Sydney ▾</a>
+                        <a href="#" onclick="showPage('login-page')" class="btn btn-secondary">Instructor Login</a>
+                        <a href="#" onclick="showPage('login-page')" class="btn btn-primary">Learner Login</a>
+                    </div>
+                </nav>
+            </header>
+
+            <main class="hero">
+                <div class="hero-content">
+                    <span class="tag">Driving excellence</span>
+                    <h1>Find the Right Fit from <br>1000+ Trusted Driving <br><span>Instructors</span></h1>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                    <div class="hero-buttons">
+                        <a href="#" onclick="showPage('login-page')" class="btn btn-primary">Learner Login</a>
+                        <a href="#" onclick="showPage('login-page')" class="btn btn-secondary">Instructor Login</a>
+                    </div>
+                </div>
+                <div class="hero-images">
+                    <div class="happy-client-badge">
+                        <p><strong>30K +</strong><span>happy client</span></p>
+                    </div>
+                    <img src="https://placehold.co/600x400/cccccc/333333?text=Happy+Learner+1" alt="Happy Driver 1" class="hero-img-1">
+                    <img src="https://placehold.co/400x300/cccccc/333333?text=Happy+Learner+2" alt="Happy Driver 2" class="hero-img-2">
+                </div>
+            </main>
+            
+            <div class="road-footer">
+                <img src="https://www.vhv.rs/dpng/f/453-4532395_car-on-road-png.png" alt="Yellow Sports Car" class="car-graphic">
+            </div>
+        </div>
+    </div>
+    
+    <div id="login-page" class="page">
+        <div class="login-page">
+            <div class="login-art">
+                <div class="logo-large">
+                    <img src="https://placehold.co/150x150/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h2>SAFE LEARNERS</h2>
+                    <p>DRIVE RIGHT</p>
+                </div>
+                <div class="road-footer">
+                    <img src="https://www.vhv.rs/dpng/f/453-4532395_car-on-road-png.png" alt="Yellow Sports Car" class="car-graphic">
+                </div>
+            </div>
+            <div class="login-form-container">
+                <form id="login-form">
+                    <h2>Instructor <span class="text-primary">Login</span></h2>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            Remember Me For 90 Days
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Login</button>
+                    <p id="error-message" class="error-text"></p>
+                    <p class="signup-link">Don't Have An Account? <a href="#">Signup Now</a></p>
+                    <p class="signup-link" style="margin-top: 10px;"><a href="#" onclick="showPage('landing-page')">&larr; Back to Home</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-page" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h3>SAFE LEARNERS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="active"><a href="#">Dashboard</a></li>
+                        <li><a href="#">Wallet</a></li>
+                        <li><a href="#">Invite Friends</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <ul>
+                        <li><a href="#">Give Feedback</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <button id="logout-button" class="btn btn-secondary">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h3>Dashboard</h3>
+                    <div class="user-info">
+                        <i class="fas fa-bell"></i>
+                        <div class="user-profile">
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar">
+                            <span id="user-name">Jhon</span> ▾
+                        </div>
+                    </div>
+                </header>
+                <section class="dashboard-body">
+                    <h2 id="welcome-message">Welcome back, Shikhar!</h2>
+                    <div class="cards-grid">
+                        <div class="card instructor-card">
+                            <div class="card-header">
+                                <h4>My Instructor</h4>
+                                <button class="btn btn-primary btn-small">Book Now</button>
+                            </div>
+                            <div class="card-body instructor-details">
+                                <div class="instructor-info">
+                                    <img src="https://placehold.co/120x120?text=Fazley" alt="Instructor Fazley">
+                                    <div>
+                                        <h5>Fazley</h5>
+                                        <p>$70/Hr</p>
+                                    </div>
+                                </div>
+                                <div class="vehicle-info">
+                                    <img src="https://placehold.co/120x120/cccccc/000000?text=Car" alt="Toyota Corolla">
+                                    <div>
+                                        <h5>Toyota Corolla 2021</h5>
+                                        <p>5-Star ANCAP Rating<br>Dual Controls Fitted</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">Switch Instructor &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="card wallet-card">
+                            <div class="card-header">
+                                <h4>My Wallet</h4>
+                                <button class="btn btn-secondary btn-small">Add Credit</button>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="wallet-balance">$ 30</h2>
+                                <p class="wallet-note">Includes $ 30 Of Non Refundable Credit</p>
+                            </div>
+                             <div class="card-footer">
+                                <a href="#">View Details &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="card test-package-card">
+                         <div class="test-package-details">
+                            <div class="package-icon"><span>P</span></div>
+                            <div class="package-info">
+                                <h4>Driving Test Package</h4>
+                                <ul>
+                                    <li>2.5hr Test Package</li>
+                                    <li>Use Instructor's Vehicle for Test</li>
+                                    <li>Pick Up & Drop Off Included</li>
+                                    <li>45 Minute Pre-Test Warm Up Lesson</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="test-package-action">
+                            <span class="price">$ 200</span>
+                            <button class="btn btn-primary">Book Now</button>
+                        </div>
+                    </div>
+    
+                    <div class="booking-section">
+                        <h3>Booking</h3>
+                        <div class="tabs">
+                            <button class="tab-link active">Upcoming</button>
+                            <button class="tab-link">Service</button>
+                            <button class="tab-link">Past</button>
+                        </div>
+                        <div class="tab-content">
+                            <p>You Have No Upcoming Booking To View At This Time</p>
+                        </div>
+                    </div>
+    
+                </section>
+            </main>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // PASTE YOUR FIREBASE CONFIG OBJECT HERE
+        const firebaseConfig = {
+          apiKey: "AIzaSy...YOUR_API_KEY",
+          authDomain: "your-project-id.firebaseapp.com",
+          projectId: "your-project-id",
+          storageBucket: "your-project-id.appspot.com",
+          messagingSenderId: "YOUR_SENDER_ID",
+          appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // --- PAGE NAVIGATION LOGIC ---
+        const pages = document.querySelectorAll('.page');
+        
+        function showPage(pageId) {
+            pages.forEach(page => {
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+        }
+
+        // --- AUTHENTICATION LOGIC ---
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const logoutButton = document.getElementById('logout-button');
+
+        // Login event listener
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                errorMessage.textContent = '';
+                
+                const email = loginForm.email.value;
+                const password = loginForm.password.value;
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        console.log('User signed in:', user.uid);
+                        // The onAuthStateChanged observer will handle the page switch
+                    })
+                    .catch((error) => {
+                        errorMessage.textContent = error.message;
+                    });
+            });
+        }
+
+        // Logout event listener
+        if(logoutButton) {
+            logoutButton.addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    console.log('User signed out');
+                    // The onAuthStateChanged observer will handle the page switch
+                }).catch((error) => {
+                    console.error('Sign out error', error);
+                });
+            });
+        }
+
+        // --- AUTH STATE OBSERVER ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is logged in
+                showPage('dashboard-page');
+                // You can now fetch user data from Firestore
+                fetchUserData(user);
+            } else {
+                // User is logged out
+                showPage('landing-page');
+            }
+        });
+
+        // --- DASHBOARD DATA LOGIC ---
+        function fetchUserData(user) {
+            const welcomeMessage = document.getElementById('welcome-message');
+            const userName = document.getElementById('user-name');
+
+            // Example: Fetch user data from a 'users' collection in Firestore
+            const userDocRef = db.collection('users').doc(user.uid);
+
+            userDocRef.get().then((doc) => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const displayName = userData.firstName || user.email.split('@')[0]; // Use first name or part of email
+                    
+                    welcomeMessage.textContent = `Welcome back, ${displayName}!`;
+                    userName.textContent = displayName;
+
+                    // Update other dashboard elements here (e.g., wallet balance)
+                    // const walletBalance = document.querySelector('.wallet-balance');
+                    // walletBalance.textContent = `$ ${userData.walletBalance || 0}`;
+
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document in Firestore!");
+                     // Use default values if no Firestore doc exists
+                    const displayName = user.email.split('@')[0];
+                    welcomeMessage.textContent = `Welcome back, ${displayName}!`;
+                    userName.textContent = displayName;
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+
+    </script>
+</body>
+</html>
