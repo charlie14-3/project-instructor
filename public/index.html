@@ -1434,6 +1434,277 @@
             background-color: #f0f0f0;
         }
 
+        /* --- START: Added for Services Tab & Booking Tabs --- */
+.tab-pane {
+    display: none; /* This is the key rule to hide inactive tabs */
+}
+
+.tab-pane.active {
+    display: block; /* This rule shows the active tab */
+}
+
+/* This resets the style for the services grid so it doesn't have a white box */
+#services-content.active {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    color: var(--dark-color);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.service-card {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #E53935;
+    color: var(--white-color);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.service-card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.service-card p {
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-bottom: 20px;
+}
+
+.service-card .illustration {
+    height: 100px;
+    width: 100%;
+    margin-bottom: 20px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* --- START: Booking History & Details Styles --- */
+
+/* Removes the white box from the history tab container */
+#history-content.tab-content {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+}
+
+.booking-history-table {
+    width: 100%;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.history-header,
+.history-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr 1.5fr 1.5fr 2fr 1fr 1fr;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.history-header {
+    font-weight: 600;
+    color: var(--gray-color);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--light-gray-color);
+}
+
+.history-row {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-row:last-child {
+    border-bottom: none;
+}
+
+.booking-id-link {
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.instructor-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.instructor-cell img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-completed { background-color: #E6F4EA; color: #4CAF50; }
+.status-processed { background-color: #E3F2FD; color: #2196F3; }
+.status-confirmed { background-color: #E8EAF6; color: #3F51B5; }
+.status-pending { background-color: #FFF9C4; color: #F57F17; }
+
+
+/* Booking Details Page */
+.booking-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.booking-details-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+.booking-details-actions {
+    display: flex;
+    gap: 10px;
+}
+.booking-details-actions .btn i {
+    margin-right: 5px;
+}
+
+.booking-main-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.booking-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gray-color);
+}
+.booking-info-item i {
+    width: 20px;
+    text-align: center;
+}
+.booking-info-item span {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+.booking-info-instructor {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--light-gray-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+.booking-info-instructor img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.booking-info-instructor p {
+    font-size: 12px;
+    color: var(--gray-color);
+    margin: 0;
+}
+.booking-info-instructor h5 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.payment-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.payment-details p {
+    color: var(--gray-color);
+    font-size: 14px;
+    margin: 0 0 5px 0;
+}
+.payment-amount {
+    text-align: right;
+}
+.payment-amount h2 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Update History */
+.update-history-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.update-history-item:last-child {
+    border-bottom: none;
+}
+.update-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-gray-color);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    color: var(--gray-color);
+}
+.update-details p {
+    margin: 0;
+    line-height: 1.4;
+}
+.update-time {
+    font-size: 12px;
+    color: var(--gray-color);
+}
+.update-history-item .status-badge {
+    margin-left: auto;
+}
+/* --- END: Booking History & Details Styles --- */
+
+
+/* --- END: Added for Services Tab & Booking Tabs --- */
+
         /* --- END: AVAILABILITY MODAL STYLES --- */
     </style>
 </head>
@@ -1690,16 +1961,75 @@
                         </div>
                     </div>
                     <div class="booking-section">
-                        <h3>Booking</h3>
-                        <div class="tabs">
-                            <button class="tab-link active">Upcoming</button>
-                            <button class="tab-link">Service</button>
-                            <button class="tab-link">Past</button>
-                        </div>
-                        <div class="tab-content">
-                            <p>You Have No Upcoming Booking To View At This Time</p>
-                        </div>
-                    </div>
+    <h3>Booking</h3>
+    <div class="tabs">
+        <button class="tab-link" data-target="upcoming-content">Upcoming</button>
+        <button class="tab-link active" data-target="services-content">Services</button>
+        <button class="tab-link" data-target="history-content">History</button>
+    </div>
+
+    <div id="upcoming-content" class="tab-pane tab-content">
+        <p>You Have No Upcoming Booking To View At This Time</p>
+    </div>
+
+    <div id="services-content" class="tab-pane active">
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <h4>1 hour <br>Driving Lesson</h4>
+                <p>Price <strong>$70</strong><br>Transmission <strong>Auto</strong></p>
+                <button class="btn btn-primary btn-full">Book with Fazley</button>
+            </div>
+            <div class="service-card">
+                <span class="popular-tag">MOST POPULAR</span>
+                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <h4>2 hour <br>Driving Lesson</h4>
+                <p>Price <strong>$140</strong><br>Transmission <strong>Auto</strong></p>
+                <button class="btn btn-primary btn-full">Book with Fazley</button>
+            </div>
+            <div class="service-card">
+                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <h4>2.5 hours <br>Test Package</h4>
+                <p>Price <strong>$225</strong><br>Transmission <strong>Auto</strong></p>
+                <button class="btn btn-primary btn-full">Book with Fazley</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="history-content" class="tab-pane tab-content">
+    <div class="booking-history-container">
+        <div class="booking-history-table">
+            <div class="history-header">
+                <div class="history-cell">Booking</div>
+                <div class="history-cell">Instructor</div>
+                <div class="history-cell">Date</div>
+                <div class="history-cell">Time</div>
+                <div class="history-cell">Location</div>
+                <div class="history-cell">Status</div>
+                <div class="history-cell">Payment</div>
+            </div>
+            <div class="history-row">
+                <div class="history-cell" data-label="Booking">
+                    <a href="#" class="booking-id-link">#7934355</a>
+                </div>
+                <div class="history-cell instructor-cell" data-label="Instructor">
+                    <img src="https://placehold.co/100x100?text=M" alt="Mandeep">
+                    <span>Mandeep</span>
+                </div>
+                <div class="history-cell" data-label="Date">Mon, 24 Feb 2025</div>
+                <div class="history-cell" data-label="Time">9:00 am - 10:00 am</div>
+                <div class="history-cell" data-label="Location">5 Hogan PL, Quakers Hill 2763 NSW</div>
+                <div class="history-cell" data-label="Status">
+                    <span class="status-badge status-completed">COMPLETED</span>
+                </div>
+                <div class="history-cell" data-label="Payment">
+                    <span class="status-badge status-processed">PROCESSED</span>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+</div>
                 </section>
 
                 <div id="switch-instructor-content" class="content-view">
@@ -2168,6 +2498,147 @@
             </main>
         </div>
     </div>
+    <div id="booking-details-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#" id="nav-dashboard-details">Dashboard</a></li>
+                    <li><a href="#" id="nav-wallet-details">Wallet</a></li>
+                    <li><a href="#">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-details" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="breadcrumbs">
+                    <span>Dashboard</span> > <span>Booking #7934355</span>
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-bell"></i>
+                    <div class="user-profile">
+                        <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                        <span>Jhon</span> ▾
+                    </div>
+                </div>
+            </header>
+
+            <section class="booking-details-content">
+                <div class="booking-details-header">
+                    <h2>Booking #7934355</h2>
+                    <div class="booking-details-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-question-circle"></i> Support</button>
+                        <button class="btn btn-secondary">Modify Booking</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="booking-main-info">
+                        <div class="booking-info-item">
+                            <span class="status-badge status-completed">COMPLETED</span>
+                        </div>
+                        <div class="booking-info-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Mon, 24 Feb 2025</span>
+                        </div>
+                        <div class="booking-info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>9:00 am - 10:00 am</span>
+                        </div>
+                        <div class="booking-info-item">
+                            <i class="fas fa-road"></i>
+                            <span>1 Hour Driving Lesson (Auto)</span>
+                        </div>
+                        <div class="booking-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>5 Hogan PL, Quakers Hill 2763 NSW</span>
+                        </div>
+                        <div class="booking-info-instructor">
+                            <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                            <div>
+                                <p>Instructor details</p>
+                                <h5>Mandeep</h5>
+                                <p>0497 011 481</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Payment</h4>
+                    <div class="payment-details">
+                        <div>
+                            <p>Booking made on 21 Feb 2025, 8:07 PM</p>
+                            <span class="status-badge status-processed">PROCESSED</span>
+                        </div>
+                        <div class="payment-amount">
+                            <h2>$75</h2>
+                            <p>From your EzLicence Wallet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Booking Update History</h4>
+                    <div class="update-history-list">
+                        <div class="update-history-item">
+                            <div class="update-icon"><i class="fas fa-credit-card"></i></div>
+                            <div class="update-details">
+                                <p><strong>Payment</strong> booking payment applied</p>
+                                <p class="update-time">4 months ago</p>
+                            </div>
+                            <span class="status-badge status-processed">PROCESSED</span>
+                        </div>
+                        <div class="update-history-item">
+                            <div class="update-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="update-details">
+                                <p><strong>Booking</strong> processed</p>
+                                <p class="update-time">4 months ago</p>
+                            </div>
+                            <span class="status-badge status-completed">COMPLETED</span>
+                        </div>
+                        <div class="update-history-item">
+                            <div class="update-icon"><i class="fas fa-user-check"></i></div>
+                            <div class="update-details">
+                                <p><strong>Shikhar G.</strong> confirmed this booking</p>
+                                <p class="update-time">4 months ago</p>
+                            </div>
+                            <span class="status-badge status-confirmed">CONFIRMED</span>
+                        </div>
+                        <div class="update-history-item">
+                            <div class="update-icon"><i class="fas fa-user-plus"></i></div>
+                            <div class="update-details">
+                                <p><strong>Shikhar G.</strong> accepted booking proposal</p>
+                                <p class="update-time">4 months ago</p>
+                            </div>
+                            <span class="status-badge status-confirmed">CONFIRMED</span>
+                        </div>
+                        <div class="update-history-item">
+                            <div class="update-icon"><i class="fas fa-paper-plane"></i></div>
+                            <div class="update-details">
+                                <p><strong>Mandeep</strong> proposed this booking</p>
+                                <p class="update-time">4 months ago</p>
+                            </div>
+                            <span class="status-badge status-pending">PENDING</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
 
     <div id="availability-modal" class="modal-overlay">
         <div class="modal-content">
@@ -2720,6 +3191,53 @@
             });
         }
         // --- END: MODAL CONTROL LOGIC ---
+
+        // --- START: Added for Booking Tabs Functionality ---
+document.addEventListener('DOMContentLoaded', () => {
+    const bookingSection = document.querySelector('.booking-section');
+    if (bookingSection) {
+        const tabLinks = bookingSection.querySelectorAll('.tab-link');
+        const tabPanes = bookingSection.querySelectorAll('.tab-pane');
+
+        tabLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const targetId = link.dataset.target;
+
+                // Update active state for links
+                tabLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Update active state for panes
+                tabPanes.forEach(pane => {
+                    if (pane.id === targetId) {
+                        pane.classList.add('active');
+                    } else {
+                        pane.classList.remove('active');
+                    }
+                });
+            });
+        });
+    }
+});
+
+// --- START: Added for Booking History & Details Page ---
+
+// 1. Handle clicks on the booking history item
+document.addEventListener('click', function(e) {
+    // Check if the element clicked is the booking ID link inside the history tab
+    if (e.target.closest('#history-content .booking-id-link')) {
+        e.preventDefault(); // Stop the link from trying to navigate away
+        showPage('booking-details-page'); // Show the booking details page
+    }
+});
+
+// 2. Wire up sidebar navigation buttons on the booking details page
+document.getElementById('nav-dashboard-details').addEventListener('click', goToDashboard);
+document.getElementById('nav-wallet-details').addEventListener('click', goToWallet);
+document.getElementById('logout-button-details').addEventListener('click', () => auth.signOut());
+
+// --- END: Added for Booking History & Details Page ---
+// --- END: Added for Booking Tabs Functionality ---
     </script>
 
     
