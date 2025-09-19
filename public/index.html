@@ -2575,8 +2575,8 @@
                 </nav>
                 <div class="sidebar-footer">
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#" id="feedback-btn">Give Feedback</a></li>
+                        <li><a href="#" id="support-btn">Support</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                     <button id="logout-button-main-wallet" class="btn btn-secondary">Logout</button>
@@ -3221,8 +3221,8 @@
             </nav>
             <div class="sidebar-footer">
                 <ul>
-                    <li><a href="#">Give Feedback</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="#" id="feedback-btn">Give Feedback</a></li>
+                   <li><a href="#" id="support-btn">Support</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
                 <button id="logout-button-invite" class="btn btn-secondary">Logout</button>
@@ -3526,8 +3526,8 @@
             </nav>
             <div class="sidebar-footer">
                 <ul>
-                    <li><a href="#">Give Feedback</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="#" id="feedback-btn">Give Feedback</a></li>
+                   <li><a href="#" id="support-btn">Support</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
                 <button id="logout-button-success" class="btn btn-secondary">Logout</button>
@@ -3675,25 +3675,73 @@
         function goToInvite() { showPage('invite-page'); updateSidebarActiveState('invite'); }
 
         // --- MAIN CLICK CONTROLLER FOR ALL NAVIGATION ---
-        document.addEventListener('click', (e) => {
-            const target = e.target.closest('a, button');
-            if (!target) return;
+        // --- MAIN CLICK CONTROLLER FOR ALL NAVIGATION ---
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('a, button');
+  if (!target) return;
 
-            if (target.matches('[data-nav]')) {
-                e.preventDefault();
-                const navTarget = target.dataset.nav;
-                if (navTarget === 'dashboard') goToDashboard();
-                if (navTarget === 'wallet') goToWallet();
-                if (navTarget === 'invite') goToInvite();
-            }
-            if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); }            if (target.matches('.open-booking-btn')) { e.preventDefault(); showPage('booking-page'); }
-            if (target.matches('.view-profile-btn')) { e.preventDefault(); showPage('instructor-profile-page'); }
-            if (target.matches('#switch-instructor-link')) { e.preventDefault(); showView('switch-instructor-content'); }
-            if (target.matches('#back-to-instructors-btn')) { e.preventDefault(); goToDashboard(); }
-            if (target.matches('#history-content .booking-id-link')) { e.preventDefault(); showPage('booking-details-page'); }
-            if (target.matches('#leave-rating-link')) { e.preventDefault(); showPage('rating-page'); }
-            if (target.matches('.logout-btn')) { auth.signOut(); }
-        });
+  // 1) Generic sidebar top-level nav
+  if (target.matches('[data-nav]')) {
+    e.preventDefault();
+    const navTarget = target.dataset.nav;
+    if (navTarget === 'dashboard') { goToDashboard(); }
+    if (navTarget === 'wallet')    { goToWallet(); }
+    if (navTarget === 'invite')    { goToInvite(); }
+    return;
+  }
+
+  // 2) Wallet / Booking / Profile routes (existing)
+  if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); return; }
+  if (target.matches('.open-booking-btn'))        { e.preventDefault(); showPage('booking-page'); return; }
+  if (target.matches('.view-profile-btn'))        { e.preventDefault(); showPage('instructor-profile-page'); return; }
+  if (target.matches('#switch-instructor-link'))  { e.preventDefault(); showView('switch-instructor-content'); return; }
+  if (target.matches('#back-to-instructors-btn')) { e.preventDefault(); goToDashboard(); return; }
+  if (target.matches('#history-content .booking-id-link')) { e.preventDefault(); showPage('booking-details-page'); return; }
+  if (target.matches('#leave-rating-link'))       { e.preventDefault(); showPage('rating-page'); return; }
+
+  // 3) NEW: Feedback routes (all places it appears)
+  if (target.matches(
+    '#nav-feedback-main,' +        // dashboard sidebar
+    '#feedback-btn,' +             // success page sidebar
+    '#nav-feedback-feedback,' +    // feedback page sidebar (self)
+    '#nav-feedback-support,' +     // support page sidebar
+    '#share-feedback-btn'          // "Share Feedback" button on success page
+  )) {
+    e.preventDefault();
+    showPage('feedback-page');
+    return;
+  }
+
+  // 4) NEW: Support routes (all places it appears)
+  if (target.matches(
+    '#nav-support-main,' +         // dashboard sidebar
+    '#support-btn,' +              // success page sidebar
+    '#nav-support-support,' +      // support page sidebar (self)
+    '#nav-support-profile,' +      // feedback page sidebar
+    '#support-back-to-home'        // breadcrumb link on support header
+  )) {
+    e.preventDefault();
+    showPage('support-page');
+    return;
+  }
+
+  // 5) Logout (your buttons use ids, not .logout-btn)
+  if (target.matches('#logout-button, #logout-button-feedback, #logout-button-support, #logout-button-success')) {
+    e.preventDefault();
+    auth.signOut();
+    return;
+  }
+});
+
+// --- FEEDBACK FORM: go to success page on submit ---
+const feedbackForm = document.getElementById('feedback-form');
+if (feedbackForm) {
+  feedbackForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // TODO: save to Firestore if you want; for now just route to success UI
+    showPage('feedback-success-page');
+  });
+}
 
         // --- LOGIC FOR BOOKING TABS ---
         const bookingSection = document.querySelector('.booking-section');
@@ -3797,6 +3845,8 @@
                 });
             });
         }
+
+        
         // --- END: ADDED FOR INVITE FRIENDS PAGE ---
     </script>
 
