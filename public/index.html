@@ -1706,6 +1706,131 @@
 /* --- END: Added for Services Tab & Booking Tabs --- */
 
         /* --- END: AVAILABILITY MODAL STYLES --- */
+        /* --- NOTIFICATION POPUP STYLES --- */
+.notification-container {
+    position: relative;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #E53935;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    border: 2px solid var(--light-gray-color);
+}
+.notification-popup {
+    display: none;
+    position: absolute;
+    top: 140%;
+    right: -20px;
+    width: 320px;
+    background-color: var(--white-color);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    padding: 15px;
+    z-index: 100;
+    align-items: center;
+    gap: 15px;
+}
+.notification-container:hover .notification-popup {
+    display: flex;
+}
+.notification-popup img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.notification-popup .popup-text p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+    color: var(--dark-color);
+}
+.notification-popup .popup-text a {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--dark-color);
+}
+.notification-popup .fa-chevron-right {
+    margin-left: auto;
+    color: var(--gray-color);
+}
+
+/* --- RATING PAGE STYLES --- */
+.rating-page-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+}
+.rating-card {
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+}
+.rating-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.rating-question {
+    font-size: 16px;
+    color: var(--gray-color);
+    margin-bottom: 25px;
+}
+.rating-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.rating-input-group input[type="radio"] {
+    display: none;
+}
+.rating-input-group label {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.rating-input-group label:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+.rating-input-group input[type="radio"]:checked + label {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-color);
+}
+.rating-note {
+    font-size: 13px;
+    color: var(--gray-color);
+    margin: 15px 0;
+}
+.rating-card textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: var(--font-family);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
     </style>
 </head>
 
@@ -1892,10 +2017,21 @@
                 <header class="dashboard-header">
                     <h3>Dashboard</h3>
                     <div class="user-info">
-                        <i class="fas fa-bell"></i>
+                        <div class="notification-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">1</span>
+                            <div class="notification-popup">
+                                <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                                <div class="popup-text">
+                                    <p>How was your learning experience with Mandeep?</p>
+                                    <a href="#" id="leave-rating-link">Please leave a rating.</a>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
                         <div class="user-profile">
-                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar">
-                            <span id="user-name">Jhon</span> ▾
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                            <span id="user-name-main">Jhon</span> ▾
                         </div>
                     </div>
                 </header>
@@ -2188,10 +2324,21 @@
                         <span>My Wallet</span> > <span>Add Credit</span>
                     </div>
                     <div class="user-info">
-                        <i class="fas fa-bell"></i>
+                        <div class="notification-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">1</span>
+                            <div class="notification-popup">
+                                <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                                <div class="popup-text">
+                                    <p>How was your learning experience with Mandeep?</p>
+                                    <a href="#" id="leave-rating-link">Please leave a rating.</a>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
                         <div class="user-profile">
-                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar" id="user-avatar-wallet">
-                            <span id="user-name-wallet">Jhon</span> ▾
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                            <span id="user-name-main">Jhon</span> ▾
                         </div>
                     </div>
                 </header>
@@ -2290,11 +2437,21 @@
                         <span>Dashboard</span> > <span>Make a Booking</span>
                     </div>
                     <div class="user-info">
-                        <i class="fas fa-bell"></i>
+                        <div class="notification-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">1</span>
+                            <div class="notification-popup">
+                                <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                                <div class="popup-text">
+                                    <p>How was your learning experience with Mandeep?</p>
+                                    <a href="#" id="leave-rating-link">Please leave a rating.</a>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
                         <div class="user-profile">
-                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar"
-                                id="user-avatar-booking">
-                            <span id="user-name-booking">Jhon</span> ▾
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                            <span id="user-name-main">Jhon</span> ▾
                         </div>
                     </div>
                 </header>
@@ -2527,10 +2684,21 @@
                     <span>Dashboard</span> > <span>Booking #7934355</span>
                 </div>
                 <div class="user-info">
-                    <i class="fas fa-bell"></i>
+                    <div class="notification-container">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">1</span>
+                        <div class="notification-popup">
+                            <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                            <div class="popup-text">
+                                <p>How was your learning experience with Mandeep?</p>
+                                <a href="#" id="leave-rating-link">Please leave a rating.</a>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
                     <div class="user-profile">
                         <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
-                        <span>Jhon</span> ▾
+                        <span id="user-name-main">Jhon</span> ▾
                     </div>
                 </div>
             </header>
@@ -2636,6 +2804,51 @@
                     </div>
                 </div>
             </section>
+        </main>
+    </div>
+</div>
+
+<div id="rating-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button class="btn btn-secondary logout-btn">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content rating-page-main">
+            <div class="card rating-card">
+                <form id="rating-form">
+                    <h2>Rate Your Instructor</h2>
+                    <p class="rating-question">How was your learning experience with Mandeep?</p>
+                    <div class="rating-input-group">
+                        <input type="radio" name="rating" id="rating-1" value="1" required><label for="rating-1">1</label>
+                        <input type="radio" name="rating" id="rating-2" value="2"><label for="rating-2">2</label>
+                        <input type="radio" name="rating" id="rating-3" value="3"><label for="rating-3">3</label>
+                        <input type="radio" name="rating" id="rating-4" value="4"><label for="rating-4">4</label>
+                        <input type="radio" name="rating" id="rating-5" value="5"><label for="rating-5">5</label>
+                    </div>
+                    <p class="rating-note">* 5 is the highest rating.</p>
+                    <textarea name="feedback" placeholder="Enter your feedback here..." rows="5"></textarea>
+                    <button type="submit" class="btn btn-primary btn-full">Submit</button>
+                    <p class="rating-note">Please note: This review will be public to assist future learners.</p>
+                </form>
+            </div>
         </main>
     </div>
 </div>
@@ -3238,6 +3451,42 @@ document.getElementById('logout-button-details').addEventListener('click', () =>
 
 // --- END: Added for Booking History & Details Page ---
 // --- END: Added for Booking Tabs Functionality ---
+// --- START: Logic to open the Rating Page ---
+        document.addEventListener('click', function(e) {
+            // This listens for a click on the "Please leave a rating" link
+            if (e.target.closest('#leave-rating-link')) {
+                e.preventDefault();
+                showPage('rating-page');
+            }
+        });
+        // --- END: Logic to open the Rating Page ---
+
+
+        // --- START: Logic for the Rating Form Submission ---
+        const ratingForm = document.getElementById('rating-form');
+        if (ratingForm) {
+            ratingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(ratingForm);
+                const rating = formData.get('rating');
+                const feedback = formData.get('feedback');
+
+                if (!rating) {
+                    alert('Please select a rating from 1 to 5.');
+                    return;
+                }
+
+                console.log('Rating:', rating);
+                console.log('Feedback:', feedback);
+
+                // TODO: Save the rating and feedback to your Firebase database here.
+
+                alert('Thank you for your feedback!');
+                ratingForm.reset();
+                goToDashboard(e); // This calls your existing function to go back
+            });
+        }
+        // --- END: Logic for the Rating Form Submission ---
     </script>
 
     
