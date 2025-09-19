@@ -547,6 +547,12 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid var(--border-color);
+            
+            /* START: ADD THESE 3 LINES */
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            /* END: ADD THESE 3 LINES */
         }
 
         .sidebar-header {
@@ -1955,6 +1961,140 @@
     transform: translateY(-50%);
     color: var(--gray-color);
 }
+
+
+/* --- INVITE FRIENDS PAGE STYLES --- */
+.invite-header-card {
+    background-color: #1a202c;
+    color: var(--white-color);
+    text-align: center;
+}
+.invite-header-card h2 { font-size: 28px; margin-bottom: 10px; }
+.invite-header-card p { color: #a0aec0; }
+.benefits-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+}
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+.benefit-item i { color: #4299e1; }
+.terms-text { font-size: 12px; }
+.terms-text a { color: var(--primary-color); text-decoration: underline; }
+
+.share-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+.share-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+.share-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 20px; }
+.share-link-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+.share-link-wrapper input {
+    flex-grow: 1;
+    border: none;
+    padding: 0 15px;
+    background: none;
+    color: var(--gray-color);
+    font-size: 14px;
+}
+.share-link-wrapper input:focus { outline: none; }
+.share-link-wrapper button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #333;
+    color: white;
+}
+.or-text {
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+.referral-code {
+    background-color: var(--light-gray-color);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+.social-share-btns {
+    display: flex;
+    gap: 15px;
+}
+.social-share-btns button i { margin-right: 8px; }
+
+.rewards-card { margin-top: 30px; }
+.rewards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.rewards-header h3 { font-size: 20px; font-weight: 600; }
+.rewards-header span { font-weight: 500; }
+.rewards-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+.reward-summary-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #1a202c;
+    color: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
+}
+.reward-summary-circle h2 { font-size: 28px; margin: 0; }
+.reward-summary-circle p { font-size: 14px; margin: 0; color: #a0aec0; }
+.reward-summary-circle hr {
+    width: 30%;
+    border-color: #4a5568;
+    margin: 8px 0;
+}
+.rewards-table {
+    width: 100%;
+}
+.rewards-table-header, .rewards-table-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    padding: 12px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+.rewards-table-header { font-weight: 600; color: var(--gray-color); }
+.rewards-table-row { color: var(--gray-color); }
+.rewards-table-row:last-child { border-bottom: none; }
+
+
+
+
     </style>
 </head>
 
@@ -2123,9 +2263,9 @@
 
                 <nav class="sidebar-nav">
                     <ul>
-                        <li class="active"><a href="#" id="nav-dashboard-main">Dashboard</a></li>
-                        <li><a href="#" id="nav-wallet-main">Wallet</a></li>
-                        <li><a href="#">Invite Friends</a></li>
+                        <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-nav="wallet">Wallet</a></li>
+                        <li><a href="#" data-nav="invite">Invite Friends</a></li>
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
@@ -2419,6 +2559,94 @@
         </div>
     </div>
 
+    <div id="main-wallet-page" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h3>SAFE LEARNERS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" id="nav-dashboard-main-wallet">Dashboard</a></li>
+                        <li class="active"><a href="#" id="nav-wallet-main-wallet">Wallet</a></li>
+                        <li><a href="#" class="nav-invite-friends">Invite Friends</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <ul>
+                        <li><a href="#">Give Feedback</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <button id="logout-button-main-wallet" class="btn btn-secondary">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <div class="breadcrumbs">
+                        <span> > Wallet</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="notification-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">1</span>
+                            <div class="notification-popup">
+                                <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                                <div class="popup-text">
+                                    <p>How was your learning experience with Mandeep?</p>
+                                    <a href="#" id="leave-rating-link">Please leave a rating.</a>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="user-profile">
+                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                            <span id="user-name-wallet">Jhon</span> ▾
+                        </div>
+                    </div>
+                </header>
+    
+                <section class="wallet-view-grid">
+                    <div class="wallet-view-main">
+                        <div class="card">
+                            <h4>Payment Method</h4>
+                            <div class="payment-method-card">
+                                <span>Mastercard ending in 9059</span>
+                                <button class="close-btn">&times;</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4>All Transactions</h4>
+                            <div class="transactions-table">
+                                <div class="transactions-header">
+                                    <div>Transaction ID</div> <div>Description</div> <div>Date</div> <div>Amount</div> <div>Balance</div>
+                                </div>
+                                <div class="transaction-row">
+                                    <div>#2289679</div> <div>1 Hour Driving Lesson with Mandeep...</div> <div>Fri, 21 Feb 2025</div> <div>-$75.00</div> <div>$0.00</div>
+                                </div>
+                                <div class="transaction-row">
+                                    <div>#2289678</div> <div>Credit purchased</div> <div>Fri, 21 Feb 2025</div> <div>$75.00</div> <div>$75.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="wallet-view-sidebar">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>My Wallet</h4>
+                                <button id="add-credit-from-main-wallet-btn" class="btn btn-secondary btn-small">Add Credit</button>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="wallet-balance">$0</h2>
+                                <p class="wallet-note">Includes $0.00 of non refundable credit</p>
+                            </div>
+                        </div>
+                    </aside>
+                </section>
+            </main>
+        </div>
+    </div>
     <div id="wallet-page" class="page">
         <div class="dashboard-layout">
             <aside class="sidebar">
@@ -2428,9 +2656,9 @@
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li><a href="#" id="nav-dashboard-wallet">Dashboard</a></li>
-                        <li class="active"><a href="#" id="nav-wallet-wallet">Wallet</a></li>
-                        <li><a href="#">Invite Friends</a></li>
+                        <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-nav="wallet">Wallet</a></li>
+                        <li><a href="#" data-nav="invite">Invite Friends</a></li>
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
@@ -2542,9 +2770,9 @@
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li class="active"><a href="#" id="nav-dashboard-booking">Dashboard</a></li>
-                        <li><a href="#" id="nav-wallet-booking">Wallet</a></li>
-                        <li><a href="#">Invite Friends</a></li>
+                        <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-nav="wallet">Wallet</a></li>
+                        <li><a href="#" data-nav="invite">Invite Friends</a></li>
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
@@ -2684,9 +2912,9 @@
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li class="active"><a href="#" id="nav-dashboard-profile">Dashboard</a></li>
-                        <li><a href="#" id="nav-wallet-profile">Wallet</a></li>
-                        <li><a href="#">Invite Friends</a></li>
+                        <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-nav="wallet">Wallet</a></li>
+                        <li><a href="#" data-nav="invite">Invite Friends</a></li>
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
@@ -2789,9 +3017,9 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="active"><a href="#" id="nav-dashboard-details">Dashboard</a></li>
-                    <li><a href="#" id="nav-wallet-details">Wallet</a></li>
-                    <li><a href="#">Invite Friends</a></li>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -2942,9 +3170,9 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="active"><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
                     <li><a href="#" data-nav="wallet">Wallet</a></li>
-                    <li><a href="#">Invite Friends</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -2973,6 +3201,91 @@
                     <button type="submit" class="btn btn-primary btn-full">Submit</button>
                     <p class="rating-note">Please note: This review will be public to assist future learners.</p>
                 </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div id="invite-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-invite" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content">
+             <div class="card invite-header-card">
+                <h2>Refer Friends & Family To Earn Cash!</h2>
+                <p>Earn Cash Together With Your Friends & Family Each Time They Make Their First Purchase With Safe Learners.</p>
+                <div class="benefits-container">
+                    <div class="benefit-item">
+                        <i class="fas fa-gift"></i>
+                        <span>You Get <strong>$20 Cash</strong> From Safe Learners</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-gift"></i>
+                        <span>They Get <strong>$10 Cash</strong> From Safe Learners</span>
+                    </div>
+                </div>
+                <p class="terms-text">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s. <a href="#">Terms And Conditions Apply</a></p>
+            </div>
+
+            <div class="card share-card">
+                <span class="share-tag">Start Sharing</span>
+                <h3>Simple Share Your Unique Link</h3>
+                <div class="share-link-wrapper">
+                    <input type="text" id="referral-link-input" value="https://safelearners.com/ref/Design@202" readonly>
+                    <button id="copy-link-btn" class="btn btn-secondary"><i class="far fa-copy"></i> Copy Link</button>
+                </div>
+                <p class="or-text">Or Tell people to enter <span class="referral-code">Design@202</span> into the referral code field during the Signup</p>
+                <div class="social-share-btns">
+                    <button class="btn btn-secondary"><i class="fab fa-facebook-f"></i> Facebook</button>
+                    <button class="btn btn-secondary"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                    <button class="btn btn-secondary"><i class="far fa-envelope"></i> Email</button>
+                </div>
+            </div>
+
+            <div class="card rewards-card">
+                <div class="rewards-header">
+                    <h3>My Rewards</h3>
+                    <span>Current Balance: $02</span>
+                </div>
+                <div class="rewards-content">
+                    <div class="reward-summary-circle">
+                        <h2>0</h2>
+                        <p>Referrals</p>
+                        <hr>
+                        <h2>$0</h2>
+                        <p>Earned</p>
+                    </div>
+                    <div class="rewards-table">
+                        <div class="rewards-table-header">
+                            <div>Date</div>
+                            <div>Transaction</div>
+                            <div>Amount</div>
+                        </div>
+                        <div class="rewards-table-row">
+                            <div>---</div>
+                            <div>---</div>
+                            <div>---</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -3170,9 +3483,9 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" id="nav-dashboard-feedback">Dashboard</a></li>
-                    <li><a href="#" id="nav-wallet-feedback">Wallet</a></li>
-                    <li><a href="#">Invite Friends</a></li>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -3206,9 +3519,9 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" id="nav-dashboard-success">Dashboard</a></li>
-                    <li><a href="#" id="nav-wallet-success">Wallet</a></li>
-                    <li><a href="#">Invite Friends</a></li>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -3244,9 +3557,9 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" id="nav-dashboard-support">Dashboard</a></li>
-                    <li><a href="#" id="nav-wallet-support">Wallet</a></li>
-                    <li><a href="#">Invite Friends</a></li>
+                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-nav="wallet">Wallet</a></li>
+                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -3331,412 +3644,131 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // --- PAGE NAVIGATION LOGIC ---
+        // --- GLOBAL STATE & NAVIGATION ---
         const pages = document.querySelectorAll('.page');
-        const goToSignupLink = document.getElementById('go-to-signup');
-        const goToLoginLink = document.getElementById('go-to-login');
+        let lastDashboardView = 'dashboard-main-content'; 
+        const allSidebars = document.querySelectorAll('.sidebar-nav');
 
-        goToSignupLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('signup-page');
-        });
-
-        goToLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('login-page');
-        });
         function showPage(pageId) {
-            pages.forEach(page => {
-                if (page.id === pageId) {
-                    page.classList.add('active');
-                } else {
-                    page.classList.remove('active');
-                }
-            });
+            pages.forEach(page => page.classList.toggle('active', page.id === pageId));
         }
-
-        // --- AUTHENTICATION LOGIC ---
-        const loginForm = document.getElementById('login-form');
-        const errorMessage = document.getElementById('error-message');
-        const logoutButton = document.getElementById('logout-button');
-
-        const loginTitle = document.getElementById('login-title');
-
-        // Get all four login buttons
-        const instructorLoginBtn1 = document.getElementById('instructor-login-btn-1');
-        const learnerLoginBtn1 = document.getElementById('learner-login-btn-1');
-        const instructorLoginBtn2 = document.getElementById('instructor-login-btn-2');
-        const learnerLoginBtn2 = document.getElementById('learner-login-btn-2');
-
-        function setLoginTitle(userType) {
-            loginTitle.innerHTML = `${userType} <span class="text-primary">Login</span>`;
-            showPage('login-page');
-        }
-
-        instructorLoginBtn1.addEventListener('click', () => setLoginTitle('Instructor'));
-        instructorLoginBtn2.addEventListener('click', () => setLoginTitle('Instructor'));
-        learnerLoginBtn1.addEventListener('click', () => setLoginTitle('Learner'));
-        learnerLoginBtn2.addEventListener('click', () => setLoginTitle('Learner'));
-
-        // Login event listener
-        if (loginForm) {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                errorMessage.textContent = '';
-
-                const email = loginForm.email.value;
-                const password = loginForm.password.value;
-
-                // --- DUMMY LOGIN LOGIC ---
-                if (email === 'test@test.com' && password === 'password123') {
-                    console.log('Dummy user logged in');
-
-                    // 1. Manually show the dashboard page
-                    showPage('dashboard-page');
-
-                    // 2. Manually populate dashboard with dummy data
-                    document.getElementById('welcome-message').textContent = 'Welcome back, Shikhar!';
-                    document.getElementById('user-name').textContent = 'Jhon';
-
-                    // 3. Stop the function here so it doesn't try to use Firebase
-                    return;
-                }
-                // --- END DUMMY LOGIN ---
-
-                // Original Firebase login for any other credentials
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Signed in
-                        const user = userCredential.user;
-                        console.log('User signed in:', user.uid);
-                    })
-                    .catch((error) => {
-                        errorMessage.textContent = "Invalid credentials or Firebase error.";
-                    });
-            });
-        }
-
-        // Logout event listener
-        if (logoutButton) {
-            logoutButton.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    console.log('User signed out');
-                    // The onAuthStateChanged observer will handle the page switch
-                }).catch((error) => {
-                    console.error('Sign out error', error);
-                });
-            });
-        }
-
-        // --- AUTH STATE OBSERVER ---
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // User is logged in
-                showPage('dashboard-page');
-                // You can now fetch user data from Firestore
-                fetchUserData(user);
-            } else {
-                // User is logged out
-                showPage('landing-page');
-            }
-        });
-
-        // --- DASHBOARD DATA LOGIC ---
-        function fetchUserData(user) {
-            const welcomeMessage = document.getElementById('welcome-message');
-            const userName = document.getElementById('user-name');
-
-            // Example: Fetch user data from a 'users' collection in Firestore
-            const userDocRef = db.collection('users').doc(user.uid);
-
-            userDocRef.get().then((doc) => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const displayName = userData.firstName || user.email.split('@')[0]; // Use first name or part of email
-
-                    welcomeMessage.textContent = `Welcome back, ${displayName}!`;
-                    userName.textContent = displayName;
-
-                } else {
-                    console.log("No such document in Firestore!");
-                    // Use default values if no Firestore doc exists
-                    const displayName = user.email.split('@')[0];
-                    welcomeMessage.textContent = `Welcome back, ${displayName}!`;
-                    userName.textContent = displayName;
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-        }
-        // --- SIGNUP LOGIC ---
-        const signupForm = document.getElementById('signup-form');
-        const signupErrorMessage = document.getElementById('signup-error-message');
-
-        if (signupForm) {
-            signupForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                signupErrorMessage.textContent = '';
-
-                // Get user info from the signup form
-                const firstName = signupForm.firstName.value;
-                const email = signupForm.email.value;
-                const password = signupForm.password.value;
-                // Add these variables and event listeners
-
-                // Use Firebase Auth to create a new user
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        console.log('New user created:', user.uid);
-
-                        // Now, save the user's first name to Firestore
-                        // This is crucial for your `fetchUserData` function to work
-                        return db.collection('users').doc(user.uid).set({
-                            firstName: firstName,
-                            email: email
-                        });
-                    })
-                    .then(() => {
-                        console.log('User data saved to Firestore.');
-                        // The `onAuthStateChanged` observer will automatically handle
-                        // switching to the dashboard page after successful signup.
-                    })
-                    .catch((error) => {
-                        // Display friendly error messages
-                        if (error.code == 'auth/weak-password') {
-                            signupErrorMessage.textContent = 'Password should be at least 6 characters.';
-                        } else if (error.code == 'auth/email-already-in-use') {
-                            signupErrorMessage.textContent = 'This email is already registered.';
-                        } else {
-                            signupErrorMessage.textContent = 'An error occurred. Please try again.';
-                        }
-                        console.error('Signup Error:', error);
-                    });
-            });
-        }
-
-        // --- DASHBOARD/WALLET NAVIGATION ---
-        const navDashboardMain = document.getElementById('nav-dashboard-main');
-        const navWalletMain = document.getElementById('nav-wallet-main');
-        const navDashboardWallet = document.getElementById('nav-dashboard-wallet');
-        const navWalletWallet = document.getElementById('nav-wallet-wallet'); // Wallet link on the wallet page
-
-        const addCreditBtn = document.getElementById('add-credit-btn');
-        if (addCreditBtn) {
-            addCreditBtn.addEventListener('click', goToWallet);
-        }
-        function goToDashboard(e) {
-            e.preventDefault();
-            showPage('dashboard-page');
-            showView('dashboard-main-content'); // This new line resets the view
-        }
-        function goToWallet(e) {
-            e.preventDefault();
-            showPage('wallet-page');
-        }
-
-        navDashboardMain.addEventListener('click', goToDashboard);
-        navDashboardWallet.addEventListener('click', goToDashboard);
-        navWalletMain.addEventListener('click', goToWallet);
-        navWalletWallet.addEventListener('click', goToWallet);
-
-        // Also update the logout button on the new wallet page
-        const logoutButtonWallet = document.getElementById('logout-button-wallet');
-        if (logoutButtonWallet) {
-            logoutButtonWallet.addEventListener('click', () => {
-                auth.signOut(); // Existing signout logic
-            });
-        }
-
-
-        // --- WALLET PAGE INTERACTIVITY ---
-        const creditOptions = document.querySelectorAll('.credit-option');
-
-        creditOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove 'selected' from all options
-                creditOptions.forEach(opt => opt.classList.remove('selected'));
-
-                // Add 'selected' to the clicked option
-                option.classList.add('selected');
-
-                // Check the radio button inside the clicked option
-                const radio = option.querySelector('input[type="radio"]');
-                if (radio) {
-                    radio.checked = true;
-                }
-
-                // In a real app, you would update the order summary here
-                // based on the selected radio.value
-                console.log(`Selected value: ${radio.value}`);
-            });
-        });
-
-        // --- BOOKING PAGE NAVIGATION ---
-        const allBookNowButtons = document.querySelectorAll('.open-booking-btn');
-        const navDashboardBooking = document.getElementById('nav-dashboard-booking');
-        const navWalletBooking = document.getElementById('nav-wallet-booking');
-
-        allBookNowButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPage('booking-page');
-            });
-        });
-
-        // Add event listeners for the new sidebar links
-        if (navDashboardBooking) navDashboardBooking.addEventListener('click', goToDashboard);
-        if (navWalletBooking) navWalletBooking.addEventListener('click', goToWallet);
-
-        // Also add the new logout button
-        const logoutButtonBooking = document.getElementById('logout-button-booking');
-        if (logoutButtonBooking) {
-            logoutButtonBooking.addEventListener('click', () => {
-                auth.signOut();
-            });
-        }
-        // --- Connect "Switch Instructor" link ---
-        // --- Connect "Switch Instructor" and "View Profile" links ---
-        const dashboardPage = document.getElementById('dashboard-page');
-
-        // This handles clicks ANYWHERE inside the dashboard page wrapper
-        if (dashboardPage) {
-            dashboardPage.addEventListener('click', (e) => {
-                // Check if "Switch Instructor" was clicked
-                if (e.target.closest('#switch-instructor-link')) {
-                    e.preventDefault();
-                    showView('switch-instructor-content');
-                }
-
-                // Check if any "View Profile" button was clicked
-                if (e.target.closest('.view-profile-btn')) {
-                    e.preventDefault();
-                    showPage('instructor-profile-page');
-                }
-            });
-        }
-
-        // Handle the "< Back" button on the profile page
-        const backToInstructorsBtn = document.getElementById('back-to-instructors-btn');
-        if (backToInstructorsBtn) {
-            backToInstructorsBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPage('dashboard-page'); // Go back to the dashboard page wrapper
-                showView('switch-instructor-content'); // Show the instructor list inside it
-            });
-        }
-
-        // Handle sidebar navigation from the new profile page
-        document.getElementById('nav-dashboard-profile').addEventListener('click', goToDashboard);
-        document.getElementById('nav-wallet-profile').addEventListener('click', goToWallet);
-        document.getElementById('logout-button-profile').addEventListener('click', () => auth.signOut());
 
         function showView(viewId) {
-            // Get all content views within the dashboard's main content area
-            const views = document.querySelectorAll('#dashboard-page .main-content .content-view');
-            views.forEach(view => {
-                // Hide all views by removing the 'active' class
-                view.classList.remove('active');
-            });
-
-            // Find the specific view to show and add the 'active' class
+            document.querySelectorAll('#dashboard-page .main-content .content-view').forEach(view => view.classList.remove('active'));
             const viewToShow = document.getElementById(viewId);
             if (viewToShow) {
                 viewToShow.classList.add('active');
+                lastDashboardView = viewId;
             }
         }
-        // --- START: MODAL CONTROL LOGIC ---
+        
+        function updateSidebarActiveState(target) {
+            allSidebars.forEach(sidebar => {
+                sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+                const activeLink = sidebar.querySelector(`[data-nav="${target}"]`);
+                if (activeLink) activeLink.parentElement.classList.add('active');
+            });
+        }
+
+        function goToDashboard() { showPage('dashboard-page'); showView(lastDashboardView); updateSidebarActiveState('dashboard'); }
+        function goToWallet() { showPage('wallet-page'); updateSidebarActiveState('wallet'); }
+        function goToInvite() { showPage('invite-page'); updateSidebarActiveState('invite'); }
+
+        // --- MAIN CLICK CONTROLLER FOR ALL NAVIGATION ---
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('a, button');
+            if (!target) return;
+
+            if (target.matches('[data-nav]')) {
+                e.preventDefault();
+                const navTarget = target.dataset.nav;
+                if (navTarget === 'dashboard') goToDashboard();
+                if (navTarget === 'wallet') goToWallet();
+                if (navTarget === 'invite') goToInvite();
+            }
+            if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); }            if (target.matches('.open-booking-btn')) { e.preventDefault(); showPage('booking-page'); }
+            if (target.matches('.view-profile-btn')) { e.preventDefault(); showPage('instructor-profile-page'); }
+            if (target.matches('#switch-instructor-link')) { e.preventDefault(); showView('switch-instructor-content'); }
+            if (target.matches('#back-to-instructors-btn')) { e.preventDefault(); goToDashboard(); }
+            if (target.matches('#history-content .booking-id-link')) { e.preventDefault(); showPage('booking-details-page'); }
+            if (target.matches('#leave-rating-link')) { e.preventDefault(); showPage('rating-page'); }
+            if (target.matches('.logout-btn')) { auth.signOut(); }
+        });
+
+        // --- LOGIC FOR BOOKING TABS ---
+        const bookingSection = document.querySelector('.booking-section');
+        if (bookingSection) {
+            bookingSection.addEventListener('click', (e) => {
+                const clickedTab = e.target.closest('.tab-link');
+                if (!clickedTab) return;
+                const targetId = clickedTab.dataset.target;
+                bookingSection.querySelectorAll('.tabs .tab-link').forEach(link => link.classList.toggle('active', link === clickedTab));
+                bookingSection.querySelectorAll('.tab-pane').forEach(pane => pane.classList.toggle('active', pane.id === targetId));
+            });
+        }
+        
+        // --- AUTHENTICATION & USER DATA ---
+        auth.onAuthStateChanged(user => {
+            if (user) { showPage('dashboard-page'); fetchUserData(user); } 
+            else { showPage('landing-page'); }
+        });
+
+        function fetchUserData(user) {
+            db.collection('users').doc(user.uid).get().then(doc => {
+                const displayName = (doc.exists && doc.data().firstName) ? doc.data().firstName : user.email.split('@')[0];
+                document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
+                if(document.getElementById('welcome-message')) {
+                    document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
+                }
+            }).catch(error => console.error("Error fetching user data:", error));
+        }
+
+        // --- LOGIN & SIGNUP FORMS ---
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const [email, password] = [loginForm.email.value, loginForm.password.value];
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = '';
+                auth.signInWithEmailAndPassword(email, password).catch(err => errorMessage.textContent = err.message);
+            });
+            document.getElementById('go-to-signup').addEventListener('click', (e) => { e.preventDefault(); showPage('signup-page'); });
+        }
+        const signupForm = document.getElementById('signup-form');
+        if (signupForm) {
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const [firstName, email, password] = [signupForm.firstName.value, signupForm.email.value, signupForm.password.value];
+                const signupErrorMessage = document.getElementById('signup-error-message');
+                signupErrorMessage.textContent = '';
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(cred => db.collection('users').doc(cred.user.uid).set({ firstName, email }))
+                    .catch(err => signupErrorMessage.textContent = err.message);
+            });
+            document.getElementById('go-to-login').addEventListener('click', (e) => { e.preventDefault(); showPage('login-page'); });
+        }
+        
+        // --- AVAILABILITY MODAL ---
         const availabilityModal = document.getElementById('availability-modal');
         const checkAvailabilityBtn = document.getElementById('check-availability-btn');
         const closeModalBtn = document.getElementById('close-modal-btn');
-
+        let calendarInstance = null;
         function openModal() {
             if (availabilityModal) availabilityModal.classList.add('active');
-        }
-
-        function closeModal() {
-            if (availabilityModal) availabilityModal.classList.remove('active');
-        }
-
-        if (checkAvailabilityBtn) {
-            checkAvailabilityBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openModal();
-            });
-        }
-
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', closeModal);
-        }
-
-        // Optional: Close modal if user clicks on the dark overlay
-        if (availabilityModal) {
-            availabilityModal.addEventListener('click', (e) => {
-                if (e.target === availabilityModal) {
-                    closeModal();
+            if (!calendarInstance) {
+                // Flatpickr library is needed for this to work
+                if(typeof flatpickr !== 'undefined') {
+                    calendarInstance = flatpickr("#calendar-container", { inline: true, mode: "multiple" });
                 }
-            });
-        }
-        // --- END: MODAL CONTROL LOGIC ---
-
-        // --- START: Added for Booking Tabs Functionality ---
-document.addEventListener('DOMContentLoaded', () => {
-    const bookingSection = document.querySelector('.booking-section');
-    if (bookingSection) {
-        const tabLinks = bookingSection.querySelectorAll('.tab-link');
-        const tabPanes = bookingSection.querySelectorAll('.tab-pane');
-
-        tabLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                const targetId = link.dataset.target;
-
-                // Update active state for links
-                tabLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                // Update active state for panes
-                tabPanes.forEach(pane => {
-                    if (pane.id === targetId) {
-                        pane.classList.add('active');
-                    } else {
-                        pane.classList.remove('active');
-                    }
-                });
-            });
-        });
-    }
-});
-
-// --- START: Added for Booking History & Details Page ---
-
-// 1. Handle clicks on the booking history item
-document.addEventListener('click', function(e) {
-    // Check if the element clicked is the booking ID link inside the history tab
-    if (e.target.closest('#history-content .booking-id-link')) {
-        e.preventDefault(); // Stop the link from trying to navigate away
-        showPage('booking-details-page'); // Show the booking details page
-    }
-});
-
-// 2. Wire up sidebar navigation buttons on the booking details page
-document.getElementById('nav-dashboard-details').addEventListener('click', goToDashboard);
-document.getElementById('nav-wallet-details').addEventListener('click', goToWallet);
-document.getElementById('logout-button-details').addEventListener('click', () => auth.signOut());
-
-// --- END: Added for Booking History & Details Page ---
-// --- END: Added for Booking Tabs Functionality ---
-// --- START: Logic to open the Rating Page ---
-        document.addEventListener('click', function(e) {
-            // This listens for a click on the "Please leave a rating" link
-            if (e.target.closest('#leave-rating-link')) {
-                e.preventDefault();
-                showPage('rating-page');
             }
-        });
-        // --- END: Logic to open the Rating Page ---
+        }
+        function closeModal() { if (availabilityModal) availabilityModal.classList.remove('active'); }
+        if (checkAvailabilityBtn) checkAvailabilityBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (availabilityModal) availabilityModal.addEventListener('click', (e) => { if (e.target === availabilityModal) closeModal(); });
 
-
-        // --- START: Logic for the Rating Form Submission ---
+        // --- RATING FORM LOGIC ---
         const ratingForm = document.getElementById('rating-form');
         if (ratingForm) {
             ratingForm.addEventListener('submit', (e) => {
@@ -3744,98 +3776,28 @@ document.getElementById('logout-button-details').addEventListener('click', () =>
                 const formData = new FormData(ratingForm);
                 const rating = formData.get('rating');
                 const feedback = formData.get('feedback');
-
-                if (!rating) {
-                    alert('Please select a rating from 1 to 5.');
-                    return;
-                }
-
-                console.log('Rating:', rating);
-                console.log('Feedback:', feedback);
-
-                // TODO: Save the rating and feedback to your Firebase database here.
-
+                if (!rating) { alert('Please select a rating from 1 to 5.'); return; }
+                console.log('Rating:', rating, 'Feedback:', feedback);
                 alert('Thank you for your feedback!');
                 ratingForm.reset();
-                goToDashboard(e); // This calls your existing function to go back
-            });
-        }
-        // --- END: Logic for the Rating Form Submission ---
-
-        // --- FEEDBACK PAGE NAVIGATION ---
-        const feedbackLink = document.querySelector('.sidebar-footer a[href="#"][id^="nav-feedback"]');
-        
-        function goToFeedback(e) {
-            e.preventDefault();
-            showPage('feedback-page');
-        }
-
-        if (feedbackLink) {
-            feedbackLink.addEventListener('click', goToFeedback);
-        }
-
-        // Add event listeners for the sidebar on the feedback page
-        document.getElementById('nav-dashboard-feedback').addEventListener('click', goToDashboard);
-        document.getElementById('nav-wallet-feedback').addEventListener('click', goToWallet);
-        document.getElementById('logout-button-feedback').addEventListener('click', () => {
-            auth.signOut();
-        });
-
-        // --- FEEDBACK FORM SUBMISSION ---
-        // --- FEEDBACK FORM SUBMISSION & SUCCESS PAGE LOGIC ---
-        const feedbackForm = document.getElementById('feedback-form');
-        const shareFeedbackBtn = document.getElementById('share-feedback-btn');
-
-        if (feedbackForm) {
-            feedbackForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const feedbackText = feedbackForm.querySelector('textarea').value;
-
-                if (!feedbackText) {
-                    alert('Please provide some feedback before submitting.');
-                    return;
-                }
-
-                console.log('Feedback submitted:', feedbackText);
-                feedbackForm.reset(); // Reset form fields
-                showPage('feedback-success-page'); // Show the new success page
+                goToDashboard();
             });
         }
 
-        if (shareFeedbackBtn) {
-            shareFeedbackBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPage('feedback-page'); // Take the user back to the feedback page
+        // --- INVITE PAGE "COPY LINK" BUTTON ---
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        if (copyLinkBtn) {
+            copyLinkBtn.addEventListener('click', () => {
+                const linkInput = document.getElementById('referral-link-input');
+                navigator.clipboard.writeText(linkInput.value).then(() => {
+                    copyLinkBtn.innerHTML = 'Copied!';
+                    setTimeout(() => {
+                        copyLinkBtn.innerHTML = '<i class="far fa-copy"></i> Copy Link';
+                    }, 2000);
+                });
             });
         }
-
-        // Add event listeners for the sidebar on the success page
-        document.getElementById('nav-dashboard-success').addEventListener('click', goToDashboard);
-        document.getElementById('nav-wallet-success').addEventListener('click', goToWallet);
-        document.getElementById('logout-button-success').addEventListener('click', () => {
-            auth.signOut();
-        });
-
-        // --- SUPPORT PAGE NAVIGATION ---
-        const navSupportMain = document.querySelector('.sidebar-footer a[id^="nav-support"]');
-        const navSupportFeedback = document.getElementById('nav-support-feedback');
-
-        function goToSupport(e) {
-            e.preventDefault();
-            showPage('support-page');
-        }
-
-        if (navSupportMain) {
-            navSupportMain.addEventListener('click', goToSupport);
-        }
-
-        // Add event listeners for the new support page sidebar links
-        document.getElementById('nav-dashboard-support').addEventListener('click', goToDashboard);
-        document.getElementById('nav-wallet-support').addEventListener('click', goToWallet);
-        document.getElementById('nav-feedback-support').addEventListener('click', goToFeedback);
-        document.getElementById('logout-button-support').addEventListener('click', () => {
-            auth.signOut();
-        });
+        // --- END: ADDED FOR INVITE FRIENDS PAGE ---
     </script>
 
     
