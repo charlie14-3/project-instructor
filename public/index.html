@@ -1831,6 +1831,130 @@
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
+/* --- New CSS for the Feedback Success Page --- */
+#feedback-success-page .main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+#feedback-success-page .card {
+    background-color: var(--white-color);
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 550px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+#feedback-success-page .feedback-success-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark-color);
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+#feedback-success-page .btn {
+    width: 200px;
+    padding: 12px 28px;
+}
+
+/* --- Support Page Styles --- */
+.support-breadcrumbs {
+    font-size: 14px;
+    color: var(--gray-color);
+}
+.support-breadcrumbs a, .support-breadcrumbs span {
+    font-weight: 500;
+}
+.support-breadcrumbs a {
+    color: var(--dark-color);
+}
+.support-breadcrumbs > span {
+    color: var(--gray-color);
+}
+.support-content-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+.support-sidebar {
+    background-color: var(--white-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+.support-sidebar-link {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.support-topics {
+    margin-top: 20px;
+}
+.support-topics h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.support-topics ul {
+    list-style: none;
+}
+.support-topics li a {
+    display: block;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+.see-all-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.support-article h1, .support-article h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.support-article ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.support-article p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.help-link {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.search-bar {
+    position: relative;
+    width: 250px;
+}
+.search-bar input {
+    width: 100%;
+    padding: 8px 15px 8px 35px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 14px;
+}
+.search-bar i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-color);
+}
     </style>
 </head>
 
@@ -2006,8 +2130,8 @@
                 </nav>
                 <div class="sidebar-footer">
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                        <li><a href="#" id="nav-support-main">Support</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                     <button id="logout-button" class="btn btn-secondary">Logout</button>
@@ -2311,8 +2435,8 @@
                 </nav>
                 <div class="sidebar-footer">
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                        <li><a href="#" id="nav-support-wallet">Support</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                     <button id="logout-button-wallet" class="btn btn-secondary">Logout</button>
@@ -2425,8 +2549,8 @@
                 </nav>
                 <div class="sidebar-footer">
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                        <li><a href="#" id="nav-support-booking">Support</a></li>
                     </ul>
                     <button id="logout-button-booking" class="btn btn-secondary">Logout</button>
                 </div>
@@ -2567,8 +2691,9 @@
                 </nav>
                 <div class="sidebar-footer">
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                        <li><a href="#" id="nav-support-profile">Support</a></li>
+                        
                         <li><a href="#">Contact</a></li>
                     </ul>
                     <button id="logout-button-profile" class="btn btn-secondary">Logout</button>
@@ -2671,8 +2796,8 @@
             </nav>
             <div class="sidebar-footer">
                 <ul>
-                    <li><a href="#">Give Feedback</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                   <li><a href="#" id="nav-support-profile">Support</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
                 <button id="logout-button-details" class="btn btn-secondary">Logout</button>
@@ -2824,8 +2949,8 @@
             </nav>
             <div class="sidebar-footer">
                 <ul>
-                    <li><a href="#">Give Feedback</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="#" id="nav-feedback-main">Give Feedback</a></li>
+                    <li><a href="#" id="nav-support-profile">Support</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
                 <button class="btn btn-secondary logout-btn">Logout</button>
@@ -3036,6 +3161,155 @@
         </div>
     </div>
 
+    <div id="feedback-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" id="nav-dashboard-feedback">Dashboard</a></li>
+                    <li><a href="#" id="nav-wallet-feedback">Wallet</a></li>
+                    <li><a href="#">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li class="active"><a href="#" id="nav-feedback-feedback">Give Feedback</a></li>
+                    <li><a href="#" id="nav-support-profile">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-feedback" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content rating-page-main">
+            <div class="card rating-card" style="text-align: left;">
+                <form id="feedback-form">
+                    <h2 style="text-align: center;">Give Feedback</h2>
+                    <p class="rating-question" style="text-align: center;">What One Feature Or Improvement Would Enhance Your Experience As A Driving Instructor On Safe Learners?</p>
+                    <textarea name="feedback" placeholder="Answer Required" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary btn-full">Submit</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div id="feedback-success-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" id="nav-dashboard-success">Dashboard</a></li>
+                    <li><a href="#" id="nav-wallet-success">Wallet</a></li>
+                    <li><a href="#">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-success" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content rating-page-main">
+            <div class="card rating-card">
+                <div class="feedback-success-content">
+                    <img src="https://placehold.co/100x100?text=✓" alt="Success Icon" style="margin-bottom: 20px;">
+                    <h2 style="text-align: center;">Feedback Submitted!</h2>
+                    <p style="text-align: center;">Thanks For Sharing Your Ideas, Issues Or Appreciation. We Can't Respond Individually, But We'll Pass It On To Those Who Are Working To Help Make Save Learners Better For Everyone.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#" id="share-feedback-btn" class="btn btn-primary">Share Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div id="support-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" id="nav-dashboard-support">Dashboard</a></li>
+                    <li><a href="#" id="nav-wallet-support">Wallet</a></li>
+                    <li><a href="#">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#" id="nav-feedback-support">Give Feedback</a></li>
+                    <li class="active"><a href="#" id="nav-support-support">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-support" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="support-breadcrumbs">
+                    <a href="#" id="support-back-to-home">Support</a> > <span>Driving Instructors</span> > <span>How To Safe Learners Works</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search">
+                    <i class="fas fa-search"></i>
+                </div>
+            </header>
+
+            <div class="support-content-grid">
+                <aside class="support-sidebar">
+                    <a href="#" class="support-sidebar-link">Support &rsaquo; Driving Instructors</a>
+                    <a href="#" class="support-sidebar-link">Support &rsaquo; Learners</a>
+                    <div class="support-topics">
+                        <h4>How Safe Learners Works</h4>
+                        <ul>
+                            <li><a href="#">Business Criteria</a></li>
+                            <li><a href="#">Getting Started</a></li>
+                            <li><a href="#">How To Use Our Support Centre</a></li>
+                            <li><a href="#">Private Learner Fact Sheet</a></li>
+                            <li><a href="#">Payout Processing Fees Fact Sheet</a></li>
+                        </ul>
+                    </div>
+                    <a href="#" class="see-all-link">See All 9 Articles</a>
+                </aside>
+                <article class="support-article">
+                    <h1>Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s,</h1>
+                    <ul>
+                        <li>Lorem Ipsum is Simply Dummy</li>
+                        <li>Text Of The Printing And Typesetting</li>
+                        <li>Industry. Lorem Ipsum Has Been The Industry's</li>
+                        <li>Standard Dummy Text Ever Since The 1500s,</li>
+                        <li>When An Unknown Printer Took A Galley Of Type A</li>
+                    </ul>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <h2>Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s,</h2>
+                    <ul>
+                        <li>Lorem Ipsum is Simply Dummy</li>
+                        <li>Text Of The Printing And Typesetting</li>
+                        <li>Industry. Lorem Ipsum Has Been The Industry's</li>
+                        <li>Standard Dummy Text Ever Since The 1500s,</li>
+                        <li>When An Unknown Printer Took A Galley Of Type A</li>
+                    </ul>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+            </div>
+            <a href="#" class="help-link">? Help</a>
+        </main>
+    </div>
+</div>
 
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
@@ -3487,6 +3761,81 @@ document.getElementById('logout-button-details').addEventListener('click', () =>
             });
         }
         // --- END: Logic for the Rating Form Submission ---
+
+        // --- FEEDBACK PAGE NAVIGATION ---
+        const feedbackLink = document.querySelector('.sidebar-footer a[href="#"][id^="nav-feedback"]');
+        
+        function goToFeedback(e) {
+            e.preventDefault();
+            showPage('feedback-page');
+        }
+
+        if (feedbackLink) {
+            feedbackLink.addEventListener('click', goToFeedback);
+        }
+
+        // Add event listeners for the sidebar on the feedback page
+        document.getElementById('nav-dashboard-feedback').addEventListener('click', goToDashboard);
+        document.getElementById('nav-wallet-feedback').addEventListener('click', goToWallet);
+        document.getElementById('logout-button-feedback').addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        // --- FEEDBACK FORM SUBMISSION ---
+        // --- FEEDBACK FORM SUBMISSION & SUCCESS PAGE LOGIC ---
+        const feedbackForm = document.getElementById('feedback-form');
+        const shareFeedbackBtn = document.getElementById('share-feedback-btn');
+
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const feedbackText = feedbackForm.querySelector('textarea').value;
+
+                if (!feedbackText) {
+                    alert('Please provide some feedback before submitting.');
+                    return;
+                }
+
+                console.log('Feedback submitted:', feedbackText);
+                feedbackForm.reset(); // Reset form fields
+                showPage('feedback-success-page'); // Show the new success page
+            });
+        }
+
+        if (shareFeedbackBtn) {
+            shareFeedbackBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('feedback-page'); // Take the user back to the feedback page
+            });
+        }
+
+        // Add event listeners for the sidebar on the success page
+        document.getElementById('nav-dashboard-success').addEventListener('click', goToDashboard);
+        document.getElementById('nav-wallet-success').addEventListener('click', goToWallet);
+        document.getElementById('logout-button-success').addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        // --- SUPPORT PAGE NAVIGATION ---
+        const navSupportMain = document.querySelector('.sidebar-footer a[id^="nav-support"]');
+        const navSupportFeedback = document.getElementById('nav-support-feedback');
+
+        function goToSupport(e) {
+            e.preventDefault();
+            showPage('support-page');
+        }
+
+        if (navSupportMain) {
+            navSupportMain.addEventListener('click', goToSupport);
+        }
+
+        // Add event listeners for the new support page sidebar links
+        document.getElementById('nav-dashboard-support').addEventListener('click', goToDashboard);
+        document.getElementById('nav-wallet-support').addEventListener('click', goToWallet);
+        document.getElementById('nav-feedback-support').addEventListener('click', goToFeedback);
+        document.getElementById('logout-button-support').addEventListener('click', () => {
+            auth.signOut();
+        });
     </script>
 
     
