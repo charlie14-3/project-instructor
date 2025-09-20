@@ -2220,6 +2220,214 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+/* --- INSTRUCTOR DASHBOARD BOOKING LIST STYLES --- */
+.upcoming-booking-list .card {
+    padding: 0;
+    overflow: hidden; /* Ensures border-radius is respected by children */
+}
+.booking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+}
+.booking-item-main {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Space between columns */
+    flex-grow: 1;
+}
+.booking-item-section p {
+    font-size: 13px;
+    color: var(--gray-color);
+    margin-bottom: 8px;
+}
+.booking-item-section span {
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.learner-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.learner-details img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.learner-details h5 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+.learner-details small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--gray-color);
+}
+.booking-item-location {
+    background-color: var(--light-gray-color);
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+.booking-item-location span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+/* --- PENDING PROPOSALS TAB STYLE --- */
+#pending-proposals-content.tab-content {
+    background: none;
+    border: none;
+    padding-top: 25px;
+    text-align: left;
+    font-size: 14px;
+}
+#pending-proposals-content.tab-content a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* --- INSTRUCTOR BOOKING HISTORY STYLES --- */
+#booking-history-content.tab-content {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+}
+.booking-history-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.history-table.card {
+    padding: 0;
+}
+.history-table-header, .history-table-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1.5fr 1.2fr 1.2fr 2.5fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.history-table-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-color);
+    background-color: var(--light-gray-color);
+}
+.history-table-row {
+    font-size: 14px;
+}
+.history-table-row:last-child {
+    border-bottom: none;
+}
+.learner-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+.learner-cell img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* --- INSTRUCTOR BOOKING DETAILS STYLES --- */
+.booking-details-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.booking-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+    margin-top: 20px;
+}
+.booking-details-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+}
+.booking-details-info i {
+    font-size: 16px;
+    color: var(--gray-color);
+    width: 20px;
+    text-align: center;
+}
+.booking-details-info.learner-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.booking-details-info strong {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-color);
+}
+.booking-details-info p {
+    font-weight: 500;
+    line-height: 1.4;
+}
+.payment-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.payment-details-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.payment-details-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.payment-amount h2 { font-size: 36px; }
+.payment-amount p { font-size: 14px; color: var(--gray-color); text-align: right;}
+
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.notes-header h4 { display: flex; align-items: center; gap: 8px; }
+.notes-header i { font-weight: 400; color: var(--gray-color); }
+.notes-body {
+    text-align: center;
+    padding: 30px;
+    color: var(--gray-color);
+}
+.history-table-header.wide-grid, .history-table-row.wide-grid {
+    grid-template-columns: 40px 3fr 1fr 1fr;
+}
+.update-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-gray-color);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    color: var(--gray-color);
+}
     </style>
 </head>
 
@@ -2495,6 +2703,141 @@
                             <a href="#">Your reviews</a>
                         </div>
                     </div>
+
+
+
+                   <div class="booking-section" style="margin-top: 40px;">
+                        
+                        <div class="instructor-dashboard-header">
+                            <h2>Bookings</h2>
+                            <div class="instructor-actions">
+                                <button class="btn btn-secondary">Invite Learner</button>
+                                <button class="btn btn-primary">Propose Booking</button>
+                            </div>
+                        </div>
+
+                        <div class="tabs">
+                            <button class="tab-link active" data-target="upcoming-booking-content">Upcoming</button>
+                            <button class="tab-link" data-target="pending-proposals-content">Pending proposals</button>
+                            <button class="tab-link" data-target="booking-history-content">Booking history</button>
+                        </div>
+
+                        <div id="upcoming-booking-content" class="tab-pane active">
+                            <div class="card">
+                                <div class="booking-item">
+                                    <div class="booking-item-main">
+                                        <div class="booking-item-section">
+                                            <p>Booking Details</p>
+                                            <span><i class="fas fa-calendar-alt"></i> Sat, 21 Jun 2025</span><br>
+                                            <span><i class="fas fa-clock"></i> 11:45 am - 1:45 pm</span>
+                                        </div>
+                                        <div class="booking-item-section">
+                                            <p>Lesson Details</p>
+                                            <span><i class="fas fa-car"></i> 2 Hour Driving Lesson (Auto)</span>
+                                        </div>
+                                        <div class="booking-item-section">
+                                            <p>Learner Details</p>
+                                            <div class="learner-details">
+                                                <img src="https://placehold.co/100x100?text=R" alt="Learner">
+                                                <h5>Ryan B.<small>0478922109</small></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item-actions">
+                                        <a href="#" class="btn btn-secondary btn-small">See more / Manage</a>
+                                    </div>
+                                </div>
+                                <div class="booking-item-location">
+                                    <span><i class="fas fa-map-marker-alt"></i> Dirrabarri Lane, Parramatta NSW, Parramatta 2150 NSW</span>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="booking-item">
+                                     <div class="booking-item-main">
+                                        <div class="booking-item-section">
+                                            <p>Booking Details</p>
+                                            <span><i class="fas fa-calendar-alt"></i> Sat, 21 Jun 2025</span><br>
+                                            <span><i class="fas fa-clock"></i> 2:30 pm - 3:30 pm</span>
+                                        </div>
+                                        <div class="booking-item-section">
+                                            <p>Lesson Details</p>
+                                            <span><i class="fas fa-car"></i> 1 Hour Driving Lesson (Auto)</span>
+                                        </div>
+                                        <div class="booking-item-section">
+                                            <p>Learner Details</p>
+                                            <div class="learner-details">
+                                                <img src="https://placehold.co/100x100?text=S" alt="Learner">
+                                                <h5>Siddanth G.<small>0426649377</small></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item-actions">
+                                        <a href="#" class="btn btn-secondary btn-small">See more / Manage</a>
+                                    </div>
+                                </div>
+                                <div class="booking-item-location">
+                                    <span><i class="fas fa-map-marker-alt"></i> 8 George St, Seven Hills 2147 NSW</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pending-proposals-content" class="tab-pane tab-content">
+                            <p>No pending booking proposals. <a href="#">Create a new proposal.</a></p>
+                        </div>
+                        
+                        <div id="booking-history-content" class="tab-pane tab-content">
+                            <h3 class="booking-history-title">Booking History</h3>
+                            <div class="history-table card">
+                                <div class="history-table-header">
+                                    <div>Booking</div>
+                                    <div>Learner</div>
+                                    <div>Date</div>
+                                    <div>Time</div>
+                                    <div>Location</div>
+                                    <div>Status</div>
+                                    <div>Payment</div>
+                                </div>
+                                <div class="history-table-row">
+                                    <div><a href="#" class="booking-id-link">#8129177</a></div>
+                                    <div class="learner-cell">
+                                        <img src="https://placehold.co/100x100?text=J" alt="Learner">
+                                        <span>Jasper C.</span>
+                                    </div>
+                                    <div>Sun, 15 Jun 2025</div>
+                                    <div>10:00 am - 12:00 pm</div>
+                                    <div>18 HOMELANDS AVENUE, Carlingford 2118 NSW</div>
+                                    <div><span class="status-badge status-completed">COMPLETED</span></div>
+                                    <div><span class="status-badge status-processed">PROCESSED</span></div>
+                                </div>
+                                <div class="history-table-row">
+                                    <div><a href="#" class="booking-id-link">#8129174</a></div>
+                                    <div class="learner-cell">
+                                        <img src="https://placehold.co/100x100?text=J" alt="Learner">
+                                        <span>Jasper C.</span>
+                                    </div>
+                                    <div>Sat, 14 Jun 2025</div>
+                                    <div>3:15 pm - 5:15 pm</div>
+                                    <div>18 HOMELANDS AVENUE, Carlingford 2118 NSW</div>
+                                    <div><span class="status-badge status-completed">COMPLETED</span></div>
+                                    <div><span class="status-badge status-processed">PROCESSED</span></div>
+                                </div>
+                                <div class="history-table-row">
+                                    <div><a href="#" class="booking-id-link">#8141653</a></div>
+                                    <div class="learner-cell">
+                                        <img src="https://placehold.co/100x100?text=S" alt="Learner">
+                                        <span>Siddanth G.</span>
+                                    </div>
+                                    <div>Sat, 14 Jun 2025</div>
+                                    <div>11:45 am - 1:45 pm</div>
+                                    <div>2 Green Rd, Castle Hill 2154 NSW</div>
+                                    <div><span class="status-badge status-completed">COMPLETED</span></div>
+                                    <div><span class="status-badge status-processed">PROCESSED</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </section>
 
                     
                 </section>
@@ -3570,6 +3913,137 @@
         </main>
     </div>
 </div>
+<div id="instructor-booking-details-page" class="page">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <h3>SAFE LEARNERS</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#" id="nav-dashboard-ibd">Dashboard</a></li>
+                    <li><a href="#" id="nav-wallet-ibd">Wallet</a></li>
+                    <li><a href="#" class="nav-invite-friends">Invite Friends</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <ul>
+                    <li><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button id="logout-button-ibd" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="breadcrumbs">
+                    <span> > </span> <a href="#">Upcoming Bookings</a> <span> > Booking #8132725</span>
+                </div>
+                 <div class="user-info">
+                    <i class="fas fa-bell"></i>
+                    <div class="user-profile">
+                        <img src="https://placehold.co/100x100?text=M" alt="User Avatar">
+                        <span id="instructor-user-name-details">Mandeep</span> ▾
+                    </div>
+                </div>
+            </header>
+
+            <section class="booking-details-body">
+                <div class="card">
+                    <div class="booking-details-title">
+                        <h2>Booking #8132725 <span class="status-badge status-completed">COMPLETED</span></h2>
+                    </div>
+                    <div class="booking-details-grid">
+                        <div class="booking-details-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Sun, 08 Jun 2025</span>
+                        </div>
+                         <div class="booking-details-info">
+                            <i class="fas fa-clock"></i>
+                            <span>2:30 pm - 4:30 pm</span>
+                        </div>
+                         <div class="booking-details-info">
+                            <i class="fas fa-car"></i>
+                            <span>2 Hour Driving Lesson (Auto)</span>
+                        </div>
+                         <div class="booking-details-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>14 Jasper Rd, Baulkham Hills 2153 NSW</span>
+                        </div>
+                        <div class="booking-details-info learner-info">
+                             <img src="https://placehold.co/100x100?text=J" alt="Learner">
+                             <div>
+                                <strong>Learner details</strong>
+                                <p>Janavika H.<br>0452668197</p>
+                            </div>
+                        </div>
+                        <div class="booking-details-info parent-info">
+                             <i class="fas fa-user-shield"></i>
+                             <div>
+                                <strong>Parent details</strong>
+                                <p>MANISH H.<br>0452668197</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                     <div class="payment-details-header">
+                        <h4>Payment <span class="status-badge status-processed">PROCESSED</span></h4>
+                        <button class="btn btn-secondary btn-small"><i class="fas fa-history"></i> Reverse Payment</button>
+                    </div>
+                    <div class="payment-details-body">
+                        <p>Booking Made On<br>26 May 2025, 7:07 AM</p>
+                        <div class="payment-amount">
+                            <h2>$112.50</h2>
+                            <p>Your Net Payment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="notes-header">
+                        <h4>Your Notes <i class="fas fa-info-circle"></i></h4>
+                        <button class="btn btn-secondary btn-small">+ Add a Note</button>
+                    </div>
+                    <div class="notes-body">
+                        <p>Write your first note about Janavika H.<br>(These notes are only visible by you.)</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>Booking Update History</h4>
+                    <div class="history-table" style="margin-top: 15px;">
+                        <div class="history-table-header wide-grid">
+                           <div></div> <div>Event</div> <div>Updated</div> <div>Status</div>
+                        </div>
+                        <div class="history-table-row wide-grid">
+                            <div class="update-icon"><i class="fas fa-credit-card"></i></div>
+                            <div><strong>Payment</strong> booking payment applied</div>
+                            <div>10 days ago</div>
+                            <div><span class="status-badge status-processed">PROCESSED</span></div>
+                        </div>
+                        <div class="history-table-row wide-grid">
+                           <div class="update-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div><strong>Booking</strong> processed</div>
+                            <div>10 days ago</div>
+                            <div><span class="status-badge status-completed">COMPLETED</span></div>
+                        </div>
+                         <div class="history-table-row wide-grid">
+                           <div class="update-icon"><i class="fas fa-user"></i></div>
+                            <div><strong>Janavika H.</strong> confirmed this booking</div>
+                            <div>23 days ago</div>
+                            <div><span class="status-badge status-confirmed">CONFIRMED</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
 
     <div id="availability-modal" class="modal-overlay">
         <div class="modal-content">
@@ -4251,6 +4725,26 @@ if (feedbackForm) {
 
         
         // --- END: ADDED FOR INVITE FRIENDS PAGE ---
+        // --- START: ADDED FOR INSTRUCTOR BOOKING DETAILS PAGE ---
+
+        // This makes the booking ID links in the instructor's history table work
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('#instructor-dashboard-page .booking-id-link')) {
+                e.preventDefault();
+                showPage('instructor-booking-details-page');
+            }
+        });
+
+        // This handles the navigation FROM the new booking details page
+        const navDashboardIBD = document.getElementById('nav-dashboard-ibd');
+        const navWalletIBD = document.getElementById('nav-wallet-ibd');
+        const logoutButtonIBD = document.getElementById('logout-button-ibd');
+
+        if(navDashboardIBD) navDashboardIBD.addEventListener('click', goToDashboard);
+        if(navWalletIBD) navWalletIBD.addEventListener('click', goToWallet);
+        if(logoutButtonIBD) logoutButtonIBD.addEventListener('click', () => auth.signOut());
+        
+        // --- END: ADDED FOR INSTRUCTOR BOOKING DETAILS PAGE ---
     </script>
 
     
