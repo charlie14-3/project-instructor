@@ -2092,9 +2092,134 @@
 .rewards-table-row { color: var(--gray-color); }
 .rewards-table-row:last-child { border-bottom: none; }
 
+/* --- INSTRUCTOR DASHBOARD STYLES --- */
+.offer-banner {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    font-weight: 500;
+}
+.offer-banner .fa-star {
+    color: var(--primary-color);
+}
 
+.instructor-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.instructor-dashboard-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.instructor-actions {
+    display: flex;
+    gap: 10px;
+}
 
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+.stat-card p {
+    color: var(--gray-color);
+    font-size: 14px;
+}
+.stat-card h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 5px 0 10px 0;
+}
+.stat-card a {
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: underline;
+}
 
+.upcoming-booking-list .card {
+    padding: 0;
+}
+.booking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.booking-item-main {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-grow: 1;
+}
+.booking-item-section p {
+    font-size: 13px;
+    color: var(--gray-color);
+    margin-bottom: 4px;
+}
+.booking-item-section span {
+    font-weight: 500;
+}
+.booking-item-section h5 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.learner-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.learner-details img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.learner-details small {
+    display: block;
+    color: var(--gray-color);
+    font-size: 12px;
+}
+.booking-item-actions a {
+    font-weight: 600;
+}
+
+.ez-rewards-card {
+    background-color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+.ez-rewards-card h5 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.ez-rewards-card h3 {
+    font-size: 24px;
+    font-weight: 700;
+}
+.ez-rewards-card p {
+    font-size: 13px;
+    color: var(--gray-color);
+}
+.instructor-logout-btn {
+    width: 100%;
+}
+
+.instructor-photo-new img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
     </style>
 </head>
 
@@ -2251,6 +2376,132 @@
         </div>
     </div>
 
+
+    <div id="instructor-signup-page" class="page">
+        <div class="login-page">
+            <div class="login-art">
+                <div class="logo-large">
+                    <img src="https://placehold.co/150x150/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                    <h2>SAFE LEARNERS</h2>
+                    <p>DRIVE RIGHT</p>
+                </div>
+                <div class="road-footer">
+                    <img src="291429995_48aa561c-0fb7-4de1-8956-55dac2201764 1.png" alt="Yellow Sports Car"
+                        class="car-graphic">
+                </div>
+            </div>
+            <div class="login-form-container">
+                <form id="instructor-signup-form">
+                    <h2>Instructor <span class="text-primary">Signup</span></h2>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="instructor-signup-firstname">First Name</label>
+                            <input type="text" id="instructor-signup-firstname" name="firstName" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="instructor-signup-surname">Surname</label>
+                            <input type="text" id="instructor-signup-surname" name="surname" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="instructor-signup-email">Email Address</label>
+                        <input type="email" id="instructor-signup-email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="instructor-signup-password">Password</label>
+                        <input type="password" id="instructor-signup-password" name="password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Instructor Account</button>
+                    <p id="instructor-signup-error-message" class="error-text"></p>
+                    <p class="signup-link">Already Have An Account? <a href="#" class="go-to-login-link">Login Now</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="instructor-dashboard-page" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="EzLicence Logo">
+                    <h3>Safe Learners</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="active"><a href="#">Dashboard</a></li>
+                        <li><a href="#">Calendar</a></li>
+                        <li><a href="#">Learners</a></li>
+                        <li><a href="#">Reports</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="card ez-rewards-card">
+                        <h5>SLRewards</h5>
+                        <h3>Earn $500</h3>
+                        <p>Refer instructors to SafeLearners</p>
+                    </div>
+                    <ul>
+                        <li><a href="#">Give Feedback</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <button class="btn btn-secondary instructor-logout-btn">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h3>Dashboard</h3>
+                    <div class="user-info">
+                         <i class="fas fa-bell"></i>
+                        <div class="user-profile">
+                            <img src="https://placehold.co/100x100?text=M" alt="User Avatar">
+                            <span id="instructor-user-name">Mandeep</span> ▾
+                        </div>
+                    </div>
+                </header>
+                <section class="dashboard-body">
+                    <div class="card offer-banner">
+                        <i class="fas fa-star"></i>
+                        <span>Your Test Package Service Fee Offer</span>
+                    </div>
+
+                    <div class="instructor-dashboard-header">
+                        <h2>Bookings</h2>
+                        <div class="instructor-actions">
+                            <button class="btn btn-secondary">Invite Learner</button>
+                            <button class="btn btn-primary">Propose Booking</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="card stat-card">
+                            <p>Earnings</p>
+                            <h3>$309.37</h3>
+                            <a href="#">Your next payout: 23 Jun</a>
+                        </div>
+                        <div class="card stat-card">
+                            <p>Cancellation Rate</p>
+                            <h3>0.0%</h3>
+                            <a href="#">Your cancels in the last 90 days</a>
+                        </div>
+                        <div class="card stat-card">
+                            <p>Booking hours per learner</p>
+                            <h3>3.05</h3>
+                            <a href="#">Excludes new learners (within 90 days)</a>
+                        </div>
+                        <div class="card stat-card">
+                            <p>Learner rating</p>
+                            <h3>5.0</h3>
+                            <a href="#">Your reviews</a>
+                        </div>
+                    </div>
+
+                    
+                </section>
+            </main>
+        </div>
+    </div>
+
     <div id="dashboard-page" class="page">
         <div class="dashboard-layout">
             <aside class="sidebar">
@@ -2375,20 +2626,20 @@
     <div id="services-content" class="tab-pane active">
         <div class="services-grid">
             <div class="service-card">
-                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 6.48.47 PM.png');"></div>
                 <h4>1 hour <br>Driving Lesson</h4>
                 <p>Price <strong>$70</strong><br>Transmission <strong>Auto</strong></p>
                 <button class="btn btn-primary btn-full">Book with Fazley</button>
             </div>
             <div class="service-card">
                 <span class="popular-tag">MOST POPULAR</span>
-                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 7.00.41 PM.png');"></div>
                 <h4>2 hour <br>Driving Lesson</h4>
                 <p>Price <strong>$140</strong><br>Transmission <strong>Auto</strong></p>
                 <button class="btn btn-primary btn-full">Book with Fazley</button>
             </div>
             <div class="service-card">
-                <div class="illustration" style="background-image: url('https://placehold.co/200x150/f0f0f0/757575?text=Illustration');"></div>
+                <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 7.01.05 PM.png');"></div>
                 <h4>2.5 hours <br>Test Package</h4>
                 <p>Price <strong>$225</strong><br>Transmission <strong>Auto</strong></p>
                 <button class="btn btn-primary btn-full">Book with Fazley</button>
@@ -2433,6 +2684,11 @@
                 </section>
 
                 <div id="switch-instructor-content" class="content-view">
+                    <div id="switch-instructor-content" class="content-view">
+    <a href="#" id="back-to-dashboard-btn" class="back-link">
+        <i class="fas fa-chevron-left"></i> Back to Dashboard
+    </a>
+    </div>
                     <header class="instructor-filters">
                         <div class="filter-group">
                             <label>Time</label>
@@ -2453,11 +2709,20 @@
                     </header>
                     <section class="instructor-page-layout">
                         <div class="instructor-list-container">
+                            <!-- ADD: back button for instructor list page -->
+<div class="list-page-header">
+  <a href="#" id="back-to-dashboards-btn" class="back-link">
+    <i class="fas fa-chevron-left"></i> Back
+  </a>
+</div>
+
                             <h3>63 Auto instructors available in the next 7 days</h3>
                             <p class="subtitle">From $60.00/hr</p>
                             <div class="instructor-grid">
                                 <div class="instructor-card-new">
                                     <div class="instructor-photo-new">
+                                                <img src="https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=" alt="Instructor Syed">
+
                                     </div>
                                     <div class="instructor-details-new">
                                         <h4>Syed</h4>
@@ -2476,9 +2741,11 @@
 
                                 <div class="instructor-card-new">
                                     <div class="instructor-photo-new">
+                                                <img src="https://t4.ftcdn.net/jpg/00/88/53/89/360_F_88538986_5Bi4eJ667pocsO3BIlbN4fHKz8yUFSuA.jpg" alt="Instructor Chris">
+
                                     </div>
                                     <div class="instructor-details-new">
-                                        <h4>Muhammad</h4>
+                                        <h4>Chris</h4>
                                         <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
                                         <p class="instructor-meta"><i class="fas fa-star"></i> 5.0 - 80 Ratings</p>
                                         <p class="instructor-meta"><i class="fas fa-check-circle"></i> 570 Completed
@@ -2494,6 +2761,8 @@
 
                                 <div class="instructor-card-new">
                                     <div class="instructor-photo-new">
+                                                <img src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c21pbGluZyUyMG1hbnxlbnwwfHwwfHx8MA%3D%3D" alt="Instructor Roumyo">
+
                                     </div>
                                     <div class="instructor-details-new">
                                         <h4>Roumyo</h4>
@@ -2513,6 +2782,9 @@
 
                                 <div class="instructor-card-new">
                                     <div class="instructor-photo-new">
+
+                                                <img src="https://static.vecteezy.com/system/resources/previews/048/888/842/non_2x/portrait-of-a-smiling-man-in-a-beige-jacket-photo.jpg" alt="Instructor Syed">
+
                                     </div>
                                     <div class="instructor-details-new">
                                         <h4>Sitara</h4>
@@ -2592,7 +2864,7 @@
                             <i class="fas fa-bell"></i>
                             <span class="notification-badge">1</span>
                             <div class="notification-popup">
-                                <img src="https://placehold.co/100x100?text=M" alt="Instructor Mandeep">
+                                <img src="https://media.istockphoto.com/id/483627817/photo/showing-off-his-pearly-whites.jpg?s=612x612&w=0&k=20&c=gk6aVVGp52YFx1ZzPVQplGc7JL5zkrfxQTuLjIn2RU8=" alt="Instructor Mandeep">
                                 <div class="popup-text">
                                     <p>How was your learning experience with Mandeep?</p>
                                     <a href="#" id="leave-rating-link">Please leave a rating.</a>
@@ -2601,7 +2873,7 @@
                             </div>
                         </div>
                         <div class="user-profile">
-                            <img src="https://placehold.co/100x100?text=User" alt="User Avatar">
+                            <img src="https://img.freepik.com/free-photo/happy-man-student-with-afro-hairdo-shows-white-teeth-being-good-mood-after-classes_273609-16608.jpg" alt="User Avatar">
                             <span id="user-name-wallet">Jhon</span> ▾
                         </div>
                     </div>
@@ -2810,19 +3082,27 @@
 
                 <section class="booking-content">
                     <div class="booking-main">
+                        <!-- ADD: back button for instructor list page -->
+<div class="list-page-header">
+  <a href="#" id="back-to-dashboard-btn" class="back-link">
+    <i class="fas fa-chevron-left"></i> Back
+  </a>
+</div>
+
                         <h2>Make a Booking</h2>
+
                         <div class="card">
                             <h4>My Instructor</h4>
                             <div class="instructor-details" style="margin-top: 20px;">
                                 <div class="instructor-info">
-                                    <img src="https://placehold.co/120x120?text=Fazley" alt="Instructor Fazley">
+                                    <img src="https://img.freepik.com/free-photo/handsome-man-smiling-happy-face-portrait-close-up_53876-145493.jpg" alt="Instructor Fazley">
                                     <div>
                                         <h5>Fazley</h5>
                                         <p>$70/hr<br>Offers 1 & 2hr lessons</p>
                                     </div>
                                 </div>
                                 <div class="vehicle-info">
-                                    <img src="https://placehold.co/120x120/cccccc/000000?text=Car" alt="Toyota Corolla">
+                                    <img src="https://di-uploads-pod25.dealerinspire.com/edmarktoyota/uploads/2024/02/2024-toyota-corolla-banner.jpg" alt="Toyota Corolla">
                                     <div>
                                         <h5>Toyota Corolla 2011 (Auto)</h5>
                                         <p>5-star ANCAP rating<br>Dual controls fitted</p>
@@ -2933,9 +3213,9 @@
                 <section class="profile-content-grid">
                     <div class="profile-main">
                         <header class="profile-header">
-                            <img src="https://placehold.co/150x150?text=Syed" alt="Instructor Syed"
+                            <img src="https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=" alt="Instructor Syed"
                                 class="profile-photo">
-                            <img src="https://placehold.co/150x150/cccccc/000000?text=Car" alt="Car"
+                            <img src="https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Urban-Cruiser/12237/1735368926257/front-left-side-47.jpg" alt="Car"
                                 class="profile-car-photo">
                             <div class="profile-header-info">
                                 <h2>Syed</h2>
@@ -3695,7 +3975,26 @@ document.addEventListener('click', (e) => {
   if (target.matches('.open-booking-btn'))        { e.preventDefault(); showPage('booking-page'); return; }
   if (target.matches('.view-profile-btn'))        { e.preventDefault(); showPage('instructor-profile-page'); return; }
   if (target.matches('#switch-instructor-link'))  { e.preventDefault(); showView('switch-instructor-content'); return; }
-  if (target.matches('#back-to-instructors-btn')) { e.preventDefault(); goToDashboard(); return; }
+  // Back from instructor profile to dashboard
+// Back from instructor lists/profile to dashboard
+if (target.matches('#back-to-instructors-btn, #back-to-dashboard-btn')) {
+  e.preventDefault();
+  showPage('dashboard-page');                // go back to the dashboard page
+  showView(lastDashboardView || 'dashboard-main-content'); // restore previous dashboard view
+  updateSidebarActiveState('dashboard');     // highlight Dashboard in sidebar
+  return;
+}
+// Back from instructor lists/profile to dashboard
+if (target.matches('#back-to-dashboards-btn')) {
+  e.preventDefault();
+  showPage('dashboard-page');                // go back to the dashboard page
+  showView('dashboard-main-content'); // restore previous dashboard view
+  updateSidebarActiveState('dashboard');     // highlight Dashboard in sidebar
+  return;
+}
+
+
+
   if (target.matches('#history-content .booking-id-link')) { e.preventDefault(); showPage('booking-details-page'); return; }
   if (target.matches('#leave-rating-link'))       { e.preventDefault(); showPage('rating-page'); return; }
 
@@ -3756,9 +4055,40 @@ if (feedbackForm) {
         }
         
         // --- AUTHENTICATION & USER DATA ---
+        // --- AUTHENTICATION & ROLE-BASED ROUTING ---
         auth.onAuthStateChanged(user => {
-            if (user) { showPage('dashboard-page'); fetchUserData(user); } 
-            else { showPage('landing-page'); }
+            if (user) {
+                // User is signed in, check their role in Firestore
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        const displayName = userData.firstName || user.email.split('@')[0];
+                        
+                        if (userData.role === 'instructor') {
+                            // --- INSTRUCTOR LOGGED IN ---
+                            document.getElementById('instructor-user-name').textContent = displayName;
+                            showPage('instructor-dashboard-page');
+                        } else {
+                            // --- LEARNER LOGGED IN ---
+                             document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
+                            if(document.getElementById('welcome-message')) {
+                                document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
+                            }
+                            showPage('dashboard-page');
+                        }
+                    } else {
+                        // Fallback if user has no data in Firestore
+                        console.error("User data not found in Firestore!");
+                        showPage('login-page');
+                    }
+                }).catch(error => {
+                    console.error("Error fetching user data:", error);
+                    showPage('login-page');
+                });
+            } else {
+                // User is signed out
+                showPage('landing-page');
+            }
         });
 
         function fetchUserData(user) {
@@ -3779,22 +4109,35 @@ if (feedbackForm) {
                 const [email, password] = [loginForm.email.value, loginForm.password.value];
                 const errorMessage = document.getElementById('error-message');
                 errorMessage.textContent = '';
-                auth.signInWithEmailAndPassword(email, password).catch(err => errorMessage.textContent = err.message);
+                auth.signInWithEmailAndPassword(email, password)
+                    .catch(err => errorMessage.textContent = err.message);
             });
-            document.getElementById('go-to-signup').addEventListener('click', (e) => { e.preventDefault(); showPage('signup-page'); });
         }
         const signupForm = document.getElementById('signup-form');
         if (signupForm) {
             signupForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const [firstName, email, password] = [signupForm.firstName.value, signupForm.email.value, signupForm.password.value];
+                const firstName = signupForm.firstName.value;
+                const email = signupForm.email.value;
+                const password = signupForm.password.value;
                 const signupErrorMessage = document.getElementById('signup-error-message');
                 signupErrorMessage.textContent = '';
+
                 auth.createUserWithEmailAndPassword(email, password)
-                    .then(cred => db.collection('users').doc(cred.user.uid).set({ firstName, email }))
+                    .then(cred => {
+                        // Set user data in Firestore with role 'learner'
+                        return db.collection('users').doc(cred.user.uid).set({
+                            firstName: firstName,
+                            email: email,
+                            role: 'learner' 
+                        });
+                    })
                     .catch(err => signupErrorMessage.textContent = err.message);
             });
-            document.getElementById('go-to-login').addEventListener('click', (e) => { e.preventDefault(); showPage('login-page'); });
+            document.getElementById('go-to-login').addEventListener('click', (e) => {
+                e.preventDefault();
+                setupLoginPage('learner'); // Default to learner login
+            });
         }
         
         // --- AVAILABILITY MODAL ---
@@ -3845,6 +4188,66 @@ if (feedbackForm) {
                 });
             });
         }
+
+        // --- INSTRUCTOR SIGNUP FORM ---
+        const instructorSignupForm = document.getElementById('instructor-signup-form');
+        if (instructorSignupForm) {
+            instructorSignupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const firstName = instructorSignupForm.firstName.value;
+                const email = instructorSignupForm.email.value;
+                const password = instructorSignupForm.password.value;
+                const signupErrorMessage = document.getElementById('instructor-signup-error-message');
+                signupErrorMessage.textContent = '';
+
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(cred => {
+                        // Set user data in Firestore with role 'instructor'
+                        return db.collection('users').doc(cred.user.uid).set({
+                            firstName: firstName,
+                            email: email,
+                            role: 'instructor'
+                        });
+                    })
+                    .catch(err => signupErrorMessage.textContent = err.message);
+            });
+             document.querySelectorAll('.go-to-login-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setupLoginPage('instructor');
+                });
+            });
+        }
+
+        // --- DYNAMIC LOGIN PAGE SETUP ---
+        const loginTitle = document.getElementById('login-title');
+        const loginSignupLink = document.getElementById('go-to-signup');
+        
+        function setupLoginPage(role) {
+            if (role === 'instructor') {
+                loginTitle.innerHTML = 'Instructor <span class="text-primary">Login</span>';
+                loginSignupLink.textContent = "Signup as an Instructor";
+                loginSignupLink.onclick = (e) => { e.preventDefault(); showPage('instructor-signup-page'); };
+            } else {
+                loginTitle.innerHTML = 'Learner <span class="text-primary">Login</span>';
+                loginSignupLink.textContent = "Signup Now";
+                loginSignupLink.onclick = (e) => { e.preventDefault(); showPage('signup-page'); };
+            }
+            showPage('login-page');
+        }
+
+        // --- EVENT LISTENERS FOR LANDING PAGE BUTTONS ---
+        document.getElementById('learner-login-btn-1').addEventListener('click', () => setupLoginPage('learner'));
+        document.getElementById('learner-login-btn-2').addEventListener('click', () => setupLoginPage('learner'));
+        document.getElementById('instructor-login-btn-1').addEventListener('click', () => setupLoginPage('instructor'));
+        document.getElementById('instructor-login-btn-2').addEventListener('click', () => setupLoginPage('instructor'));
+        
+        // --- GENERIC LOGOUT ---
+        document.body.addEventListener('click', (e) => {
+            if (e.target.matches('.logout-btn, .instructor-logout-btn, #logout-button, #logout-button-wallet, #logout-button-booking, #logout-button-details, #logout-button-profile, #logout-button-invite, #logout-button-feedback, #logout-button-success, #logout-button-support')) {
+                auth.signOut();
+            }
+        });
 
         
         // --- END: ADDED FOR INVITE FRIENDS PAGE ---
