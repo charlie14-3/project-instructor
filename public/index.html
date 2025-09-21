@@ -2428,6 +2428,264 @@
     font-size: 16px;
     color: var(--gray-color);
 }
+
+.instructor-view {
+            display: none;
+        }
+        .instructor-view.active {
+            display: block;
+        }
+        .learners-list {
+            padding: 0;
+            overflow: hidden;
+        }
+        .learners-list-header, .learners-list-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 2fr;
+            gap: 20px;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+        .learners-list-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-color);
+            background-color: var(--light-gray-color);
+        }
+        .learners-list-row:last-child {
+            border-bottom: none;
+        }
+        .learner-cell-details h5 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 4px 0;
+        }
+        .learner-cell-details span {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        .learners-list-row > div {
+            font-weight: 500;
+        }
+        .learner-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+        .learner-actions a {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark-color);
+            text-decoration: underline;
+        }
+
+        /* --- START: Invite Learner Modal Styles --- */
+        .invite-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .invite-modal-header i {
+            font-size: 20px;
+            color: var(--dark-color);
+        }
+        .invite-modal-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .invite-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        /* --- END: Invite Learner Modal Styles --- */
+
+            .page-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-view-header h2 { 
+            font-size: 28px; 
+            font-weight: 600; 
+            margin: 5px 0 0 0;
+        }
+        .page-view-actions { 
+            display: flex; 
+            gap: 10px; 
+        }
+        .draft-tag {
+            background-color: #e0e0e0;
+            color: var(--gray-color);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .booking-proposal-card .form-group { 
+            margin-bottom: 25px; 
+        }
+        .booking-proposal-card label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .learner-select-group { 
+            display: flex; 
+            gap: 10px; 
+            align-items: center;
+        }
+        .learner-select-group select { 
+            flex-grow: 1; 
+        }
+        .learner-select-group .btn {
+            padding: 10px 20px;
+            flex-shrink: 0;
+        }
+        .booking-type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--light-gray-color);
+        }
+        .booking-type-selector input[type="radio"] { 
+            display: none; 
+        }
+        .booking-type-selector label {
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        .booking-type-selector input[type="radio"]:checked + label {
+            background-color: var(--white-color);
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .booking-proposal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        .booking-proposal-footer .footer-actions {
+            display: flex;
+            gap: 10px;
+        }
+         .learner-details-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 2.5fr;
+            gap: 30px;
+            margin-top: 15px;
+            align-items: start;
+        }
+        .learner-details-left-col, .learner-details-right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .learner-profile-card {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+        .learner-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            display: grid;
+            place-items: center;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .learner-info h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .age-tag {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--gray-color);
+        }
+        .learner-tag {
+            display: inline-block;
+            background-color: var(--light-gray-color);
+            color: var(--gray-color);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .learner-info p {
+            font-size: 14px;
+            color: var(--gray-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .learner-profile-card .btn {
+            grid-column: 1 / -1; /* Span full width */
+            margin-top: 15px;
+        }
+        .learner-notes-card-body {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-color);
+        }
+        .empty-state {
+             text-align: center;
+             padding: 40px 20px;
+             color: var(--gray-color);
+        }
+        .learner-history-table {
+            width: 100%;
+            font-size: 14px;
+        }
+        .learner-history-header, .learner-history-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr 2fr 1.2fr 1.2fr;
+            gap: 15px;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .learner-history-header {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--gray-color);
+            background-color: var(--light-gray-color);
+        }
+        .learner-history-row:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 
@@ -2627,6 +2885,9 @@
         </div>
     </div>
 
+
+    
+
     <div id="instructor-dashboard-page" class="page">
         <div class="dashboard-layout">
             <aside class="sidebar">
@@ -2636,9 +2897,9 @@
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li class="active"><a href="#">Dashboard</a></li>
+                        <li class="active"><a href="#" data-view="instructor-dashboard-view">Dashboard</a></li>
                         <li><a href="#">Calendar</a></li>
-                        <li><a href="#">Learners</a></li>
+                        <li><a href="#" data-view="instructor-learners-view">Learners</a></li>
                         <li><a href="#">Reports</a></li>
                     </ul>
                 </nav>
@@ -2667,7 +2928,7 @@
                         </div>
                     </div>
                 </header>
-                <section class="dashboard-body">
+                <section id="instructor-dashboard-view" class="instructor-view active">
                     <div class="card offer-banner">
                         <i class="fas fa-star"></i>
                         <span>Your Test Package Service Fee Offer</span>
@@ -2676,8 +2937,8 @@
                     <div class="instructor-dashboard-header">
                         <h2>Bookings</h2>
                         <div class="instructor-actions">
-                            <button class="btn btn-secondary">Invite Learner</button>
-                            <button class="btn btn-primary">Propose Booking</button>
+                            <button class="btn btn-secondary invite-learner-btn">Invite Learner</button>
+                            <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
                         </div>
                     </div>
 
@@ -2840,6 +3101,237 @@
                     </section>
 
                     
+                </section> <section id="instructor-learners-view" class="instructor-view">
+                    <div class="instructor-dashboard-header">
+                        <h2>Learners</h2>
+                        <div class="instructor-actions">
+                            <button class="btn btn-secondary invite-learner-btn">Invite Learner</button>
+                            <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab-link active" data-target="my-learners-content">My Learners</button>
+                        <button class="tab-link" data-target="pending-invites-content">Pending Invites</button>
+                    </div>
+
+                    <div id="my-learners-content" class="tab-pane active">
+                        <div class="search-bar" style="width: 100%; max-width: 400px; margin-top: 20px; margin-bottom: 20px;">
+                            <input type="text" placeholder="Search by learner name or phone number" style="border-radius: 8px; padding-left: 35px; height: 42px;">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="card learners-list">
+                            <div class="learners-list-header">
+                                <div>Learner Details</div>
+                                <div>Guardian Details</div>
+                                <div>Booking Hours Completed</div>
+                                <div>Upcoming Bookings</div>
+                                <div></div> </div>
+                            <div class="learners-list-row">
+                                <div class="learner-cell-details">
+                                    <h5>Angelina K.</h5>
+                                    <span>0421 819 495</span>
+                                </div>
+                                <div>-</div>
+                                <div>0</div>
+                                <div>0</div>
+                                <div class="learner-actions">
+                                    <a href="#" class="view-learner-details-btn">Learner Details</a>
+                                    <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                                </div>
+                            </div>
+                            <div class="learners-list-row">
+                                <div class="learner-cell-details">
+                                    <h5>Anum A.</h5>
+                                    <span>0432 986 253</span>
+                                </div>
+                                <div>-</div>
+                                <div>0</div>
+                                <div>0</div>
+                                <div class="learner-actions">
+                                    <a href="#" class="view-learner-details-btn">Learner Details</a>
+                                   <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                                </div>
+                            </div>
+                            <div class="learners-list-row">
+                                <div class="learner-cell-details">
+                                    <h5>Araf A.</h5>
+                                    <span>0426 394 757</span>
+                                </div>
+                                <div>-</div>
+                                <div>0</div>
+                                <div>1</div>
+                                <div class="learner-actions">
+                                    <a href="#" class="view-learner-details-btn">Learner Details</a>
+                                    <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                                </div>
+                            </div>
+                             <div class="learners-list-row">
+                                <div class="learner-cell-details">
+                                    <h5>Ashok B.</h5>
+                                    <span>0452 081 244</span>
+                                </div>
+                                <div>-</div>
+                                <div>0</div>
+                                <div>0</div>
+                                <div class="learner-actions">
+                                    <a href="#" class="view-learner-details-btn">Learner Details</a>
+                                    <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pending-invites-content" class="tab-pane tab-content" style="display: none;">
+                        <p>You have no pending invites.</p>
+                    </div>
+                </section>
+
+                  <section id="instructor-propose-booking-view" class="instructor-view">
+                    <div class="page-view-header">
+                        <div>
+                            <p class="breadcrumbs" style="font-size: 14px; color: var(--gray-color);">Calendar > New Booking Proposal</p>
+                            <h2>New Booking Proposal</h2>
+                        </div>
+                        <div class="page-view-actions">
+                            <button class="btn btn-secondary">Cancel Proposal</button>
+                            <button class="btn btn-primary btn-disabled" disabled>Propose Booking +</button>
+                        </div>
+                    </div>
+
+                    <div class="card booking-proposal-card">
+                        <div class="card-header" style="padding-bottom: 20px;">
+                            <h4>Booking <span class="draft-tag">DRAFT</span></h4>
+                        </div>
+                        
+                        <form>
+                            <div class="form-group">
+                                <label for="proposal-learner">Learner *</label>
+                                <div class="learner-select-group">
+                                    <select id="proposal-learner">
+                                        <option>Select a learner</option>
+                                    </select>
+                                    <button type="button" class="btn btn-secondary">+ Add new</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Booking Type</label>
+                                <div class="booking-type-selector">
+                                    <input type="radio" id="type-1hr" name="booking-type" value="1hr" checked>
+                                    <label for="type-1hr">1-Hour Driving Lesson</label>
+                                    
+                                    <input type="radio" id="type-2hr" name="booking-type" value="2hr">
+                                    <label for="type-2hr">2-Hour Driving Lesson</label>
+
+                                    <input type="radio" id="type-test" name="booking-type" value="test">
+                                    <label for="type-test">Driving Test Package</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Lesson start time *</label>
+                                <div class="form-group-inline">
+                                    <select><option>Select a day</option></select>
+                                    <select><option>Select a time</option></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Lesson pick up location</label>
+                                <div class="location-field" style="background-color: #f7f7f7;">
+                                    <span>Select a learner to begin</span>
+                                    <button class="edit-btn" disabled><i class="fas fa-pencil-alt"></i> Edit</button>
+                                </div>
+                                <div class="form-group-inline" style="margin-top: 15px;">
+                                    <input type="text" placeholder="Street no." disabled>
+                                    <input type="text" placeholder="Street name" disabled>
+                                </div>
+                                <div class="form-group-inline" style="margin-top: 15px;">
+                                    <input type="text" placeholder="Street" disabled>
+                                    <select disabled><option>Annangrove NSW 2156</option></select>
+                                </div>
+                            </div>
+
+                            <div class="booking-proposal-footer">
+                                <div>
+                                    <p class="form-note" style="margin: 0; max-width: 500px;">
+                                        Booking proposals will 'hold' the selected time slot(s) until confirmed by the learner. Proposals remain valid for 24 hours OR the proposed booking start time (whichever arrives first).
+                                    </p>
+                                </div>
+                                <div class="footer-actions">
+                                    <button type="button" class="btn btn-secondary btn-disabled" disabled>+ Add Another Booking</button>
+                                    <button type="submit" class="btn btn-primary btn-disabled" disabled>Propose Booking</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                 <section id="instructor-learner-details-view" class="instructor-view">
+                    <a href="#" class="back-link instructor-back-to-learners-btn"><i class="fas fa-chevron-left"></i> Back to Learners</a>
+                    
+                    <div class="learner-details-grid">
+                        <div class="learner-details-left-col">
+                            <div class="card learner-profile-card">
+                                <div class="learner-avatar">AK</div>
+                                <div class="learner-info">
+                                    <h3>Angelina K. <span class="age-tag">Age 21</span></h3>
+                                    <span class="learner-tag">Learner</span>
+                                    <p><i class="fas fa-phone-alt"></i> 0421819495</p>
+                                </div>
+                                <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                            </div>
+
+                            <div class="card learner-notes-card">
+                                <div class="card-header">
+                                    <h4>Your Notes</h4>
+                                    <button class="btn btn-secondary btn-small">Write a Note</button>
+                                </div>
+                                <div class="learner-notes-card-body">
+                                    <p>Write your first note about Angelina K.<br>(These notes are only visible by you.)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="learner-details-right-col">
+                            <div class="card">
+                                <h4>Upcoming Bookings</h4>
+                                <div class="empty-state">
+                                    <p>No upcoming bookings</p>
+                                </div>
+                            </div>
+
+                            <div class="card" style="padding: 0;">
+                                <h4 style="padding: 20px 20px 0;">Booking History</h4>
+                                <div class="learner-history-table">
+                                    <div class="learner-history-header">
+                                        <div>Booking</div>
+                                        <div>Date</div>
+                                        <div>Time</div>
+                                        <div>Location</div>
+                                        <div>Status</div>
+                                        <div>Payment</div>
+                                    </div>
+                                    <div class="learner-history-row">
+                                        <div><a href="#" class="booking-id-link">#7806613</a></div>
+                                        <div>Sun, 05 Jan 2025</div>
+                                        <div>10:00 am - 11:00 am</div>
+                                        <div>223 Targo Road, Girraween 2145 NSW</div>
+                                        <div><span class="status-badge status-completed">COMPLETED</span></div>
+                                        <div><span class="status-badge status-processed">PROCESSED</span></div>
+                                    </div>
+                                    <div class="learner-history-row">
+                                        <div><a href="#" class="booking-id-link">#7795012</a></div>
+                                        <div>Sun, 22 Dec 2024</div>
+                                        <div>10:00 am - 11:00 am</div>
+                                        <div>223 Targo Rd, Girraween 2145 NSW</div>
+                                        <div><span class="status-badge status-completed">COMPLETED</span></div>
+                                        <div><span class="status-badge status-processed">PROCESSED</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>
@@ -4228,6 +4720,32 @@
         </div>
     </div>
 
+    <div id="invite-learner-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 600px;">
+        <button class="modal-close-btn">&times;</button>
+        <div class="invite-modal-header">
+            <i class="fas fa-user-plus"></i>
+            <h3>Invite Learner</h3>
+        </div>
+        <form id="invite-learner-form">
+            <div class="form-group-inline" style="gap: 25px;">
+                <div class="input-group">
+                    <label for="invite-learner-name">Learner Name *</label>
+                    <input type="text" id="invite-learner-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="invite-learner-mobile">Mobile *</label>
+                    <input type="tel" id="invite-learner-mobile" placeholder="0400 000 000" required>
+                </div>
+            </div>
+            <div class="invite-modal-actions">
+                <button type="button" class="btn btn-secondary btn-disabled" disabled>Propose Booking</button>
+                <button type="submit" class="btn btn-primary">Send SMS Invite</button>
+            </div>
+        </form>
+    </div>
+</div>
+
     <div id="feedback-page" class="page">
     <div class="dashboard-layout">
         <aside class="sidebar">
@@ -4718,13 +5236,76 @@ if (feedbackForm) {
         
         // --- GENERIC LOGOUT ---
         document.body.addEventListener('click', (e) => {
+         // --- START: Added for Learner Details View ---
+            if (e.target.closest('.view-learner-details-btn')) {
+                e.preventDefault();
+                document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => view.classList.remove('active'));
+                const detailsView = document.getElementById('instructor-learner-details-view');
+                if (detailsView) detailsView.classList.add('active');
+            }
+
+            if (e.target.closest('.instructor-back-to-learners-btn')) {
+                e.preventDefault();
+                document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => view.classList.remove('active'));
+                const learnersView = document.getElementById('instructor-learners-view');
+                if (learnersView) learnersView.classList.add('active');
+            }
+            // --- END: Added for Learner Details View ---
+
+
             if (e.target.matches('.logout-btn, .instructor-logout-btn, #logout-button, #logout-button-wallet, #logout-button-booking, #logout-button-details, #logout-button-profile, #logout-button-invite, #logout-button-feedback, #logout-button-success, #logout-button-support')) {
                 auth.signOut();
             }
+
+
         });
 
         
         // --- END: ADDED FOR INVITE FRIENDS PAGE ---
+        // --- START: ADDED FOR INSTRUCTOR DASHBOARD NAVIGATION ---
+        const instructorDashboardPage = document.getElementById('instructor-dashboard-page');
+        if (instructorDashboardPage) {
+            const instructorSidebarNav = instructorDashboardPage.querySelector('.sidebar-nav');
+            const instructorViews = instructorDashboardPage.querySelectorAll('.instructor-view');
+
+            instructorSidebarNav.addEventListener('click', (e) => {
+                const link = e.target.closest('a[data-view]');
+                if (!link) return;
+
+                e.preventDefault();
+                const targetViewId = link.dataset.view;
+                
+                // 1. Update active class on sidebar
+                instructorSidebarNav.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+                link.parentElement.classList.add('active');
+
+                // 2. Show the correct content view
+                instructorViews.forEach(view => {
+                    view.classList.toggle('active', view.id === targetViewId);
+                });
+            });
+
+            // Also handle the tabs on the learners page
+            const learnersView = document.getElementById('instructor-learners-view');
+            if(learnersView) {
+                const learnerTabs = learnersView.querySelector('.tabs');
+                learnerTabs.addEventListener('click', (e) => {
+                    const clickedTab = e.target.closest('.tab-link');
+                    if (!clickedTab) return;
+                    
+                    const targetPaneId = clickedTab.dataset.target;
+                    learnerTabs.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+                    clickedTab.classList.add('active');
+                    
+                    learnersView.querySelectorAll('.tab-pane').forEach(pane => {
+                        pane.style.display = pane.id === targetPaneId ? 'block' : 'none';
+                        // also add active class for potential future styling
+                        pane.classList.toggle('active', pane.id === targetPaneId);
+                    });
+                });
+            }
+        }
+        // --- END: ADDED FOR INSTRUCTOR DASHBOARD NAVIGATION ---
         // --- START: ADDED FOR INSTRUCTOR BOOKING DETAILS PAGE ---
 
         // This makes the booking ID links in the instructor's history table work
@@ -4745,6 +5326,64 @@ if (feedbackForm) {
         if(logoutButtonIBD) logoutButtonIBD.addEventListener('click', () => auth.signOut());
         
         // --- END: ADDED FOR INSTRUCTOR BOOKING DETAILS PAGE ---
+
+        // --- START: INVITE LEARNER MODAL LOGIC ---
+        const inviteLearnerModal = document.getElementById('invite-learner-modal');
+        if (inviteLearnerModal) {
+            const inviteLearnerBtns = document.querySelectorAll('.invite-learner-btn');
+            const closeInviteModalBtn = inviteLearnerModal.querySelector('.modal-close-btn');
+
+            const openInviteModal = (e) => {
+                e.preventDefault();
+                inviteLearnerModal.classList.add('active');
+            };
+            const closeInviteModal = () => {
+                inviteLearnerModal.classList.remove('active');
+            };
+
+            inviteLearnerBtns.forEach(btn => btn.addEventListener('click', openInviteModal));
+            
+            if(closeInviteModalBtn) {
+                closeInviteModalBtn.addEventListener('click', closeInviteModal);
+            }
+
+            inviteLearnerModal.addEventListener('click', (e) => {
+                if (e.target === inviteLearnerModal) {
+                    closeInviteModal();
+                }
+            });
+
+            const inviteForm = document.getElementById('invite-learner-form');
+            if(inviteForm) {
+                inviteForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // In a real application, you would send the form data to a server here.
+                    alert('SMS Invite Sent!');
+                    closeInviteModal();
+                    inviteForm.reset();
+                });
+            }
+        }
+        // --- END: INVITE LEARNER MODAL LOGIC ---
+
+        // --- START: PROPOSE BOOKING PAGE NAVIGATION ---
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('.propose-booking-btn')) {
+                e.preventDefault();
+                
+                // Hide all other instructor views
+                document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => {
+                    view.classList.remove('active');
+                });
+                
+                // Show the propose booking view
+                const proposeBookingView = document.getElementById('instructor-propose-booking-view');
+                if (proposeBookingView) {
+                    proposeBookingView.classList.add('active');
+                }
+            }
+        });
+        // --- END: PROPOSE BOOKING PAGE NAVIGATION ---
     </script>
 
     
