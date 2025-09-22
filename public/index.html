@@ -2686,6 +2686,273 @@
         .learner-history-row:last-child {
             border-bottom: none;
         }
+
+        /* --- START: INSTRUCTOR FEEDBACK PAGE STYLES (EZLicence Look) --- */
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--white-color);
+    padding: 20px;
+    text-align: center;
+}
+.feedback-content {
+    width: 100%;
+    max-width: 650px;
+}
+.feedback-content .logo {
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.feedback-content .logo img {
+    height: 35px;
+}
+.feedback-content .logo span {
+    font-size: 24px;
+    font-weight: 700;
+}
+.feedback-content h2 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+.feedback-content p {
+    color: var(--gray-color);
+    margin-bottom: 10px;
+    text-align: left;
+}
+.feedback-content textarea {
+    border: 1px solid #ced4da; /* A light gray border */
+    font-size: 16px;
+    font-family: var(--font-family);
+    min-height: 90px;
+}
+.feedback-content .btn-submit-dark {
+    background-color: #5a6268;
+    color: var(--white-color);
+    border: none;
+    font-weight: 600;
+    padding: 12px 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.feedback-content .btn-submit-dark:hover {
+    background-color: #495057;
+}
+.feedback-content .success-text {
+    text-align: center;
+    font-size: 16px;
+    color: var(--gray-color);
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+.feedback-content .success-text a {
+    color: var(--dark-color);
+    text-decoration: underline;
+}
+
+/* --- START: SUPPORT INDEX PAGE STYLES --- */
+#support-index-page {
+    background-color: var(--white-color);
+}
+.support-index-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: var(--font-family);
+}
+.support-index-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.support-index-header .breadcrumbs {
+    font-size: 14px;
+    color: var(--dark-color);
+}
+.support-index-header .search-bar input {
+    width: 250px;
+    padding: 10px 15px 10px 40px;
+    border-radius: 6px;
+}
+.support-index-header .search-bar i {
+    left: 15px;
+}
+.support-index-title h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.support-index-title p {
+    font-size: 16px;
+    color: var(--gray-color);
+    margin-bottom: 40px;
+}
+.support-category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+}
+.support-category-column h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.support-category-column ul {
+    list-style: none;
+    padding: 0;
+}
+.support-category-column li a {
+    display: block;
+    padding: 12px 0;
+    color: var(--dark-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+.support-category-column li a:hover {
+    color: var(--primary-color);
+}
+/* --- END: SUPPORT INDEX PAGE STYLES --- */
+/* --- END: INSTRUCTOR FEEDBACK PAGE STYLES --- */
+
+/* --- START: SUPPORT ARTICLE PAGE STYLES --- */
+#support-page {
+    background-color: var(--white-color);
+}
+.support-article-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: var(--font-family);
+}
+.support-article-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar and main content */
+    gap: 60px;
+    margin-top: 20px;
+}
+.support-article-sidebar h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.support-article-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.support-article-sidebar li a {
+    display: block;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--dark-color);
+    text-decoration: none;
+}
+.support-article-sidebar li a.active {
+    font-weight: 700;
+}
+.support-article-content h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.support-article-content .meta {
+    font-size: 13px;
+    color: var(--gray-color);
+    margin-bottom: 40px;
+}
+.support-article-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.support-article-content p, .support-article-content ul {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--dark-color);
+}
+.support-article-content ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.floating-help-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background-color: #1f2d3d;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 100;
+}
+/* --- END: SUPPORT ARTICLE PAGE STYLES --- */
+/* --- CONTACT MODAL STYLES --- */
+.contact-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+#contact-modal p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+#contact-modal p a {
+    font-weight: 600;
+    text-decoration: underline;
+}
+.contact-modal-images {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px 0;
+}
+.contact-modal-images img {
+    height: 250px;
+    width: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+/* --- INSTRUCTOR REFERRAL PAGE --- */
+.referral-header-card {
+    background-color: #1a202c;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+}
+.referral-header-card h2 { color: #fff; font-size: 28px; margin-bottom: 5px; }
+.referral-header-card > p { color: #a0aec0; margin-bottom: 20px; }
+.how-it-works-link { color: var(--primary-color); text-decoration: underline; font-weight: 500; font-size: 16px; margin-bottom: 30px; display: inline-block; }
+.referral-steps { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+.referral-step { flex: 1; }
+.referral-step span { display: block; background-color: var(--primary-color); color: var(--dark-color); font-weight: 600; padding: 5px; border-radius: 4px; margin-bottom: 10px; }
+.referral-step p { font-size: 14px; color: #d1d5db; line-height: 1.5; }
+.referral-terms { text-align: left; border-top: 1px solid #4a5568; padding-top: 20px; font-size: 13px; color: #a0aec0; }
+.referral-terms h4 { font-size: 14px; color: #fff; margin-bottom: 10px; }
+.referral-terms ul { list-style: disc; padding-left: 20px; }
+.referral-terms ul li { margin-bottom: 8px; }
+
+.referral-form-card { margin-top: 30px; }
+.referral-form-card h2 { font-size: 22px; font-weight: 600; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px; }
+.radio-group { display: flex; align-items: center; gap: 10px; height: 45px;}
+.radio-group label { margin-bottom: 0; }
+.radio-group input { margin-right: 5px; }
+.form-footer-note { text-align: center; margin-top: 20px; color: var(--gray-color); font-size: 14px; }
+.form-footer-note a { color: var(--dark-color); text-decoration: underline; font-weight: 500; }
+.rewards-card-link { text-decoration: none; }
     </style>
 </head>
 
@@ -2904,15 +3171,19 @@
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
-                    <div class="card ez-rewards-card">
-                        <h5>SLRewards</h5>
-                        <h3>Earn $500</h3>
-                        <p>Refer instructors to SafeLearners</p>
-                    </div>
+                    <a href="#" data-view="instructor-referral-view" class="rewards-card-link">
+                        <div class="card ez-rewards-card">
+                            <h5>EzRewards</h5>
+                            <h3>Earn $500</h3>
+                            <p>Refer instructors to EzLicence</p>
+                        </div>
+                    </a>
                     <ul>
-                        <li><a href="#">Give Feedback</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Contact</a></li>
+                       
+                            <li><a href="#" id="instructor-nav-feedback">Give Feedback</a></li>
+                            <li><a href="#" id="instructor-nav-support">Support</a></li>
+                            <li><a href="#" id="instructor-nav-contact">Contact</a></li>
+                       
                     </ul>
                     <button class="btn btn-secondary instructor-logout-btn">Logout</button>
                 </div>
@@ -3332,6 +3603,92 @@
                             </div>
                         </div>
                     </div>
+                </section>
+                <section id="instructor-referral-view" class="instructor-view">
+                    <a href="#" class="back-link" data-view="instructor-dashboard-view"><i class="fas fa-chevron-left"></i> Back to Dashboard</a>
+                    
+                    <div class="card referral-header-card">
+                        <h2>Instructor Referral Program</h2>
+                        <p>Earn $500 for each driving instructor you refer*</p>
+                        <a href="#" class="how-it-works-link">How does it work?</a>
+                        <div class="referral-steps">
+                            <div class="referral-step">
+                                <span>Step 1</span>
+                                <p>Refer a fully accredited driving instructor to Safe Learners.</p>
+                            </div>
+                            <div class="referral-step">
+                                <span>Step 2</span>
+                                <p>Referred instructor is onboarded by Safe Learners.</p>
+                            </div>
+                            <div class="referral-step">
+                                <span>Step 3</span>
+                                <p>Referred instructor completes 25 driving lesson bookings.</p>
+                            </div>
+                            <div class="referral-step">
+                                <span>Step 4</span>
+                                <p>Safe Learners pays $500 into your nominated bank account.</p>
+                            </div>
+                        </div>
+                        <div class="referral-terms">
+                            <h4>Terms & Conditions</h4>
+                            <ul>
+                                <li>A referral fee will not be payable for Referred Instructors if:</li>
+                                <li>The Referred Instructor was already referred to Safe Learners by another party or has already had contact with Safe Learners;</li>
+                                <li>the Referred Instructor has already agreed to join Safe Learners;</li>
+                                <li>EzLicence declines to proceed the Referred Instructor for any reason; and/or</li>
+                                <li>the Referred Instructor does not complete 25 bookings within 60 days of going live on the platform.</li>
+                            </ul>
+                        </div>
+                    </div>
+                
+                    <div class="card referral-form-card">
+                        <h2>Refer To Safe Learners</h2>
+                        <form id="referral-form">
+                            <div class="form-grid">
+                                <div class="input-group">
+                                    <label for="ref-your-name">Your name</label>
+                                    <input type="text" id="ref-your-name" value="SINGH, Mandeep" disabled>
+                                </div>
+                                <div class="input-group">
+                                    <label>Do you have the contact details of the referred instructor?</label>
+                                    <div class="radio-group">
+                                        <input type="radio" id="contact-yes" name="has-contact" value="yes" checked>
+                                        <label for="contact-yes">Yes</label>
+                                        <input type="radio" id="contact-no" name="has-contact" value="no">
+                                        <label for="contact-no">No</label>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="ref-instructor-name">Name of instructor you are referring</label>
+                                    <input type="text" id="ref-instructor-name" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="ref-tel">Telephone number</label>
+                                    <input type="tel" id="ref-tel" placeholder="0400 000 000">
+                                </div>
+                                <div class="input-group">
+                                    <label for="ref-city">City and service region</label>
+                                    <input type="text" id="ref-city" placeholder="e.g. Sydney, Eastern Suburbs">
+                                </div>
+                                <div class="input-group">
+                                    <label for="ref-email">Email address</label>
+                                    <input type="email" id="ref-email" placeholder="">
+                                </div>
+                                <div class="input-group">
+                                    <label for="ref-transmission">Vehicle transmission</label>
+                                    <select id="ref-transmission" required>
+                                        <option value="" disabled selected>Please select</option>
+                                        <option value="auto">Automatic</option>
+                                        <option value="manual">Manual</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions" style="text-align: left; margin-top: 20px;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                     <p class="form-footer-note">If you would like to speak to someone about the referral program please <a href="#">contact us</a>.</p>
                 </section>
             </main>
         </div>
@@ -4746,6 +5103,20 @@
     </div>
 </div>
 
+<div id="contact-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 550px; text-align: left; padding: 25px 35px;">
+        <button class="modal-close-btn">&times;</button>
+        <h3 class="contact-modal-title">Contact Our Team</h3>
+        <p>Under the "Support" menu, you will find some great resources and answers to many of the more commonly asked questions.</p>
+        <div class="contact-modal-images">
+            <img src="https://placehold.co/150x300/f1f1f1/333?text=App+Screen+1" alt="App Screenshot 1">
+            <img src="https://placehold.co/150x300/f1f1f1/333?text=App+Screen+2" alt="App Screenshot 2">
+        </div>
+        <p>If you need further assistance or you have feedback, please click <a href="#">here</a> to submit a request.</p>
+        <p>In case of an emergency, please SMS the details to <br><strong>0490 418 703</strong></p>
+        <p>Learners who require assistance can contact our Customer Support Team by <a href="#">Submitting a request</a>.</p>
+    </div>
+</div>
     <div id="feedback-page" class="page">
     <div class="dashboard-layout">
         <aside class="sidebar">
@@ -4820,81 +5191,150 @@
     </div>
 </div>
 
-<div id="support-page" class="page">
+
+
+<div id="instructor-feedback-page" class="page">
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="https://placehold.co/100x100/FFC700/000000?text=SL" alt="Safe Learners Logo">
-                <h3>SAFE LEARNERS</h3>
+                <h3>Safe Learners</h3>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" data-nav="dashboard">Dashboard</a></li>
-                    <li><a href="#" data-nav="wallet">Wallet</a></li>
-                    <li><a href="#" data-nav="invite">Invite Friends</a></li>
+                    <li><a href="#" data-view="instructor-dashboard-view">Dashboard</a></li>
+                    <li><a href="#">Calendar</a></li>
+                    <li><a href="#" data-view="instructor-learners-view">Learners</a></li>
+                    <li><a href="#">Reports</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
+                <a href="#" data-view="instructor-referral-view" class="rewards-card-link">
+                    <div class="card ez-rewards-card">
+                        <h5>EzRewards</h5>
+                        <h3>Earn $500</h3>
+                        <p>Refer instructors to EzLicence</p>
+                    </div>
+                </a>
                 <ul>
-                    <li><a href="#" id="nav-feedback-support">Give Feedback</a></li>
-                    <li class="active"><a href="#" id="nav-support-support">Support</a></li>
+                    <li class="active"><a href="#">Give Feedback</a></li>
+                    <li><a href="#">Support</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
-                <button id="logout-button-support" class="btn btn-secondary">Logout</button>
+                <button class="btn btn-secondary instructor-logout-btn">Logout</button>
             </div>
         </aside>
-        <main class="main-content">
-            <header class="dashboard-header">
-                <div class="support-breadcrumbs">
-                    <a href="#" id="support-back-to-home">Support</a> > <span>Driving Instructors</span> > <span>How To Safe Learners Works</span>
+        <main class="main-content rating-page-main">
+            <div class="card rating-card" style="text-align: left; max-width: 650px;">
+                 <div class="logo" style="justify-content: center; margin-bottom: 25px;">
+                    <img src="https://placehold.co/40x40/FFC700/000000?text=SL" alt="Safe Learners Logo" style="height: 30px;">
+                    <span style="font-weight: 700; font-size: 20px; margin-left: 5px;">Safe Learners</span>
                 </div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search">
-                    <i class="fas fa-search"></i>
-                </div>
-            </header>
-
-            <div class="support-content-grid">
-                <aside class="support-sidebar">
-                    <a href="#" class="support-sidebar-link">Support &rsaquo; Driving Instructors</a>
-                    <a href="#" class="support-sidebar-link">Support &rsaquo; Learners</a>
-                    <div class="support-topics">
-                        <h4>How Safe Learners Works</h4>
-                        <ul>
-                            <li><a href="#">Business Criteria</a></li>
-                            <li><a href="#">Getting Started</a></li>
-                            <li><a href="#">How To Use Our Support Centre</a></li>
-                            <li><a href="#">Private Learner Fact Sheet</a></li>
-                            <li><a href="#">Payout Processing Fees Fact Sheet</a></li>
-                        </ul>
-                    </div>
-                    <a href="#" class="see-all-link">See All 9 Articles</a>
-                </aside>
-                <article class="support-article">
-                    <h1>Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s,</h1>
-                    <ul>
-                        <li>Lorem Ipsum is Simply Dummy</li>
-                        <li>Text Of The Printing And Typesetting</li>
-                        <li>Industry. Lorem Ipsum Has Been The Industry's</li>
-                        <li>Standard Dummy Text Ever Since The 1500s,</li>
-                        <li>When An Unknown Printer Took A Galley Of Type A</li>
-                    </ul>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <h2>Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s,</h2>
-                    <ul>
-                        <li>Lorem Ipsum is Simply Dummy</li>
-                        <li>Text Of The Printing And Typesetting</li>
-                        <li>Industry. Lorem Ipsum Has Been The Industry's</li>
-                        <li>Standard Dummy Text Ever Since The 1500s,</li>
-                        <li>When An Unknown Printer Took A Galley Of Type A</li>
-                    </ul>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </article>
+                <form id="instructor-feedback-form">
+                    <h2 style="text-align: center; font-size: 18px; font-weight: 500; margin-bottom: 20px;">What one feature or improvement would enhance your experience as a driving instructor on EzLicence?</h2>
+                    <p style="font-size: 14px; margin-bottom: 10px;">Answer required</p>
+                    <textarea name="instructor_feedback" placeholder="Type your answer here..." rows="5" required style="font-size: 16px;"></textarea>
+                    <button type="submit" class="btn btn-primary btn-full" style="margin-top: 15px;">Submit</button>
+                </form>
             </div>
-            <a href="#" class="help-link">? Help</a>
         </main>
     </div>
 </div>
+
+<div id="instructor-feedback-success-page" class="page">
+    <div class="feedback-container">
+        <div class="feedback-content">
+            <div class="logo">
+                <img src="https://placehold.co/40x40/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <span>Safe Learners</span>
+            </div>
+            <p class="success-text">
+               If you have a specific question or need help resolving a problem, you can visit our <a href="#">Help Centre</a> or <a href="#">contact us</a> to connect with our support team. UK customers requiring help, click <a href="#">here</a>.
+            </p>
+            <h2 style="font-weight: 600;">Thanks for sharing your ideas, issues or appreciation.</h2>
+            <p class="success-text">We can't respond individually, but we'll pass it on to those who are working to help make Safe Learners better for everyone.</p>
+            <button id="instructor-share-feedback-btn" class="btn btn-submit-dark">Share Feedback</button>
+        </div>
+    </div>
+</div>
+<div id="instructor-feedback-page" class="page">
+    <div class="feedback-container">
+        <div class="feedback-content">
+             <div class="logo">
+                <img src="https://placehold.co/40x40/FFC700/000000?text=SL" alt="Safe Learners Logo">
+                <span>Safe Learners</span>
+            </div>
+            <form id="instructor-feedback-form">
+                <h2>What one feature or improvement would enhance your experience as a driving instructor on Safe Learners?</h2>
+                <p>Answer required</p>
+                <textarea class="input-group input" name="instructor_feedback" placeholder="Type your answer here..." required></textarea>
+                <button type="submit" class="btn btn-submit-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="support-index-page" class="page">
+    <div class="support-index-container">
+        <header class="support-index-header">
+            <div class="breadcrumbs">
+                Safe Learners Support &nbsp; > &nbsp; Driving Instructors
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <i class="fas fa-search"></i>
+            </div>
+        </header>
+        <main>
+            <div class="support-index-title">
+                <h1>Driving Instructors</h1>
+                <p>Information & support for driving instructors</p>
+            </div>
+            <div class="support-category-grid">
+                <div class="support-category-column">
+                    <h3>Getting Started With Safe Learners</h3>
+                    <ul>
+                        <li><a href="#" class="support-article-link" data-article="how-it-works">How Safe Learners works</a></li>
+                        <li><a href="#" class="support-article-link" data-article="business-criteria">Business Criteria</a></li>
+                        <li><a href="#" class="support-article-link" data-article="getting-started">Getting started</a></li>
+                        <li><a href="#">See all 9 articles</a></li>
+                    </ul>
+                </div>
+                <div class="support-category-column">
+                    <h3>Manage Your Account</h3>
+                    <ul>
+                        <li><a href="#">How to navigate your instructor account</a></li>
+                        <li><a href="#">See all 12 articles</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div id="support-page" class="page">
+    <div class="support-article-container">
+        <header class="support-index-header">
+            <div id="article-breadcrumbs" class="breadcrumbs"></div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <i class="fas fa-search"></i>
+            </div>
+        </header>
+        <div class="support-article-grid">
+            <aside class="support-article-sidebar">
+                <h3>Articles in this section</h3>
+                <ul id="article-sidebar-links"></ul>
+            </aside>
+            <article id="article-content-main" class="support-article-content">
+                <h1 id="article-title"></h1>
+                <p id="article-meta" class="meta"></p>
+                <div id="article-body"></div>
+            </article>
+        </div>
+    </div>
+    <div class="floating-help-btn">? Help</div>
+</div>
+
 
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
@@ -4916,14 +5356,126 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // --- START: MOCK DATABASE FOR SUPPORT ARTICLES ---
+        const articles = {
+            'how-it-works': {
+                title: 'How Safe Learners works',
+                meta: '1 year ago - Updated',
+                breadcrumbs: 'Safe Learners Support &nbsp; > &nbsp; Driving Instructors &nbsp; > &nbsp; Getting Started',
+                sidebarLinks: [
+                    { id: 'how-it-works', text: 'How Safe Learners works' },
+                    { id: 'business-criteria', text: 'Business Criteria' },
+                    { id: 'getting-started', text: 'Getting started' }
+                ],
+                body: `
+                    <h3>This will be useful if:</h3>
+                    <p>You are a <strong>Driving Instructor User</strong> of the Safe Learners booking platform.</p>
+                    <h3>You are trying to:</h3>
+                    <p>Understand how Safe Learners works</p>
+                    <h3>Overview:</h3>
+                    <p>Safe Learners is the preferred platform for independent instructors. Here’s what makes it so great:</p>
+                    <ol>
+                        <li><strong>Reach more learner drivers</strong> - We provide a platform for driving instructors to showcase their services to a wider audience, increasing visibility and attracting potential clients.</li>
+                        <li><strong>Convenient scheduling</strong> - We offer a user-friendly, real-time scheduling system, allowing instructors to manage their availability and schedule lessons with ease.</li>
+                        <li><strong>Expert marketing support</strong> - We assist driving instructors with marketing by featuring their profiles on the platform, making it easier for learners to find and connect with them.</li>
+                    </ol>
+                `
+            },
+            'business-criteria': {
+                title: 'Business Criteria',
+                meta: '1 year ago - Updated',
+                breadcrumbs: 'Safe Learners Support &nbsp; > &nbsp; Driving Instructors &nbsp; > &nbsp; Getting Started',
+                sidebarLinks: [
+                    { id: 'how-it-works', text: 'How Safe Learners works' },
+                    { id: 'business-criteria', text: 'Business Criteria' },
+                    { id: 'getting-started', text: 'Getting started' }
+                ],
+                body: `
+                    <h3>This will be useful if:</h3>
+                    <p>You are a <strong>Driving Instructor User</strong> of the Safe Learners booking platform.</p>
+                    <h3>You are trying to:</h3>
+                    <p>Understand the requirements to join.</p>
+                    <h3>Overview:</h3>
+                    <p>We can't wait to work with you! To speed up the onboarding process, make sure you have the following items readily available:</p>
+                    <h3>Accreditations</h3>
+                    <ul>
+                        <li>Australian Driver's Licence</li>
+                        <li>Driving Instructor's Licence</li>
+                        <li>Working with Children Check or state equivalent</li>
+                    </ul>
+                `
+            },
+            'getting-started': {
+                title: 'Getting started',
+                meta: '2 months ago - Updated',
+                breadcrumbs: 'Safe Learners Support &nbsp; > &nbsp; Driving Instructors &nbsp; > &nbsp; Getting Started',
+                sidebarLinks: [
+                    { id: 'how-it-works', text: 'How Safe Learners works' },
+                    { id: 'business-criteria', text: 'Business Criteria' },
+                    { id: 'getting-started', text: 'Getting started' }
+                ],
+                body: `<h3>Getting Started Overview</h3><p>This is the content for the 'Getting started' article. It explains the first steps for a new instructor on the platform.</p>`
+            }
+        };
+
+        function renderArticle(articleId) {
+            const article = articles[articleId];
+            if (!article) return;
+
+            const titleEl = document.getElementById('article-title');
+            const metaEl = document.getElementById('article-meta');
+            const breadcrumbsEl = document.getElementById('article-breadcrumbs');
+            const bodyEl = document.getElementById('article-body');
+            const sidebarUl = document.getElementById('article-sidebar-links');
+
+            // Explicitly clear all previous content
+            titleEl.innerHTML = ''; metaEl.innerHTML = ''; breadcrumbsEl.innerHTML = ''; bodyEl.innerHTML = ''; sidebarUl.innerHTML = '';
+
+            // Set the new content
+            titleEl.textContent = article.title;
+            metaEl.textContent = article.meta;
+            breadcrumbsEl.innerHTML = article.breadcrumbs;
+            bodyEl.innerHTML = article.body;
+
+            // Rebuild the sidebar
+            article.sidebarLinks.forEach(link => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#support-page`;
+                a.textContent = link.text;
+                a.classList.add('support-article-link');
+                a.dataset.article = link.id;
+                if (link.id === articleId) { a.classList.add('active'); }
+                li.appendChild(a);
+                sidebarUl.appendChild(li);
+            });
+        }
+        // --- END: MOCK DATABASE ---
         // --- GLOBAL STATE & NAVIGATION ---
         const pages = document.querySelectorAll('.page');
         let lastDashboardView = 'dashboard-main-content'; 
         const allSidebars = document.querySelectorAll('.sidebar-nav');
+        let currentUserRole = null; // <-- ADD THIS LINE
 
-        function showPage(pageId) {
-            pages.forEach(page => page.classList.toggle('active', page.id === pageId));
+        function showPage(pageId, pushState = true) {
+            const targetPage = document.getElementById(pageId);
+            if (!targetPage) return;
+
+            pages.forEach(page => {
+                page.classList.toggle('active', page.id === pageId);
+            });
+            
+            if (pushState && window.location.hash !== `#${pageId}`) {
+                history.pushState({ pageId: pageId }, '', `#${pageId}`);
+            }
         }
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.pageId) {
+                showPage(e.state.pageId, false);
+            } else {
+                showPage('landing-page', false);
+            }
+        });
 
         function showView(viewId) {
             document.querySelectorAll('#dashboard-page .main-content .content-view').forEach(view => view.classList.remove('active'));
@@ -4991,15 +5543,11 @@ if (target.matches('#back-to-dashboards-btn')) {
   if (target.matches('#leave-rating-link'))       { e.preventDefault(); showPage('rating-page'); return; }
 
   // 3) NEW: Feedback routes (all places it appears)
-  if (target.matches(
-    '#nav-feedback-main,' +        // dashboard sidebar
-    '#feedback-btn,' +             // success page sidebar
-    '#nav-feedback-feedback,' +    // feedback page sidebar (self)
-    '#nav-feedback-support,' +     // support page sidebar
-    '#share-feedback-btn'          // "Share Feedback" button on success page
-  )) {
+// 3) Feedback routes
+if (target.matches('#nav-feedback-main') && currentUserRole === 'learner') {
     e.preventDefault();
-    showPage('feedback-page');
+    // This now ONLY works if the user is a learner
+    showPage('feedback-page'); 
     return;
   }
 
@@ -5050,35 +5598,29 @@ if (feedbackForm) {
         // --- AUTHENTICATION & ROLE-BASED ROUTING ---
         auth.onAuthStateChanged(user => {
             if (user) {
-                // User is signed in, check their role in Firestore
                 db.collection('users').doc(user.uid).get().then(doc => {
+                    const initialPage = window.location.hash.substring(1) || null;
                     if (doc.exists) {
                         const userData = doc.data();
-                        const displayName = userData.firstName || user.email.split('@')[0];
-                        
                         if (userData.role === 'instructor') {
-                            // --- INSTRUCTOR LOGGED IN ---
+                            currentUserRole = 'instructor';
+                            const displayName = userData.firstName || user.email.split('@')[0];
                             document.getElementById('instructor-user-name').textContent = displayName;
-                            showPage('instructor-dashboard-page');
-                        } else {
-                            // --- LEARNER LOGGED IN ---
-                             document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
+                            showPage(initialPage || 'instructor-dashboard-page', false);
+                        } else { // LEARNER LOGIC
+                            currentUserRole = 'learner';
+                            const displayName = userData.firstName || user.email.split('@')[0];
+                            document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
                             if(document.getElementById('welcome-message')) {
                                 document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
                             }
-                            showPage('dashboard-page');
+                            showPage(initialPage || 'dashboard-page', false);
                         }
-                    } else {
-                        // Fallback if user has no data in Firestore
-                        console.error("User data not found in Firestore!");
-                        showPage('login-page');
                     }
-                }).catch(error => {
-                    console.error("Error fetching user data:", error);
-                    showPage('login-page');
                 });
             } else {
-                // User is signed out
+                currentUserRole = null;
+                history.replaceState(null, '', window.location.pathname);
                 showPage('landing-page');
             }
         });
@@ -5265,25 +5807,28 @@ if (feedbackForm) {
         // --- START: ADDED FOR INSTRUCTOR DASHBOARD NAVIGATION ---
         const instructorDashboardPage = document.getElementById('instructor-dashboard-page');
         if (instructorDashboardPage) {
-            const instructorSidebarNav = instructorDashboardPage.querySelector('.sidebar-nav');
-            const instructorViews = instructorDashboardPage.querySelectorAll('.instructor-view');
+            const instructorSidebar = instructorDashboardPage.querySelector('.sidebar');
 
-            instructorSidebarNav.addEventListener('click', (e) => {
+            instructorSidebar.addEventListener('click', (e) => {
                 const link = e.target.closest('a[data-view]');
                 if (!link) return;
 
                 e.preventDefault();
                 const targetViewId = link.dataset.view;
                 
-                // 1. Update active class on sidebar
-                instructorSidebarNav.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-                link.parentElement.classList.add('active');
+                // Update active class on main nav items only
+                const mainNav = instructorSidebar.querySelector('.sidebar-nav');
+                mainNav.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+                if (link.closest('li')) {
+                    link.closest('li').classList.add('active');
+                }
 
-                // 2. Show the correct content view
-                instructorViews.forEach(view => {
+                // Show the correct content view
+                instructorDashboardPage.querySelectorAll('.instructor-view').forEach(view => {
                     view.classList.toggle('active', view.id === targetViewId);
                 });
             });
+            // ... (rest of the code for tabs, etc.)
 
             // Also handle the tabs on the learners page
             const learnersView = document.getElementById('instructor-learners-view');
@@ -5383,7 +5928,92 @@ if (feedbackForm) {
                 }
             }
         });
+        // --- START: INSTRUCTOR FEEDBACK FLOW ---
+// --- START: INSTRUCTOR FEEDBACK FLOW (Reversed Logic as Requested) ---
+document.addEventListener('click', (e) => {
+    // 1. When "Give Feedback" is clicked in the sidebar, show the SUCCESS page first.
+    if (e.target.matches('#instructor-nav-feedback') && currentUserRole === 'instructor') {
+        e.preventDefault();
+        showPage('instructor-feedback-success-page');
+    }
+    // --- ADD THIS NEW BLOCK ---
+    // When "Support" is clicked in the sidebar, show the new support index page
+    if (e.target.matches('#instructor-nav-support')) {
+        e.preventDefault();
+        showPage('support-index-page');
+    }
+
+    // --- END OF NEW BLOCK ---
+     // --- ADD THIS NEW BLOCK ---
+    // When an article link is clicked on the support index page
+    // When an article link is clicked on the support index page
+    if (e.target.matches('.support-article-link')) {
+        e.preventDefault();
+        const articleId = e.target.dataset.article;
+        renderArticle(articleId); // This loads the correct content
+        showPage('support-page'); // This shows the page
+    }
+    // --- END OF NEW BLOCK ---
+    
+
+    // 2. When "Share Feedback" is clicked on the success page, show the FORM page.
+    if (e.target.matches('#instructor-share-feedback-btn')) {
+        e.preventDefault();
+        showPage('instructor-feedback-page');
+    }
+    
+    // This part handles clicking "Dashboard" etc. from the feedback pages
+    if (e.target.closest('#instructor-feedback-page a[data-view], #instructor-feedback-success-page a[data-view]')) {
+        e.preventDefault();
+        showPage('instructor-dashboard-page');
+    }
+});
+
+const instructorFeedbackForm = document.getElementById('instructor-feedback-form');
+if (instructorFeedbackForm) {
+    instructorFeedbackForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent the page from reloading
+
+        // 1. Show the alert message with the "OK" button
+        alert('Thank you for your feedback');
+
+        // 2. Go back to the main instructor dashboard
+        showPage('instructor-dashboard-page');
+
+        // 3. Reset the form for the next time it's opened
+        instructorFeedbackForm.reset();
+    });
+}
+// --- END: INSTRUCTOR FEEDBACK FLOW ---
+// --- END: INSTRUCTOR FEEDBACK FLOW ---
         // --- END: PROPOSE BOOKING PAGE NAVIGATION ---
+        // --- START: CONTACT MODAL LOGIC ---
+const contactModal = document.getElementById('contact-modal');
+if (contactModal) {
+    const openContactModalBtn = document.getElementById('instructor-nav-contact');
+    const closeContactModalBtn = contactModal.querySelector('.modal-close-btn');
+
+    const openContactModal = (e) => {
+        e.preventDefault();
+        contactModal.classList.add('active');
+    };
+    const closeContactModal = () => {
+        contactModal.classList.remove('active');
+    };
+
+    if (openContactModalBtn) {
+        openContactModalBtn.addEventListener('click', openContactModal);
+    }
+    if (closeContactModalBtn) {
+        closeContactModalBtn.addEventListener('click', closeContactModal);
+    }
+    contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) {
+            closeContactModal();
+        }
+    });
+}
+// --- END: CONTACT MODAL LOGIC ---
     </script>
 
     
