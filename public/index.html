@@ -3392,6 +3392,10 @@
                         <h4>My Profile</h4>
                     </div>
                     <div class="form-group" style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="instructor-photo">Upload Instructor Photo</label>
+                            <input type="file" id="instructor-photo" accept="image/*" class="form-control">
+                        </div>
                         <label for="instructor-bio">Your Instructor Bio</label>
                         <textarea id="instructor-bio" rows="10" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-family: var(--font-family);" placeholder="Tell learners a little about yourself..."></textarea>
                         
@@ -3425,7 +3429,11 @@
                 <div class="card" style="margin-top: 20px;">
                     <div class="card-header"><h4>Vehicle Details</h4></div>
                     <div class="form-group" style="padding: 20px;">
-                         <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="vehicle-photo">Upload Vehicle Photo</label>
+                            <input type="file" id="vehicle-photo" accept="image/*" class="form-control">
+                        </div>
+                        <div class="form-group-inline">
                             <div>
                                 <label>Vehicle Make</label>
                                 <input type="text" id="vehicle-make" placeholder="e.g. Toyota">
@@ -3435,7 +3443,7 @@
                                 <input type="text" id="vehicle-model" placeholder="e.g. Corolla">
                             </div>
                         </div>
-                         <div class="form-group-inline" style="margin-top: 20px;">
+                        <div class="form-group-inline" style="margin-top: 20px;">
                             <div>
                                 <label>ANCAP Safety Rating</label>
                                 <select id="vehicle-ancap">
@@ -4961,6 +4969,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+
 
     <script>
         // PASTE YOUR FIREBASE CONFIG OBJECT HERE
@@ -4986,11 +4996,9 @@ async function renderInstructors() {
         return;
     }
 
-    // 1. Show a loading state while fetching data
     instructorGrid.innerHTML = '<p>Loading instructors...</p>';
 
     try {
-        // 2. Query Firestore for all users with the role 'instructor'
         const querySnapshot = await db.collection('users').where('role', '==', 'instructor').get();
 
         if (querySnapshot.empty) {
@@ -4998,35 +5006,40 @@ async function renderInstructors() {
             return;
         }
 
-        // 3. Clear the loading message
         instructorGrid.innerHTML = '';
 
-        // 4. Loop through each instructor document and create an HTML card
         querySnapshot.forEach(doc => {
-            const instructor = doc.data(); // This is the data like {firstName, email, role}
-            const instructorId = doc.id;   // The unique ID of the document
+            const instructor = doc.data(); 
+            const instructorId = doc.id;
+            
+            // Use the uploaded photos, or fall back to a placeholder
+            const instructorPhoto = instructor.instructorPhotoUrl || "https://t4.ftcdn.net/jpg/00/88/53/89/360_F_88538986_5Bi4eJ667pocsO3BIlbN4fHKz8yUFSuA.jpg";
+            const vehiclePhoto = instructor.vehiclePhotoUrl || "https://placehold.co/100x100?text=Car";
 
-            // Note: Using placeholder images and data for fields not in your DB yet.
-            // For a richer display, you can add fields like 'imageUrl', 'rating', and 'price' 
-            // to your instructor documents in Firestore.
             const instructorCardHTML = `
                 <div class="instructor-card-new" data-id="${instructorId}">
                     <div class="instructor-photo-new">
-                        <img src="https://t4.ftcdn.net/jpg/00/88/53/89/360_F_88538986_5Bi4eJ667pocsO3BIlbN4fHKz8yUFSuA.jpg" alt="Instructor ${instructor.firstName}">
+                        <img src="${instructorPhoto}" alt="Instructor ${instructor.firstName}">
                     </div>
                     <div class="instructor-details-new">
                         <h4>${instructor.firstName || 'Instructor'}</h4>
-                        <p class="instructor-meta price">$70.00 / hr</p> <p class="instructor-meta"><i class="fas fa-star"></i> New Instructor</p> <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Instructor</p>
+                        <p class="instructor-meta price">$70.00 / hr</p> 
+                        <p class="instructor-meta"><i class="fas fa-star"></i> New Instructor</p> 
+                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Instructor</p>
                         <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
                     </div>
                     <div class="instructor-actions-new">
-                        <button class="btn btn-secondary btn-full view-profile-btn">View Profile</button>
-                        <button class="btn btn-primary btn-full">Book Online Now</button>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <img src="${vehiclePhoto}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
+                            <div>
+                                <p style="font-size: 14px; font-weight: 600;">${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}</p>
+                                <p style="font-size: 12px; color: var(--gray-color);">${instructor.transmission || 'Auto'}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
 
-            // 5. Add the newly created card to the grid on the webpage
             instructorGrid.insertAdjacentHTML('beforeend', instructorCardHTML);
         });
 
@@ -5567,38 +5580,61 @@ document.addEventListener('click', (e) => {
 });
 
 
+const storage = firebase.storage();
+
+// Function to handle the file upload and save profile data
+async function saveInstructorProfile(e) {
+    e.preventDefault();
+    if (!auth.currentUser) {
+        alert("You must be logged in to save your profile.");
+        return;
+    }
+    const uid = auth.currentUser.uid;
+    const profileForm = document.getElementById('instructor-profile-form');
+
+    const instructorPhotoFile = profileForm.querySelector('#instructor-photo').files[0];
+    const vehiclePhotoFile = profileForm.querySelector('#vehicle-photo').files[0];
+    
+    // Start with a base data object
+    const profileData = {
+        bio: profileForm.querySelector('#instructor-bio').value,
+        languages: profileForm.querySelector('#languages-spoken').value,
+        startYear: profileForm.querySelector('#instructor-start-year').value,
+        transmission: profileForm.querySelector('#instructor-transmission').value,
+        vehicleMake: profileForm.querySelector('#vehicle-make').value,
+        vehicleModel: profileForm.querySelector('#vehicle-model').value,
+        ancap: profileForm.querySelector('#vehicle-ancap').value,
+        dualControls: profileForm.querySelector('#vehicle-dual-controls').value,
+    };
+
+    try {
+        // Handle instructor photo upload if a file is selected
+        if (instructorPhotoFile) {
+            const instructorPhotoRef = storage.ref(`instructor-photos/${uid}/${instructorPhotoFile.name}`);
+            await instructorPhotoRef.put(instructorPhotoFile);
+            profileData.instructorPhotoUrl = await instructorPhotoRef.getDownloadURL();
+        }
+
+        // Handle vehicle photo upload if a file is selected
+        if (vehiclePhotoFile) {
+            const vehiclePhotoRef = storage.ref(`vehicle-photos/${uid}/${vehiclePhotoFile.name}`);
+            await vehiclePhotoRef.put(vehiclePhotoFile);
+            profileData.vehiclePhotoUrl = await vehiclePhotoRef.getDownloadURL();
+        }
+
+        // Update the document in Firestore with the data and new photo URLs
+        await db.collection('users').doc(uid).update(profileData);
+        alert("Profile updated successfully! ✅");
+    } catch (error) {
+        console.error("Error updating profile: ", error);
+        alert("There was an error saving your profile. Please try again.");
+    }
+}
+
 // Event listener to SAVE the form data
 const instructorProfileForm = document.getElementById('instructor-profile-form');
 if (instructorProfileForm) {
-    instructorProfileForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!auth.currentUser) {
-            alert("You must be logged in to save your profile.");
-            return;
-        }
-        const uid = auth.currentUser.uid;
-        
-        // 1. Collect all data from the form
-        const profileData = {
-            bio: document.getElementById('instructor-bio').value,
-            languages: document.getElementById('languages-spoken').value,
-            startYear: document.getElementById('instructor-start-year').value,
-            transmission: document.getElementById('instructor-transmission').value,
-            vehicleMake: document.getElementById('vehicle-make').value,
-            vehicleModel: document.getElementById('vehicle-model').value,
-            ancap: document.getElementById('vehicle-ancap').value,
-            dualControls: document.getElementById('vehicle-dual-controls').value,
-        };
-
-        try {
-            // 2. Update the document in Firestore
-            await db.collection('users').doc(uid).update(profileData);
-            alert("Profile updated successfully! ✅");
-        } catch (error) {
-            console.error("Error updating profile: ", error);
-            alert("There was an error saving your profile. Please try again.");
-        }
-    });
+    instructorProfileForm.addEventListener('submit', saveInstructorProfile);
 }
 // --- END: INSTRUCTOR PROFILE EDIT LOGIC ---// --- START: DYNAMIC LEARNER-FACING PROFILE PAGE ---
 async function displayInstructorProfile(instructorId) {
@@ -5614,7 +5650,13 @@ async function displayInstructorProfile(instructorId) {
 
         const data = doc.data();
 
+        // Use the uploaded photos, or fall back to placeholders
+        const instructorPhoto = data.instructorPhotoUrl || "https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=";
+        const vehiclePhoto = data.vehiclePhotoUrl || "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Urban-Cruiser/12237/1735368926257/front-left-side-47.jpg";
+
         // Populate the profile page with the instructor's data
+        page.querySelector('.profile-photo').src = instructorPhoto;
+        page.querySelector('.profile-car-photo').src = vehiclePhoto;
         page.querySelector('.profile-header-info h2').textContent = data.firstName || 'Instructor';
         page.querySelector('.profile-section p').textContent = data.bio || 'Bio not provided.';
         page.querySelector('.language-tag').textContent = data.languages || 'English';
