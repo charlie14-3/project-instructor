@@ -5026,20 +5026,23 @@ async function renderInstructors() {
                         <p class="instructor-meta price">$70.00 / hr</p> 
                         <p class="instructor-meta"><i class="fas fa-star"></i> New Instructor</p> 
                         <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Instructor</p>
-                        <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
+                        <a href="#" class="availability-link" data-id="${instructorId}"><strong>Check Availability ></strong></a>
                     </div>
                     <div class="instructor-actions-new">
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <div class="vehicle-info-display" style="display: flex; gap: 10px; align-items: center;">
                             <img src="${vehiclePhoto}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
                             <div>
-                                <p style="font-size: 14px; font-weight: 600;">${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}</p>
-                                <p style="font-size: 12px; color: var(--gray-color);">${instructor.transmission || 'Auto'}</p>
+                                <p style="font-size: 14px; font-weight: 600; margin: 0;">${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}</p>
+                                <p style="font-size: 12px; color: var(--gray-color); margin: 0;">${instructor.transmission || 'Auto'}</p>
                             </div>
+                        </div>
+                        <div class="buttons-row" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; width: 100%;">
+                            <button class="btn btn-secondary btn-full view-profile-btn">View Profile</button>
+                            <button class="btn btn-primary btn-full open-booking-btn">Book Online Now</button>
                         </div>
                     </div>
                 </div>
             `;
-
             instructorGrid.insertAdjacentHTML('beforeend', instructorCardHTML);
         });
 
@@ -5096,22 +5099,48 @@ document.addEventListener('click', (e) => {
   }
 
   // 2) Wallet / Booking / Profile routes (existing)
-  if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); return; }
-  if (target.matches('.open-booking-btn'))        { e.preventDefault(); showPage('booking-page'); return; }
-  // Find and replace the existing .view-profile-btn logic with this
-if (e.target.matches('.view-profile-btn')) {
-    e.preventDefault();
-    // Find the parent card to get the instructor's ID from the data-id attribute
-    const card = e.target.closest('.instructor-card-new');
-    if (card && card.dataset.id) {
-        const instructorId = card.dataset.id;
-        displayInstructorProfile(instructorId); // Call the new function
-    } else {
-         console.error("Could not find instructor ID for this profile.");
+  // 2) Wallet / Booking / Profile routes (existing)
+    if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); return; }
+    
+    // Updated logic for opening booking page from anywhere
+    if (target.matches('.open-booking-btn')) {
+        e.preventDefault();
+        // You might want to get the instructor ID here to pre-select them on the booking page
+        const instructorId = target.closest('.instructor-card-new')?.dataset.id;
+        console.log(`Booking for instructor ID: ${instructorId}`); // You can use this later
+        showPage('booking-page');
+        return;
     }
-    return; // Add a return statement
-}
-  if (target.matches('#switch-instructor-link'))  { e.preventDefault(); showView('switch-instructor-content');renderInstructors(); return; }
+    
+    // Handles the 'View Profile' button on the instructor list
+    if (target.matches('.view-profile-btn')) {
+        e.preventDefault();
+        const card = target.closest('.instructor-card-new');
+        if (card && card.dataset.id) {
+            const instructorId = card.dataset.id;
+            displayInstructorProfile(instructorId);
+        } else {
+             console.error("Could not find instructor ID for this profile.");
+        }
+        return;
+    }
+    
+    // Handles the 'Check Availability' link on the instructor list
+    if (target.matches('.availability-link')) {
+        e.preventDefault();
+        const instructorId = target.dataset.id;
+        // In a real app, you would fetch and display this instructor's availability
+        console.log(`Opening availability modal for instructor ID: ${instructorId}`);
+        openModal();
+        return;
+    }
+
+    if (target.matches('#switch-instructor-link')) {
+        e.preventDefault();
+        showView('switch-instructor-content');
+        renderInstructors();
+        return;
+    }
   // Back from instructor profile to dashboard
 // Back from instructor lists/profile to dashboard
 if (target.matches('#back-to-instructors-btn, #back-to-dashboard-btn')) {
