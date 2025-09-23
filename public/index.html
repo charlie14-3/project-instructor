@@ -3559,6 +3559,112 @@ input:checked + .slider:before { transform: translateX(20px); }
     font-size: 13px;
     color: var(--gray-color);
 }
+
+
+/* --- INSTRUCTOR REPORTS VIEW STYLES --- */
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
+}
+.reports-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+.reports-header .tabs {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.reports-header .tab-link {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+}
+.reports-header .tab-link.active {
+    background-color: var(--secondary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-color);
+}
+.reports-header .tab-link.active::after {
+    display: none; /* remove the underline */
+}
+.stat-card a {
+    color: var(--gray-color);
+}
+
+/* --- REPORTS - FINANCIAL YEAR TAB STYLES --- */
+.payout-legend {
+    position: absolute;
+    top: 70px;
+    right: 40px;
+    font-size: 13px;
+    display: flex;
+    gap: 15px;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.pending-payout-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+.pending-payout-card h4 {
+    margin: 0;
+}
+.next-payout-item {
+    font-weight: 500;
+    cursor: pointer;
+}
+.transaction-summary-card {
+    padding: 0;
+}
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.summary-header h4, .summary-header p, .summary-header a, .summary-header strong {
+    margin: 0;
+    line-height: 1.5;
+}
+.summary-header p { font-size: 13px; color: var(--gray-color); }
+.summary-header a { font-size: 14px; text-decoration: underline; font-weight: 500; }
+.fortnightly-reports-table {
+    font-size: 14px;
+}
+.reports-table-header, .reports-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.reports-table-header {
+    font-weight: 500;
+    color: var(--gray-color);
+}
+.reports-table-row:last-child {
+    border-bottom: none;
+}
+.reports-table-row span:first-child {
+    font-weight: 500;
+}
+.report-links {
+    text-align: right;
+}
+.report-links a {
+    text-decoration: underline;
+    margin-left: 20px;
+}
 </style>
 </head>
 
@@ -3773,7 +3879,7 @@ input:checked + .slider:before { transform: translateX(20px); }
                         <li class="active"><a href="#" data-view="instructor-dashboard-view">Dashboard</a></li>
                         <li><a href="#" data-view="instructor-calendar-view">Calendar</a></li>
                         <li><a href="#" data-view="instructor-learners-view">Learners</a></li>
-                        <li><a href="#">Reports</a></li>
+                        <li><a href="#" data-view="instructor-reports-view">Reports</a></li>
                     </ul>
                 </nav>
                 <div class="sidebar-footer">
@@ -4578,6 +4684,181 @@ input:checked + .slider:before { transform: translateX(20px); }
                 <div><i class="fas fa-user" style="margin-right: 10px;"></i> <strong>Ryan B.</strong> confirmed this booking</div>
                 <div>10 days ago</div>
                 <div><span class="status-badge status-confirmed">CONFIRMED</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="instructor-reports-view" class="instructor-view">
+    <div class="reports-header">
+        <div>
+            <p class="breadcrumbs" style="margin:0;">Reports > Summary</p>
+            <h2>Summary</h2>
+        </div>
+        <div class="tabs">
+            <button class="tab-link active">Summary</button>
+            <button class="tab-link">This Financial Year</button>
+            <button class="tab-link">FY 2023/24</button>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="card stat-card">
+            <p>Earnings</p>
+            <h3>$309.37</h3>
+            <a href="#">Your next payout: 23 Jun</a>
+        </div>
+        <div class="card stat-card">
+            <p>Cancellation Rate</p>
+            <h3>0.0%</h3>
+            <a href="#">Your cancels in the last 90 days</a>
+        </div>
+        <div class="card stat-card">
+            <p>Booking hours per learner</p>
+            <h3>3.05</h3>
+            <a href="#">Excludes new learners (within 90 days)</a>
+        </div>
+        <div class="card stat-card">
+            <p>Learner rating</p>
+            <h3>5.0</h3>
+            <a href="#">Your reviews</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Earnings report</h4>
+            <p class="subtitle" style="margin-bottom:0;">Your payouts by month (last 12 months)</p>
+        </div>
+        <img src="https://i.imgur.com/uF20k8i.png" alt="Earnings Report Graph" style="width: 100%;">
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card stat-card"><p>Next Payout (23 Jun 2025)</p><h3>$309.37</h3></div>
+        <div class="card stat-card"><p>Previous Payout (9 Jun 2025)</p><h3>$696.98</h3></div>
+        <div class="card stat-card"><p>FYTD Payout (YTD: 25)</p><h3>$9,731.24</h3></div>
+        <div class="card stat-card"><p>All Time Earnings</p><h3>$11,255.97</h3></div>
+        <div class="card stat-card"><p>Ave Weekly Earnings (last 90 days)</p><h3>$535.40</h3></div>
+        <div class="card stat-card"><p>Ave Earnings Per Hour (last 90 days)</p><h3>$53.54</h3></div>
+        <div class="card stat-card"><p>Upcoming Bookings</p><h3>$385.31</h3></div>
+        <div class="card stat-card"><p>Credits Held By Your Learners</p><h3>$855.45</h3></div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Booking Activity</h4>
+        </div>
+        <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); text-align: center; margin-top:0;">
+            <div class="stat-card" style="padding: 10px;"><h3>51,714</h3><p>Searches in your area</p></div>
+            <div class="stat-card" style="padding: 10px;"><h3>1</h3><p>Test packages</p></div>
+            <div class="stat-card" style="padding: 10px;"><h3>219</h3><p>Total booking hrs</p></div>
+            <div class="stat-card" style="padding: 10px;"><h3>78</h3><p>Learners</p></div>
+            <div class="stat-card" style="padding: 10px;"><h3>7</h3><p>Upcoming hrs booked</p></div>
+            <div class="stat-card" style="padding: 10px;"><h3>216</h3><p>Lesson hrs completed</p></div>
+        </div>
+    </div>
+
+    <div id="financial-year-content" class="tab-pane" style="position: relative; display: none;">
+        <div class="payout-legend">
+            <span class="legend-item"><i class="fas fa-circle" style="color: #4ade80;"></i> Marketplace Learner</span>
+            <span class="legend-item"><i class="fas fa-circle" style="color: #60a5fa;"></i> Private Learner</span>
+        </div>
+        <div class="card pending-payout-card">
+            <h4>Pending Payout</h4>
+            <div class="next-payout-item">
+                <span>Next Payout - 23 Jun 2025</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+        <div class="card transaction-summary-card">
+            <div class="summary-header">
+                <div>
+                    <h4>TRANSACTION SUMMARY (YTD)</h4>
+                    <p>2024/25: 1 Jul 2024 - 30 Jun 2025</p>
+                </div>
+                <div>
+                    <p>PAYOUT</p>
+                    <strong>$9,982.41</strong>
+                </div>
+                <a href="#">Transaction Summary</a>
+            </div>
+            <div class="fortnightly-reports-table">
+                <div class="reports-table-header">
+                    <span>FORTNIGHTLY REPORTS</span>
+                    <span>PAYOUT</span>
+                    <span></span>
+                </div>
+                <div class="reports-table-row">
+                    <span>#5107463 &nbsp; &nbsp; 1 Jul 2024</span>
+                    <span>$251.17</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
+                <div class="reports-table-row">
+                    <span>#5114290 &nbsp; &nbsp; 22 Jul 2024</span>
+                    <span>$1,756.48</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
+                 <div class="reports-table-row">
+                    <span>#5232758 &nbsp; &nbsp; 9 Jun 2025</span>
+                    <span>$696.98</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <div id="fy-23-24-content" class="tab-pane" style="display: none;">
+        <div class="card transaction-summary-card">
+            <div class="summary-header">
+                <div>
+                    <h4>TRANSACTION SUMMARY (YTD)</h4>
+                    <p>2023/24: 1 Jul 2023 - 30 Jun 2024</p>
+                </div>
+                <div>
+                    <p>PAYOUT</p>
+                    <strong>$1,273.56</strong>
+                </div>
+                <a href="#">Transaction Summary</a>
+            </div>
+            <div class="fortnightly-reports-table">
+                <div class="reports-table-header">
+                    <span>FORTNIGHTLY REPORTS</span>
+                    <span>PAYOUT</span>
+                    <span></span>
+                </div>
+                <div class="reports-table-row">
+                    <span>#5097346 &nbsp; &nbsp; 27 May 2024</span>
+                    <span>$276.43</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
+                <div class="reports-table-row">
+                    <span>#5102348 &nbsp; &nbsp; 10 Jun 2024</span>
+                    <span>$291.42</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
+                <div class="reports-table-row">
+                    <span>#5104853 &nbsp; &nbsp; 24 Jun 2024</span>
+                    <span>$705.71</span>
+                    <div class="report-links">
+                        <a href="#">Tax Invoice</a>
+                        <a href="#">Transaction Report</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -7115,6 +7396,49 @@ if (offerBannerHeader) {
     });
 }
 // --- END: OFFER BANNER TOGGLE LOGIC ---
+
+// --- START: REPORTS PAGE TABS LOGIC ---
+// --- START: REPORTS PAGE TABS LOGIC ---
+// --- START: REPORTS PAGE TABS LOGIC (Corrected) ---
+const reportsPage = document.getElementById('instructor-reports-view');
+if (reportsPage) {
+    const reportTabs = reportsPage.querySelector('.reports-header .tabs');
+    
+    // Get all parts of the Summary view
+    const summaryStatsGrid = reportsPage.querySelectorAll('.stats-grid')[0];
+    const earningsReportCard = summaryStatsGrid.nextElementSibling;
+    const summaryStatsGrid2 = reportsPage.querySelectorAll('.stats-grid')[1];
+    const bookingActivityCard = reportsPage.querySelectorAll('.stats-grid')[2].parentElement;
+
+    // Get the Financial Year view
+    const financialYearContent = document.getElementById('financial-year-content');
+
+    // Initially hide the Financial Year content
+    if(financialYearContent) financialYearContent.style.display = 'none';
+
+    reportTabs.addEventListener('click', (e) => {
+        const clickedTab = e.target.closest('.tab-link');
+        if (!clickedTab) return;
+
+        // Update active state on tabs
+        reportTabs.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
+        clickedTab.classList.add('active');
+
+        const isSummary = clickedTab.textContent.includes('Summary');
+
+        // Toggle visibility of ALL summary content blocks
+        summaryStatsGrid.style.display = isSummary ? 'grid' : 'none';
+        earningsReportCard.style.display = isSummary ? 'block' : 'none';
+        summaryStatsGrid2.style.display = isSummary ? 'grid' : 'none';
+        bookingActivityCard.style.display = isSummary ? 'block' : 'none';
+        
+        // Toggle visibility of the financial year content
+        if (financialYearContent) {
+            financialYearContent.style.display = isSummary ? 'none' : 'block';
+        }
+    });
+}
+// --- END: REPORTS PAGE TABS LOGIC ---
     </script>
 
     
