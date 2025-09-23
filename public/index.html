@@ -2949,7 +2949,84 @@
 .form-footer-note { text-align: center; margin-top: 20px; color: var(--gray-color); font-size: 14px; }
 .form-footer-note a { color: var(--dark-color); text-decoration: underline; font-weight: 500; }
 .rewards-card-link { text-decoration: none; }
-    </style>
+   
+/* --- REVIEWS MODAL STYLES --- */
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+.reviews-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+.reviews-header .modal-close-btn {
+    position: static; /* Override absolute positioning */
+    font-size: 24px;
+}
+.reviews-body {
+    padding: 20px 25px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.reviews-notice {
+    background-color: #eef2f7;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.review-item {
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 0;
+}
+.review-item:last-child {
+    border-bottom: none;
+}
+.review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.review-meta span {
+    color: var(--gray-color);
+}
+.review-stars {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+.review-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--gray-color);
+}
+.reviews-footer {
+    padding: 15px 25px;
+    border-top: 1px solid var(--border-color);
+    background-color: #f9fafb;
+    text-align: center;
+}
+.reviews-footer a {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 2px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+.reviews-footer a.active {
+    background-color: var(--primary-color);
+    color: var(--dark-color);
+}
+</style>
 </head>
 
 <body>
@@ -3226,8 +3303,7 @@
                         <div class="card stat-card">
                             <p>Learner rating</p>
                             <h3>5.0</h3>
-                            <a href="#">Your reviews</a>
-                        </div>
+                            <a href="#" id="open-reviews-modal">Your reviews</a>                        </div>
                     </div>
 
 
@@ -5110,6 +5186,60 @@
         <p>Learners who require assistance can contact our Customer Support Team by <a href="#">Submitting a request</a>.</p>
     </div>
 </div>
+<div id="reviews-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 800px; padding: 0;">
+        <div class="reviews-header">
+            <h3>Reviews ★ 5.0 - 32 Ratings</h3>
+            <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="reviews-body">
+            <div class="reviews-notice">
+                <i class="fas fa-info-circle"></i>
+                <span>Your 25 most recent reviews will be displayed on your public profile.</span>
+            </div>
+            <div class="review-item">
+                <div class="review-meta">
+                    <strong>Kylah</strong>
+                    <span>Posted on 8 Jun 2025</span>
+                </div>
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+                <p class="review-text">Very helpful, kind and calm, made me feel comfortable and confident in driving. I definitely recommend!</p>
+            </div>
+            <div class="review-item">
+                <div class="review-meta">
+                    <strong>Jasper</strong>
+                    <span>Posted on 3 Jun 2025</span>
+                </div>
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+                <p class="review-text">Mandeep is a calm and highly effective instructor. He is exceptionally attentive and provides clear, constructive feedback by promptly identifying mistakes and guiding you toward the correct approach. I look forward to continuing my learning journey with him. Highly recommended.</p>
+            </div>
+            <div class="review-item">
+                <div class="review-meta">
+                    <strong>Ryan</strong>
+                    <span>Posted on 29 May 2025</span>
+                </div>
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+                <p class="review-text">Easy to talk to and provided in-depth feedback on important areas to improve.</p>
+            </div>
+             </div>
+        <div class="reviews-footer">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">...</a>
+            <a href="#">Next ›</a>
+            <a href="#">Last »</a>
+        </div>
+    </div>
+</div>
 
     <div id="feedback-page" class="page">
     <div class="dashboard-layout">
@@ -5919,6 +6049,28 @@ if (contactModal) {
     });
 }
 // --- END: CONTACT MODAL LOGIC ---
+// --- START: REVIEWS MODAL LOGIC ---
+const reviewsModal = document.getElementById('reviews-modal');
+if (reviewsModal) {
+    const openReviewsModalBtn = document.getElementById('open-reviews-modal');
+    const closeReviewsModalBtn = reviewsModal.querySelector('.modal-close-btn');
+
+    openReviewsModalBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        reviewsModal.classList.add('active');
+    });
+    
+    closeReviewsModalBtn?.addEventListener('click', () => {
+        reviewsModal.classList.remove('active');
+    });
+
+    reviewsModal.addEventListener('click', (e) => {
+        if (e.target === reviewsModal) {
+            reviewsModal.classList.remove('active');
+        }
+    });
+}
+// --- END: REVIEWS MODAL LOGIC ---
     </script>
 
     
