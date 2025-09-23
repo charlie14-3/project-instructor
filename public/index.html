@@ -3489,6 +3489,76 @@ input:checked + .slider:before { transform: translateX(20px); }
 .booking-learner-details strong { font-size: 16px; }
 .booking-learner-details a { font-size: 14px; text-decoration: underline; }
 
+
+/* --- PROMOTION BANNER STYLES --- */
+.offer-banner-container {
+    padding: 0;
+    overflow: hidden;
+}
+.offer-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    border: none;
+    margin-bottom: 0;
+}
+.offer-banner > div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.banner-arrow {
+    transition: transform 0.3s ease;
+}
+.banner-arrow.rotated {
+    transform: rotate(-180deg);
+}
+/* --- PROMOTION BANNER STYLES (Corrected) --- */
+.promotion-details {
+    text-align: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* Smooth transition for padding */
+}
+.promotion-details.expanded {
+    max-height: 300px; /* Or a larger value if your content needs more space */
+    padding: 0px 40px 20px 40px; /* Padding is now only applied when expanded */
+}
+.promotion-details h4 {
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+.fee-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.fee-box {
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+.fee-box span {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-color);
+}
+.fee-box.original {
+    text-decoration: line-through;
+    color: var(--gray-color);
+    background-color: var(--light-gray-color);
+}
+.promotion-terms {
+    font-size: 13px;
+    color: var(--gray-color);
+}
 </style>
 </head>
 
@@ -3734,9 +3804,30 @@ input:checked + .slider:before { transform: translateX(20px); }
                     </div>
                 </header>
                 <section id="instructor-dashboard-view" class="instructor-view active">
-                    <div class="card offer-banner">
-                        <i class="fas fa-star"></i>
-                        <span>Your Test Package Service Fee Offer</span>
+                    <div class="card offer-banner-container">
+                        <div id="offer-banner-header" class="offer-banner">
+                            <div>
+                                <i class="fas fa-star"></i>
+                                <span>Your Test Package Service Fee Offer</span>
+                            </div>
+                            <i class="fas fa-chevron-down banner-arrow"></i>
+                        </div>
+                        <div id="promotion-details" class="promotion-details">
+                            <h4>Service Fee Promotion</h4>
+                            <div class="fee-boxes">
+                                <div class="fee-box original">
+                                    25.0%
+                                    <span>Service Fee</span>
+                                </div>
+                                <div class="fee-box promoted">
+                                    17.5%
+                                    <span>Service Fee</span>
+                                </div>
+                            </div>
+                            <p class="promotion-terms">
+                                Applies to completed & authorised test packages only. Service fee offer expires on 5 Oct 2025, 11:59 PM
+                            </p>
+                        </div>
                     </div>
 
                     <div class="instructor-dashboard-header">
@@ -7011,6 +7102,19 @@ if (bookingDetailsPage) {
     });
 }
 // --- END: CALENDAR EVENT & BOOKING DETAILS LOGIC ---
+
+// --- START: OFFER BANNER TOGGLE LOGIC ---
+const offerBannerHeader = document.getElementById('offer-banner-header');
+if (offerBannerHeader) {
+    offerBannerHeader.addEventListener('click', () => {
+        const promotionDetails = document.getElementById('promotion-details');
+        const arrow = offerBannerHeader.querySelector('.banner-arrow');
+        
+        promotionDetails.classList.toggle('expanded');
+        arrow.classList.toggle('rotated');
+    });
+}
+// --- END: OFFER BANNER TOGGLE LOGIC ---
     </script>
 
     
