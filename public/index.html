@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <style>
         /* --- WALLET PAGE STYLES --- */
         .breadcrumbs {
@@ -3807,6 +3808,55 @@ input:checked + .slider:before { transform: translateX(20px); }
 .payout-details-row div {
     font-weight: 500;
 }
+
+/* --- START: ADD FOR PROFILE DROPDOWN --- */
+.user-profile {
+    position: relative; /* Required for dropdown positioning */
+}
+
+.profile-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 180px;
+    z-index: 100;
+    overflow: hidden; /* Ensures border-radius is applied to children */
+    border: 1px solid var(--border-color);
+}
+
+.user-profile:hover .profile-dropdown {
+    display: block; /* Show on hover */
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 12px 15px;
+    font-size: 14px;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.profile-dropdown a:hover {
+    background-color: var(--light-gray-color);
+}
+
+.profile-dropdown a i {
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
+    color: var(--gray-color);
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: 60px repeat(7, 1fr);
+    min-width: 900px;
+    position: relative; /* <-- ADD THIS LINE */
+}
+/* --- END: ADD FOR PROFILE DROPDOWN --- */
 /* --- END: CSS REPLACEMENT --- */
 
 </style>
@@ -4128,63 +4178,8 @@ input:checked + .slider:before { transform: translateX(20px); }
                             <button class="tab-link" data-target="booking-history-content">Booking history</button>
                         </div>
 
-                        <div id="upcoming-booking-content" class="tab-pane active">
-                            <div class="card">
-                                <div class="booking-item">
-                                    <div class="booking-item-main">
-                                        <div class="booking-item-section">
-                                            <p>Booking Details</p>
-                                            <span><i class="fas fa-calendar-alt"></i> Sat, 21 Jun 2025</span><br>
-                                            <span><i class="fas fa-clock"></i> 11:45 am - 1:45 pm</span>
-                                        </div>
-                                        <div class="booking-item-section">
-                                            <p>Lesson Details</p>
-                                            <span><i class="fas fa-car"></i> 2 Hour Driving Lesson (Auto)</span>
-                                        </div>
-                                        <div class="booking-item-section">
-                                            <p>Learner Details</p>
-                                            <div class="learner-details">
-                                                <img src="https://placehold.co/100x100?text=R" alt="Learner">
-                                                <h5>Ryan B.<small>0478922109</small></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="booking-item-actions">
-                                        <a href="#" class="btn btn-secondary btn-small">See more / Manage</a>
-                                    </div>
-                                </div>
-                                <div class="booking-item-location">
-                                    <span><i class="fas fa-map-marker-alt"></i> Dirrabarri Lane, Parramatta NSW, Parramatta 2150 NSW</span>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="booking-item">
-                                     <div class="booking-item-main">
-                                        <div class="booking-item-section">
-                                            <p>Booking Details</p>
-                                            <span><i class="fas fa-calendar-alt"></i> Sat, 21 Jun 2025</span><br>
-                                            <span><i class="fas fa-clock"></i> 2:30 pm - 3:30 pm</span>
-                                        </div>
-                                        <div class="booking-item-section">
-                                            <p>Lesson Details</p>
-                                            <span><i class="fas fa-car"></i> 1 Hour Driving Lesson (Auto)</span>
-                                        </div>
-                                        <div class="booking-item-section">
-                                            <p>Learner Details</p>
-                                            <div class="learner-details">
-                                                <img src="https://placehold.co/100x100?text=S" alt="Learner">
-                                                <h5>Siddanth G.<small>0426649377</small></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="booking-item-actions">
-                                        <a href="#" class="btn btn-secondary btn-small">See more / Manage</a>
-                                    </div>
-                                </div>
-                                <div class="booking-item-location">
-                                    <span><i class="fas fa-map-marker-alt"></i> 8 George St, Seven Hills 2147 NSW</span>
-                                </div>
-                            </div>
+                       <div id="upcoming-booking-content" class="tab-pane active">
+                            <!-- This will be populated dynamically -->
                         </div>
 
                         <div id="pending-proposals-content" class="tab-pane tab-content">
@@ -4603,11 +4598,11 @@ input:checked + .slider:before { transform: translateX(20px); }
     <div class="card calendar-container">
         <div class="calendar-controls">
             <div class="calendar-nav">
-                <button class="btn btn-secondary btn-small">Today</button>
-                <button class="btn btn-secondary btn-small"><i class="fas fa-chevron-left"></i></button>
-                <button class="btn btn-secondary btn-small"><i class="fas fa-chevron-right"></i></button>
-                <span class="month-display">June 2025</span>
-            </div>
+    <button id="cal-today-btn" class="btn btn-secondary btn-small">Today</button>
+    <button id="cal-prev-week-btn" class="btn btn-secondary btn-small"><i class="fas fa-chevron-left"></i></button>
+    <button id="cal-next-week-btn" class="btn btn-secondary btn-small"><i class="fas fa-chevron-right"></i></button>
+    <span id="cal-month-display" class="month-display">June 2025</span>
+</div>
             <div class="view-switcher">
                 <button class="btn btn-secondary btn-small">Day</button>
                 <button class="btn btn-secondary btn-small active">Week</button>
@@ -4633,10 +4628,7 @@ input:checked + .slider:before { transform: translateX(20px); }
                 <div class="time-label">8am</div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div>
                 <div class="time-label">9am</div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div>
                 <div class="time-label">10am</div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot with-event">
-                    <div class="calendar-event event-lesson" style="top:0; height: 120px;"> <!-- Spans 2 hours -->
-                         <strong>10am - 12pm</strong>
-                         <p>Ryan B. (A)<br>Parramatta</p>
-                    </div>
+                    
                 </div> <div class="time-slot"></div>
                 <div class="time-label">11am</div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div>
                 <div class="time-label">12pm</div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div> <div class="time-slot"></div>
@@ -4761,9 +4753,9 @@ input:checked + .slider:before { transform: translateX(20px); }
         <div class="modify-booking-wrapper">
             <button id="modify-booking-btn" class="btn btn-secondary">Modify Booking</button>
             <div id="modify-booking-dropdown" class="modify-booking-dropdown">
-                <a href="#"><i class="fas fa-calendar-alt"></i> Reschedule booking</a>
-                <a href="#"><i class="fas fa-times-circle"></i> Cancel without new booking</a>
-            </div>
+    <a href="#" id="reschedule-booking-link"><i class="fas fa-calendar-alt"></i> Reschedule booking</a>
+    <a href="#" id="cancel-booking-link"><i class="fas fa-times-circle"></i> Cancel without new booking</a>
+</div>
         </div>
     </div>
 
@@ -4791,8 +4783,8 @@ input:checked + .slider:before { transform: translateX(20px); }
             </div>
         </div>
     </div>
+<div class="card" id="payment-details-card">
 
-    <div class="card">
         <div class="payment-details-header">
             <h4>Payment <span class="status-badge status-pending">PENDING</span></h4>
             <button class="btn btn-secondary btn-small btn-disabled" disabled>Reverse Payment</button>
@@ -5165,6 +5157,111 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
 </section>
 
+<section id="instructor-profile-edit-view" class="instructor-view">
+    <h2>My Profile and Vehicle Details</h2>
+    <p class="subtitle" style="color: var(--gray-color); margin-top: 5px;">This information will be visible on your public profile.</p>
+
+    <form id="instructor-profile-form">
+        <div class="profile-content-grid" style="margin-top: 25px;">
+            <div class="profile-main">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>My Profile</h4>
+                    </div>
+                    <div class="form-group" style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="instructor-photo">Upload Instructor Photo</label>
+                            <input type="file" id="instructor-photo" accept="image/*" class="form-control">
+                        </div>
+                        <label for="instructor-bio">Your Instructor Bio</label>
+                        <textarea id="instructor-bio" rows="10" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-family: var(--font-family);" placeholder="Tell learners a little about yourself..."></textarea>
+                        
+                        <label for="languages-spoken" style="margin-top: 20px;">Enter Any Languages You Speak Fluently</label>
+                        <input type="text" id="languages-spoken" placeholder="e.g. English, Hindi, Spanish" style="width: 100%;">
+                        
+                        <div class="form-group-inline" style="margin-top: 20px;">
+                            <div>
+                                <label>When did you start instructing?</label>
+                                <select id="instructor-start-year">
+                                    <option>2025</option>
+                                    <option>2024</option>
+                                    <option>2023</option>
+                                    <option>2022</option>
+                                    <option>2021</option>
+                                    <option>2020</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Transmission(s) you offer</label>
+                                <select id="instructor-transmission">
+                                    <option value="Auto">Auto</option>
+                                    <option value="Manual">Manual</option>
+                                    <option value="Both">Both</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header"><h4>Vehicle Details</h4></div>
+                    <div class="form-group" style="padding: 20px;">
+                        <div class="form-group">
+                            <label for="vehicle-photo">Upload Vehicle Photo</label>
+                            <input type="file" id="vehicle-photo" accept="image/*" class="form-control">
+                        </div>
+                        <div class="form-group-inline">
+                            <div>
+                                <label>Vehicle Make</label>
+                                <input type="text" id="vehicle-make" placeholder="e.g. Toyota">
+                            </div>
+                            <div>
+                                <label>Vehicle Model</label>
+                                <input type="text" id="vehicle-model" placeholder="e.g. Corolla">
+                            </div>
+                        </div>
+                        <div class="form-group-inline" style="margin-top: 20px;">
+                            <div>
+                                <label>ANCAP Safety Rating</label>
+                                <select id="vehicle-ancap">
+                                    <option>5 Star</option>
+                                    <option>4 Star</option>
+                                    <option>3 Star</option>
+                                    <option>Other/Not Rated</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Dual Controls?</label>
+                                 <select id="vehicle-dual-controls">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="profile-sidebar">
+                <div class="card">
+                     <div class="card-header" style="text-align: center;">
+                        <img src="https://placehold.co/100x100/FFC700/000000?text=SL" style="height: 60px; border-radius: 50%;">
+                        <h4 style="margin-top: 10px;">Your Public Profile Link</h4>
+                    </div>
+                    <div style="padding: 20px;">
+                         <p style="font-size: 14px; color: var(--gray-color); text-align:center;">Share this link with potential learners to direct them to your profile.</p>
+                        <div class="share-link-wrapper">
+                             <input type="text" value="safelearners.com/mandeep" readonly>
+                             <button type="button" class="btn btn-secondary"><i class="far fa-copy"></i> Copy</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" style="margin-top: 20px;">Save and Change</button>
+            </aside>
+        </div>
+    </form>
+</section>
+
 
 
 <!-- END: INSTRUCTOR CALENDAR VIEW -->
@@ -5278,7 +5375,7 @@ input:checked + .slider:before { transform: translateX(20px); }
                         </div>
                         <div class="test-package-action">
                             <span class="price">$ 200</span>
-                            <button class="btn btn-primary open-booking-btn">Book Now</button>
+                            <button class="btn btn-primary open-booking-btn" data-instructor-id="your-primary-instructor-id">Book Now</button>
                         </div>
                     </div>
                     <div class="booking-section">
@@ -5388,89 +5485,8 @@ input:checked + .slider:before { transform: translateX(20px); }
 
                             <h3>63 Auto instructors available in the next 7 days</h3>
                             <p class="subtitle">From $60.00/hr</p>
-                            <div class="instructor-grid">
-                                <div class="instructor-card-new">
-                                    <div class="instructor-photo-new">
-                                                <img src="https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=" alt="Instructor Syed">
-
-                                    </div>
-                                    <div class="instructor-details-new">
-                                        <h4>Syed</h4>
-                                        <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
-                                        <p class="instructor-meta"><i class="fas fa-star"></i> 4.3 - 3 Ratings</p>
-                                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> 38 Completed
-                                            Lessons</p>
-                                        <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
-                                    </div>
-                                    <div class="instructor-actions-new">
-                                        <button class="btn btn-secondary btn-full view-profile-btn">View
-                                            Profile</button>
-                                        <button class="btn btn-primary btn-full">Book Online Now</button>
-                                    </div>
-                                </div>
-
-                                <div class="instructor-card-new">
-                                    <div class="instructor-photo-new">
-                                                <img src="https://t4.ftcdn.net/jpg/00/88/53/89/360_F_88538986_5Bi4eJ667pocsO3BIlbN4fHKz8yUFSuA.jpg" alt="Instructor Chris">
-
-                                    </div>
-                                    <div class="instructor-details-new">
-                                        <h4>Chris</h4>
-                                        <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
-                                        <p class="instructor-meta"><i class="fas fa-star"></i> 5.0 - 80 Ratings</p>
-                                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> 570 Completed
-                                            Lessons</p>
-                                        <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
-                                    </div>
-                                    <div class="instructor-actions-new">
-                                        <button class="btn btn-secondary btn-full view-profile-btn">View
-                                            Profile</button>
-                                        <button class="btn btn-primary btn-full">Book Online Now</button>
-                                    </div>
-                                </div>
-
-                                <div class="instructor-card-new">
-                                    <div class="instructor-photo-new">
-                                                <img src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c21pbGluZyUyMG1hbnxlbnwwfHwwfHx8MA%3D%3D" alt="Instructor Roumyo">
-
-                                    </div>
-                                    <div class="instructor-details-new">
-                                        <h4>Roumyo</h4>
-                                        <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
-                                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> Instructed for 3
-                                            yr, 4 mo.</p>
-                                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Driving
-                                            Instructor</p>
-                                        <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
-                                    </div>
-                                    <div class="instructor-actions-new">
-                                        <button class="btn btn-secondary btn-full view-profile-btn">View
-                                            Profile</button>
-                                        <button class="btn btn-primary btn-full">Book Online Now</button>
-                                    </div>
-                                </div>
-
-                                <div class="instructor-card-new">
-                                    <div class="instructor-photo-new">
-
-                                                <img src="https://static.vecteezy.com/system/resources/previews/048/888/842/non_2x/portrait-of-a-smiling-man-in-a-beige-jacket-photo.jpg" alt="Instructor Syed">
-
-                                    </div>
-                                    <div class="instructor-details-new">
-                                        <h4>Sitara</h4>
-                                        <p class="instructor-meta price">$72.00 - $80.00 / hr</p>
-                                        <p class="instructor-meta"><i class="fas fa-star"></i> 4.8 - 26 Ratings</p>
-                                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> 262 Completed
-                                            Lessons</p>
-                                        <a href="#" class="availability-link"><strong>Check Availability ></strong></a>
-                                    </div>
-                                    <div class="instructor-actions-new">
-                                        <button class="btn btn-secondary btn-full view-profile-btn">View
-                                            Profile</button>
-                                        <button class="btn btn-primary btn-full">Book Online Now</button>
-                                    </div>
-                                </div>
-                            </div>
+                          <div class="instructor-grid">
+    </div>
                         </div>
                         <aside class="instructor-search-sidebar">
                             <div class="card">
@@ -5751,101 +5767,115 @@ input:checked + .slider:before { transform: translateX(20px); }
                 </header>
 
                 <section class="booking-content">
-                    <div class="booking-main">
-                        <!-- ADD: back button for instructor list page -->
+    <div class="booking-main">
+        <!-- ADD: back button for instructor list page -->
 <div class="list-page-header">
   <a href="#" id="back-to-dashboard-btn" class="back-link">
     <i class="fas fa-chevron-left"></i> Back
   </a>
 </div>
 
-                        <h2>Make a Booking</h2>
+        <h2>Make a Booking</h2>
 
-                        <div class="card">
-                            <h4>My Instructor</h4>
-                            <div class="instructor-details" style="margin-top: 20px;">
-                                <div class="instructor-info">
-                                    <img src="https://img.freepik.com/free-photo/handsome-man-smiling-happy-face-portrait-close-up_53876-145493.jpg" alt="Instructor Fazley">
-                                    <div>
-                                        <h5>Fazley</h5>
-                                        <p>$70/hr<br>Offers 1 & 2hr lessons</p>
-                                    </div>
-                                </div>
-                                <div class="vehicle-info">
-                                    <img src="https://di-uploads-pod25.dealerinspire.com/edmarktoyota/uploads/2024/02/2024-toyota-corolla-banner.jpg" alt="Toyota Corolla">
-                                    <div>
-                                        <h5>Toyota Corolla 2011 (Auto)</h5>
-                                        <p>5-star ANCAP rating<br>Dual controls fitted</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <h4>New Booking</h4>
-                            <div class="booking-type-tabs">
-                                <button class="tab-link">1-Hour Lesson</button>
-                                <button class="tab-link">2-Hour Lesson</button>
-                                <button class="tab-link active">Driving Test Package</button>
-                            </div>
-                            <div class="warning-box">
-                                <strong>WARNING:</strong> You must book your own driving test with local roads
-                                authority. Our Test Package only books the instructor and vehicle.
-                            </div>
-
-                            <div class="booking-form">
-                                <div class="form-group">
-                                    <label for="test-location">Driving test location</label>
-                                    <select id="test-location">
-                                        <option>Select the test location</option>
-                                    </select>
-                                </div>
-                                <div class="form-group-inline">
-                                    <div class="form-group">
-                                        <label for="available-dates">Available Dates</label>
-                                        <select id="available-dates">
-                                            <option>Select a day</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="available-times">Available Times</label>
-                                        <select id="available-times">
-                                            <option>Select test start time</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <p class="form-note">* The pickup time will be 1 hour prior to the test start time.</p>
-
-                                <div class="form-group">
-                                    <label>Pick Up Location</label>
-                                    <div class="location-field">
-                                        <span>5 Hogan PL, Quakers Hill NSW 2763</span>
-                                        <button class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Drop Off Location</label>
-                                    <div class="location-field">
-                                        <span>5 Hogan PL, Quakers Hill NSW 2763</span>
-                                        <button class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
-                                    </div>
-                                </div>
-                                <div class="form-actions">
-                                    <button class="btn btn-secondary">Save</button>
-                                </div>
-                            </div>
-                        </div>
+        <div class="card">
+            <h4>My Instructor</h4>
+            <div class="instructor-details" style="margin-top: 20px;">
+                <div class="instructor-info">
+                    <img src="https://img.freepik.com/free-photo/handsome-man-smiling-happy-face-portrait-close-up_53876-145493.jpg" alt="Instructor Fazley">
+                    <div>
+                        <h5>Fazley</h5>
+                        <p>$70/hr<br>Offers 1 & 2hr lessons</p>
                     </div>
-                    <aside class="booking-sidebar">
-                        <div class="card order-summary">
-                            <h4>Order Summary</h4>
-                            <button class="btn btn-secondary btn-full btn-disabled" disabled>
-                                <i class="fas fa-plus-circle"></i> Add Another Booking
-                            </button>
-                            <button class="btn btn-primary btn-full btn-disabled" disabled>Continue</button>
-                        </div>
-                    </aside>
-                </section>
+                </div>
+                <div class="vehicle-info">
+                    <img src="https://di-uploads-pod25.dealerinspire.com/edmarktoyota/uploads/2024/02/2024-toyota-corolla-banner.jpg" alt="Toyota Corolla">
+                    <div>
+                        <h5>Toyota Corolla 2011 (Auto)</h5>
+                        <p>5-star ANCAP rating<br>Dual controls fitted</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>New Booking</h4>
+            <div class="booking-type-tabs" id="booking-type-tabs">
+                <button class="tab-link active" data-lesson-type="1-hour">1-Hour Lesson</button>
+                <button class="tab-link" data-lesson-type="2-hour">2-Hour Lesson</button>
+                <button class="tab-link" data-lesson-type="test-package">Driving Test Package</button>
+            </div>
+            <div id="test-package-warning" class="warning-box" style="display: none;">
+                <strong>WARNING:</strong> You must book your own driving test with local roads authority. Our Test Package only books the instructor and vehicle.
+            </div>
+
+            <form id="booking-form">
+    <div class="form-group" id="test-location-group" style="display: none;">
+        <label for="test-location">Driving test location</label>
+        <select id="test-location" name="testLocation">
+            <option value="">Select the test location</option>
+            <!-- Options will be populated by JS -->
+        </select>
+    </div>
+    <div class="form-group-inline">
+        <div class="form-group">
+            <label for="available-dates">Available Dates</label>
+            <select id="available-dates" name="bookingDate">
+                <option value="">Select a day</option>
+                <!-- Options will be populated by JS -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="available-times">Available Times</label>
+            <select id="available-times" name="bookingTime">
+                <option value="">Select a time</option>
+                <!-- Options will be populated by JS -->
+            </select>
+        </div>
+    </div>
+    <p id="pickup-time-note" class="form-note" style="display: none;">* The pickup time will be 1 hour prior to the test start time.</p>
+
+    <div class="form-group">
+        <label>Pick Up Location</label>
+        <div class="location-field">
+            <span id="pickup-location-display">5 Hogan PL, Quakers Hill NSW 2763</span>
+            <button type="button" class="edit-btn" id="edit-pickup-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Drop Off Location</label>
+        <div class="location-field">
+            <span id="dropoff-location-display">5 Hogan PL, Quakers Hill NSW 2763</span>
+            <button type="button" class="edit-btn" id="edit-dropoff-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-full btn-disabled" id="confirm-booking-btn" disabled>Confirm Booking</button>
+    </div>
+</form>
+        </div>
+    </div>
+    <aside class="booking-sidebar">
+    <div class="card order-summary">
+        <h4>Order Summary</h4>
+        <div id="order-summary-content">
+            <div class="summary-item">
+                <span>Lesson Type:</span><span id="summary-lesson-type">-</span>
+            </div>
+            <div class="summary-item">
+                <span>Date & Time:</span><span id="summary-date-time">-</span>
+            </div>
+            <div class="summary-item">
+                <span>Price:</span><span id="summary-price">-</span>
+            </div>
+        </div>
+        <div class="summary-total">
+            <span>Total Payment Due</span>
+            <span class="total-price" id="summary-total-price">$0.00</span>
+        </div>
+        <button class="btn btn-primary btn-full btn-disabled" disabled id="sidebar-continue-btn">Continue</button>
+    </div>
+</aside>
+</section>
 
 
 
@@ -6273,6 +6303,11 @@ input:checked + .slider:before { transform: translateX(20px); }
                     <div class="user-profile">
                         <img src="https://placehold.co/100x100?text=M" alt="User Avatar">
                         <span id="instructor-user-name-details">Mandeep</span> ▾
+
+                         <div class="profile-dropdown">
+            <a href="#" id="edit-profile-link"><i class="fas fa-user-edit"></i> My Profile</a>
+            <a href="#" class="instructor-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
                     </div>
                 </div>
             </header>
@@ -6954,6 +6989,8 @@ input:checked + .slider:before { transform: translateX(20px); }
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+
 
     <script>
         // PASTE YOUR FIREBASE CONFIG OBJECT HERE
@@ -6977,6 +7014,13 @@ input:checked + .slider:before { transform: translateX(20px); }
         const pages = document.querySelectorAll('.page');
         let lastDashboardView = 'dashboard-main-content'; 
         const allSidebars = document.querySelectorAll('.sidebar-nav');
+        let currentInstructorId = null; // Store the ID of the selected instructor
+        // Add this with your other global variables
+let currentCalendarDate = moment();
+        // --- ADD THIS GLOBAL VARIABLE ---
+let currentInstructorPricing = { lesson: 70, testPackage: 225 }; // Default fallback values
+                let currentUserLocation = "5 Hogan PL, Quakers Hill NSW 2763"; // Placeholder for the current user's location
+
 
         function showPage(pageId) {
             pages.forEach(page => page.classList.toggle('active', page.id === pageId));
@@ -7024,10 +7068,55 @@ document.addEventListener('click', (e) => {
   }
 
   // 2) Wallet / Booking / Profile routes (existing)
-  if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); return; }
-  if (target.matches('.open-booking-btn'))        { e.preventDefault(); showPage('booking-page'); return; }
-  if (target.matches('.view-profile-btn'))        { e.preventDefault(); showPage('instructor-profile-page'); return; }
-  if (target.matches('#switch-instructor-link'))  { e.preventDefault(); showView('switch-instructor-content'); return; }
+  // 2) Wallet / Booking / Profile routes (existing)
+    if (target.matches('#add-credit-btn, #add-credit-from-wallet-btn')) { e.preventDefault(); goToWallet(); return; }
+    
+    // Updated logic for opening booking page from anywhere
+    if (target.matches('.open-booking-btn')) {
+        e.preventDefault();
+        const card = target.closest('.instructor-card-new');
+        if (card && card.dataset.id) {
+            currentInstructorId = card.dataset.id;
+        } else {
+            // Handle the case where the button is on the main dashboard and not a specific instructor card
+            // We assume there's a primary instructor set for the learner
+            currentInstructorId = document.getElementById('dashboard-main-content').querySelector('.open-booking-btn').dataset.instructorId; 
+        }
+        showPage('booking-page');
+        // Now render the instructor's data on the booking page
+        renderBookingPageInstructor(currentInstructorId);
+        return;
+    }
+    
+    // Handles the 'View Profile' button on the instructor list
+    if (target.matches('.view-profile-btn')) {
+        e.preventDefault();
+        const card = target.closest('.instructor-card-new');
+        if (card && card.dataset.id) {
+            const instructorId = card.dataset.id;
+            displayInstructorProfile(instructorId);
+        } else {
+             console.error("Could not find instructor ID for this profile.");
+        }
+        return;
+    }
+    
+    // Handles the 'Check Availability' link on the instructor list
+    if (target.matches('.availability-link')) {
+        e.preventDefault();
+        const instructorId = target.dataset.id;
+        // In a real app, you would fetch and display this instructor's availability
+        console.log(`Opening availability modal for instructor ID: ${instructorId}`);
+        openModal();
+        return;
+    }
+
+    if (target.matches('#switch-instructor-link')) {
+        e.preventDefault();
+        showView('switch-instructor-content');
+        renderInstructors();
+        return;
+    }
   // Back from instructor profile to dashboard
 // Back from instructor lists/profile to dashboard
 if (target.matches('#back-to-instructors-btn, #back-to-dashboard-btn')) {
@@ -7111,7 +7200,6 @@ if (feedbackForm) {
         // --- AUTHENTICATION & ROLE-BASED ROUTING ---
         auth.onAuthStateChanged(user => {
             if (user) {
-                // User is signed in, check their role in Firestore
                 db.collection('users').doc(user.uid).get().then(doc => {
                     if (doc.exists) {
                         const userData = doc.data();
@@ -7121,6 +7209,11 @@ if (feedbackForm) {
                             // --- INSTRUCTOR LOGGED IN ---
                             document.getElementById('instructor-user-name').textContent = displayName;
                             showPage('instructor-dashboard-page');
+                            
+                            // --- ADD THIS LINE ---
+                            // This tells the dashboard to fetch and display the bookings for this instructor.
+                            renderUpcomingBookings(user.uid);
+
                         } else {
                             // --- LEARNER LOGGED IN ---
                              document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
@@ -7128,6 +7221,8 @@ if (feedbackForm) {
                                 document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
                             }
                             showPage('dashboard-page');
+                                showView('dashboard-main-content'); 
+
                         }
                     } else {
                         // Fallback if user has no data in Firestore
@@ -7297,12 +7392,69 @@ if (feedbackForm) {
         
         // --- GENERIC LOGOUT ---
         document.body.addEventListener('click', (e) => {
+
+            const instructorNavLink = e.target.closest('#instructor-dashboard-page .sidebar-nav a[data-view]');
+    if (instructorNavLink) {
+
+        
+        e.preventDefault(); // Stop the link from trying to navigate
+
+        const targetViewId = instructorNavLink.dataset.view; // Get the target view ID
+
+        // Update the active state in the sidebar
+        const sidebar = instructorNavLink.closest('.sidebar-nav');
+        sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+        instructorNavLink.closest('li').classList.add('active');
+
+        // Call the function to show the correct view
+        showInstructorView(targetViewId);
+
+        // If the view being opened is the calendar, render the events.
+        if (targetViewId === 'instructor-calendar-view') {
+            if (auth.currentUser) {
+                renderInstructorCalendar(auth.currentUser.uid);
+                    updateCalendarView(currentCalendarDate);
+
+            }
+        }
+        // This tells the app to fetch learners when the "Learners" tab is clicked
+if (targetViewId === 'instructor-learners-view') {
+    if (auth.currentUser) {
+        renderInstructorLearners(auth.currentUser.uid);
+    }
+}
+    }
+
+            if (e.target.closest('#cancel-booking-link')) {
+        e.preventDefault();
+        const detailsView = document.getElementById('instructor-booking-details-view');
+        const bookingId = detailsView.dataset.bookingId;
+        if (bookingId) {
+            cancelBooking(bookingId);
+        } else {
+            alert('Error: Could not find booking ID.');
+        }
+    }
+    // Handle the "Reschedule Booking" link click
+    else if (e.target.closest('#reschedule-booking-link')) {
+        e.preventDefault();
+        // The UI/UX for rescheduling is complex, so we'll use a placeholder for now.
+        alert('Reschedule functionality is not yet implemented.');
+    }
          // --- START: Added for Learner Details View ---
             if (e.target.closest('.view-learner-details-btn')) {
+    e.preventDefault();
+    const learnerRow = e.target.closest('.learners-list-row');
+    if (learnerRow && learnerRow.dataset.learnerId) {
+        const learnerId = learnerRow.dataset.learnerId;
+        renderLearnerDetailsPage(learnerId); // Call the new function with the specific ID
+    }
+}
+            if (e.target.closest('#upcoming-booking-content [data-booking-id]')) {
                 e.preventDefault();
-                document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => view.classList.remove('active'));
-                const detailsView = document.getElementById('instructor-learner-details-view');
-                if (detailsView) detailsView.classList.add('active');
+                const button = e.target.closest('[data-booking-id]');
+                const bookingId = button.dataset.bookingId;
+                renderInstructorBookingDetails(bookingId); // Call our new function
             }
 
             if (e.target.closest('.instructor-back-to-learners-btn')) {
@@ -7570,39 +7722,54 @@ if (pricingPage) {
     });
 }
 
+// --- START: REPLACEMENT FOR PRICING SAVE LOGIC ---
 const savePriceBtn = document.getElementById('save-price-changes-btn');
 if (savePriceBtn) {
-    savePriceBtn.addEventListener('click', (e) => {
+    savePriceBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         
-        const newPrice = document.getElementById('hourly-lesson-price').value;
-        
-        // 1. Update the correct price element that we remembered
-        if (priceElementToUpdate) {
-            priceElementToUpdate.textContent = `$${parseFloat(newPrice).toFixed(2)}`;
+        if (!auth.currentUser) {
+            alert("Authentication error. Please log in again.");
+            return;
         }
 
-        // 2. Go back to the pricing list view
-        showView('instructor-pricing-view');
-        
-        // 3. Show the success message on the pricing page
-        const successMsgContainer = document.getElementById('instructor-pricing-view');
-        const successMsg = document.getElementById('price-update-success-msg');
-        if (successMsg && successMsgContainer) {
-            // Make it the first element within the pricing view's content for correct display
-            successMsgContainer.prepend(successMsg);
-            successMsg.style.display = 'flex';
-            
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-            }, 5000);
-            
-            successMsg.querySelector('.close-btn').onclick = () => {
-                successMsg.style.display = 'none';
-            };
+        const uid = auth.currentUser.uid;
+        const newPrice = parseFloat(document.getElementById('hourly-lesson-price').value);
+
+        if (isNaN(newPrice) || newPrice <= 0) {
+            alert("Please enter a valid price.");
+            return;
+        }
+
+        try {
+            // Update the pricing object in the instructor's user document
+            await db.collection('users').doc(uid).set({
+                pricing: {
+                    lesson: newPrice,
+                    // Assuming a test package is 3x the hourly rate for this example
+                    testPackage: newPrice * 3 
+                }
+            }, { merge: true }); // Use merge: true to avoid overwriting other user data
+
+            // --- The rest of this is the same as before ---
+            if (priceElementToUpdate) {
+                priceElementToUpdate.textContent = `$${newPrice.toFixed(2)}`;
+            }
+            showView('instructor-pricing-view');
+            const successMsg = document.getElementById('price-update-success-msg');
+            if (successMsg) {
+                successMsg.style.display = 'flex';
+                setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+                successMsg.querySelector('.close-btn').onclick = () => { successMsg.style.display = 'none'; };
+            }
+
+        } catch (error) {
+            console.error("Error saving price: ", error);
+            alert("Could not save the new price. Please try again.");
         }
     });
 }
+// --- END: REPLACEMENT FOR PRICING SAVE LOGIC ---
 // --- END: EDIT PRICING LOGIC ---
 // --- START: CREATE EVENT DROPDOWN LOGIC ---
 const createEventBtn = document.getElementById('create-event-btn');
@@ -7657,12 +7824,19 @@ if (newEventModal) {
 
 // --- START: CALENDAR EVENT & BOOKING DETAILS LOGIC ---
 const instructorCalendar = document.getElementById('instructor-calendar-view');
-if(instructorCalendar) {
+if (instructorCalendar) {
     // 1. Listen for clicks on any calendar event block
     instructorCalendar.addEventListener('click', (e) => {
-        if (e.target.closest('.calendar-event')) {
+        const eventElement = e.target.closest('.calendar-event'); // Find the event element
+        if (eventElement) {
             e.preventDefault();
-            showView('instructor-booking-details-view');
+            const bookingId = eventElement.dataset.bookingId; // Get the ID from the element
+            if (bookingId) {
+                // Call the function that renders the details, passing the correct ID
+                renderInstructorBookingDetails(bookingId);
+            } else {
+                console.error("Calendar event is missing a booking ID.");
+            }
         }
     });
 }
@@ -7796,7 +7970,911 @@ if(downloadPdfBtn) {
         html2pdf().from(reportContent).set(options).save();
     });
 }
+
+async function renderInstructors() {
+    const instructorGrid = document.querySelector('#switch-instructor-content .instructor-grid');
+    if (!instructorGrid) {
+        console.error('Instructor grid container not found!');
+        return;
+    }
+
+    instructorGrid.innerHTML = '<p>Loading instructors...</p>';
+
+    try {
+        const querySnapshot = await db.collection('users').where('role', '==', 'instructor').get();
+
+        if (querySnapshot.empty) {
+            instructorGrid.innerHTML = '<p>No instructors are available at the moment.</p>';
+            return;
+        }
+
+        instructorGrid.innerHTML = '';
+
+        querySnapshot.forEach(doc => {
+            const instructor = doc.data(); 
+            const instructorId = doc.id;
+            
+            // Use the uploaded photos, or fall back to a placeholder
+            const instructorPhoto = instructor.instructorPhotoUrl || "https://t4.ftcdn.net/jpg/00/88/53/89/360_F_88538986_5Bi4eJ667pocsO3BIlbN4fHKz8yUFSuA.jpg";
+            const vehiclePhoto = instructor.vehiclePhotoUrl || "https://placehold.co/100x100?text=Car";
+
+            const instructorCardHTML = `
+                <div class="instructor-card-new" data-id="${instructorId}">
+                    <div class="instructor-photo-new">
+                        <img src="${instructorPhoto}" alt="Instructor ${instructor.firstName}">
+                    </div>
+                    <div class="instructor-details-new">
+                        <h4>${instructor.firstName || 'Instructor'}</h4>
+                        <p class="instructor-meta price">$${(instructor.pricing?.lesson || 70).toFixed(2)} / hr</p>
+
+                        <p class="instructor-meta"><i class="fas fa-star"></i> New Instructor</p> 
+                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Instructor</p>
+                        <a href="#" class="availability-link" data-id="${instructorId}"><strong>Check Availability ></strong></a>
+                    </div>
+                    <div class="instructor-actions-new">
+                        <div class="vehicle-info-display" style="display: flex; gap: 10px; align-items: center;">
+                            <img src="${vehiclePhoto}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
+                            <div>
+                                <p style="font-size: 14px; font-weight: 600; margin: 0;">${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}</p>
+                                <p style="font-size: 12px; color: var(--gray-color); margin: 0;">${instructor.transmission || 'Auto'}</p>
+                            </div>
+                        </div>
+                        <div class="buttons-row" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; width: 100%;">
+                            <button class="btn btn-secondary btn-full view-profile-btn">View Profile</button>
+                            <button class="btn btn-primary btn-full open-booking-btn">Book Online Now</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            instructorGrid.insertAdjacentHTML('beforeend', instructorCardHTML);
+        });
+
+    } catch (error) {
+        console.error("Error fetching instructors: ", error);
+        instructorGrid.innerHTML = '<p>Sorry, there was an error loading instructors. Please try again later.</p>';
+    }
+}
+
+// Add these new functions and listeners inside your main <script> tag
+
+// --- START: INSTRUCTOR PROFILE EDIT LOGIC ---
+
+// Function to load existing data into the form
+async function loadInstructorProfileData() {
+    if (!auth.currentUser) return;
+    const uid = auth.currentUser.uid;
+    const profileForm = document.getElementById('instructor-profile-form');
+
+    try {
+        const docRef = db.collection('users').doc(uid);
+        const doc = await docRef.get();
+
+        if (doc.exists) {
+            const data = doc.data();
+            // Populate form fields with data from Firestore, using '' as a fallback
+            profileForm.querySelector('#instructor-bio').value = data.bio || '';
+            profileForm.querySelector('#languages-spoken').value = data.languages || '';
+            profileForm.querySelector('#instructor-start-year').value = data.startYear || '2024';
+            profileForm.querySelector('#instructor-transmission').value = data.transmission || 'Auto';
+            profileForm.querySelector('#vehicle-make').value = data.vehicleMake || '';
+            profileForm.querySelector('#vehicle-model').value = data.vehicleModel || '';
+            profileForm.querySelector('#vehicle-ancap').value = data.ancap || '5 Star';
+            profileForm.querySelector('#vehicle-dual-controls').value = data.dualControls || 'Yes';
+        } else {
+            console.log("No profile document found for instructor!");
+        }
+    } catch (error) {
+        console.error("Error loading instructor profile: ", error);
+    }
+}
+
+// Event listener for the "My Profile" link in the dropdown
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#edit-profile-link')) {
+        e.preventDefault();
+        // Hide all other instructor views
+        document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => {
+            view.classList.remove('active');
+        });
+        // Show the profile edit view
+        const profileView = document.getElementById('instructor-profile-edit-view');
+        if (profileView) {
+            profileView.classList.add('active');
+            loadInstructorProfileData(); // Load data when the page is shown
+        }
+    }
+});
+
+
+const storage = firebase.storage();
+
+// Function to handle the file upload and save profile data
+async function saveInstructorProfile(e) {
+    e.preventDefault();
+    if (!auth.currentUser) {
+        alert("You must be logged in to save your profile.");
+        return;
+    }
+    const uid = auth.currentUser.uid;
+    const profileForm = document.getElementById('instructor-profile-form');
+
+    const instructorPhotoFile = profileForm.querySelector('#instructor-photo').files[0];
+    const vehiclePhotoFile = profileForm.querySelector('#vehicle-photo').files[0];
+    
+    // Start with a base data object
+    const profileData = {
+        bio: profileForm.querySelector('#instructor-bio').value,
+        languages: profileForm.querySelector('#languages-spoken').value,
+        startYear: profileForm.querySelector('#instructor-start-year').value,
+        transmission: profileForm.querySelector('#instructor-transmission').value,
+        vehicleMake: profileForm.querySelector('#vehicle-make').value,
+        vehicleModel: profileForm.querySelector('#vehicle-model').value,
+        ancap: profileForm.querySelector('#vehicle-ancap').value,
+        dualControls: profileForm.querySelector('#vehicle-dual-controls').value,
+    };
+
+    try {
+        // Handle instructor photo upload if a file is selected
+        if (instructorPhotoFile) {
+            const instructorPhotoRef = storage.ref(`instructor-photos/${uid}/${instructorPhotoFile.name}`);
+            await instructorPhotoRef.put(instructorPhotoFile);
+            profileData.instructorPhotoUrl = await instructorPhotoRef.getDownloadURL();
+        }
+
+        // Handle vehicle photo upload if a file is selected
+        if (vehiclePhotoFile) {
+            const vehiclePhotoRef = storage.ref(`vehicle-photos/${uid}/${vehiclePhotoFile.name}`);
+            await vehiclePhotoRef.put(vehiclePhotoFile);
+            profileData.vehiclePhotoUrl = await vehiclePhotoRef.getDownloadURL();
+        }
+
+        // Update the document in Firestore with the data and new photo URLs
+        await db.collection('users').doc(uid).update(profileData);
+        alert("Profile updated successfully! ✅");
+    } catch (error) {
+        console.error("Error updating profile: ", error);
+        alert("There was an error saving your profile. Please try again.");
+    }
+}
+
+// Event listener to SAVE the form data
+const instructorProfileForm = document.getElementById('instructor-profile-form');
+if (instructorProfileForm) {
+    instructorProfileForm.addEventListener('submit', saveInstructorProfile);
+}
+
+// --- START: DYNAMIC LEARNER-FACING PROFILE PAGE ---
+async function displayInstructorProfile(instructorId) {
+    const page = document.getElementById('instructor-profile-page');
+    if (!page) return;
+
+    try {
+        const doc = await db.collection('users').doc(instructorId).get();
+        if (!doc.exists) {
+            console.error("Instructor not found!");
+            return;
+        }
+
+        const data = doc.data();
+
+        // Use the uploaded photos, or fall back to placeholders
+        const instructorPhoto = data.instructorPhotoUrl || "https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=";
+        const vehiclePhoto = data.vehiclePhotoUrl || "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Urban-Cruiser/12237/1735368926257/front-left-side-47.jpg";
+
+        // Populate the profile page with the instructor's data
+        page.querySelector('.profile-photo').src = instructorPhoto;
+        page.querySelector('.profile-car-photo').src = vehiclePhoto;
+        page.querySelector('.profile-header-info h2').textContent = data.firstName || 'Instructor';
+        page.querySelector('.profile-section p').textContent = data.bio || 'Bio not provided.';
+        page.querySelector('.language-tag').textContent = data.languages || 'English';
+
+        // Example for checkmark list - you can make this more dynamic
+        const checkmarkList = page.querySelector('.checkmark-list');
+        checkmarkList.innerHTML = `
+            <li><i class="fas fa-check"></i> ${data.transmission || 'Auto'} Lessons & Test Packages</li>
+            <li><i class="fas fa-check"></i> Verified Working with Children Check</li>
+            <li><i class="fas fa-check"></i> Driving Instructor's Licence</li>
+            <li><i class="fas fa-check"></i> Instructing since ${data.startYear || '2024'}</li>
+        `;
+        
+        // Show the page after populating it
+        showPage('instructor-profile-page');
+
+    } catch (error) {
+        console.error("Error fetching instructor details: ", error);
+    }
+}
+// --- END: DYNAMIC LEARNER-FACING PROFILE PAGE ---
+// --- END: INSTRUCTOR PROFILE EDIT LOGIC ---
 // --- END: TRANSACTION REPORT LOGIC ---
+// --- DYNAMICALLY POPULATE BOOKING PAGE WITH INSTRUCTOR DATA ---
+// --- DYNAMICALLY POPULATE BOOKING PAGE WITH INSTRUCTOR DATA ---
+async function renderBookingPageInstructor(instructorId) {
+            const bookingPage = document.getElementById('booking-page');
+            if (!bookingPage) return;
+
+            // First, clear any previous instructor data
+            const instructorInfoCard = bookingPage.querySelector('.instructor-details');
+            instructorInfoCard.querySelector('.instructor-info h5').textContent = 'Loading...';
+            instructorInfoCard.querySelector('.instructor-info p').textContent = '';
+            instructorInfoCard.querySelector('.vehicle-info h5').textContent = '';
+            instructorInfoCard.querySelector('.vehicle-info p').textContent = '';
+
+            // Handle the case where a specific instructor is not selected
+            if (!instructorId || instructorId === 'placeholder-id-for-default-instructor') {
+                try {
+                    const learnerDoc = await db.collection('users').doc(auth.currentUser.uid).get();
+                    const learnerData = learnerDoc.data();
+                    instructorId = learnerData.instructorId; // Fetch from learner's data
+                    if (!instructorId) {
+                        alert('Please select an instructor first.');
+                        showView('switch-instructor-content');
+                        return;
+                    }
+                } catch (error) {
+                    console.error("Could not fetch default instructor ID for learner.", error);
+                    return;
+                }
+            }
+            
+            // Now fetch and display instructor data
+            try {
+                const docRef = db.collection('users').doc(instructorId);
+                const doc = await docRef.get();
+                
+                if (doc.exists) {
+                    const instructor = doc.data();
+                    const instructorPhoto = instructor.instructorPhotoUrl || "https://placehold.co/100x100?text=I";
+                    const vehiclePhoto = instructor.vehiclePhotoUrl || "https://placehold.co/100x100?text=Car";
+                                currentInstructorPricing = instructor.pricing || { lesson: 70, testPackage: 225 };
+
+
+                    // Update the HTML elements with the fetched data
+                    instructorInfoCard.querySelector('.instructor-info img').src = instructorPhoto;
+                    instructorInfoCard.querySelector('.instructor-info h5').textContent = instructor.firstName || 'Instructor';
+                    instructorInfoCard.querySelector('.instructor-info p').textContent = `$70/hr<br>Offers ${instructor.transmission || 'Auto'} lessons`; // Example price
+                    
+                    instructorInfoCard.querySelector('.vehicle-info img').src = vehiclePhoto;
+                    instructorInfoCard.querySelector('.vehicle-info h5').textContent = `${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}`;
+                    instructorInfoCard.querySelector('.vehicle-info p').textContent = `${instructor.ancap || '5-star ANCAP rating'}<br>${instructor.dualControls === 'Yes' ? 'Dual controls fitted' : 'No dual controls'}`;
+                    
+                    // --- START OF FIX ---
+                    // These lines will now run every time, making the form functional.
+                    const bookingFormLogic = document.querySelector('#booking-page');
+                    if(bookingFormLogic) {
+                       // Find the populateAvailableDates function and call it
+                       // This function is defined within the `if (bookingPage)` block
+                                   updateOrderSummary(); 
+
+                       populateAvailableDates(); 
+                    }
+                    // --- END OF FIX ---
+
+                } else {
+                    console.error('Instructor not found in Firestore.');
+                }
+
+            } catch (error) {
+                console.error('Error rendering booking page instructor:', error);
+            }
+        }
+
+
+// --- NEW BOOKING PAGE LOGIC ---
+
+
+// --- FUNCTION TO HANDLE BOOKING CONFIRMATION AND SAVE TO FIRESTORE ---
+async function confirmBooking(bookingData) {
+    if (!auth.currentUser) {
+        alert("You must be logged in to confirm a booking.");
+        return;
+    }
+
+    const learnerId = auth.currentUser.uid;
+    const instructorId = bookingData.instructorId;
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const bookingRef = db.collection('bookings').doc(); // Create a new document reference
+            const learnerRef = db.collection('users').doc(learnerId);
+            const instructorRef = db.collection('users').doc(instructorId);
+
+            // Fetch the documents to ensure they exist before writing
+            const learnerDoc = await transaction.get(learnerRef);
+            const instructorDoc = await transaction.get(instructorRef);
+
+            if (!learnerDoc.exists || !instructorDoc.exists) {
+                throw "User or Instructor not found!";
+            }
+
+            // Create the new booking document with the booking data
+            const newBooking = {
+                ...bookingData,
+                learnerId: learnerId,
+                instructorId: instructorId,
+                status: 'CONFIRMED', // Set initial status
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                learnerName: learnerDoc.data().firstName,
+                instructorName: instructorDoc.data().firstName
+            };
+
+            transaction.set(bookingRef, newBooking);
+        });
+
+        alert("Booking confirmed successfully!");
+        // Redirect to a success page or the dashboard
+        showView('dashboard-main-content');
+
+    } catch (error) {
+        console.error("Transaction failed: ", error);
+        alert("Booking failed. Please try again.");
+    }
+}
+
+// --- FETCH AND RENDER UPCOMING BOOKINGS FOR INSTRUCTOR DASHBOARD ---
+function renderUpcomingBookings(uid) {
+    const upcomingContent = document.getElementById('upcoming-booking-content');
+    if (!upcomingContent) return;
+
+    // Clear any previous bookings
+    upcomingContent.innerHTML = '<p>Loading upcoming bookings...</p>';
+
+    // Listen for real-time updates to bookings for the current instructor
+    db.collection('bookings').where('instructorId', '==', uid).where('status', '==', 'CONFIRMED').onSnapshot(querySnapshot => {
+        if (querySnapshot.empty) {
+            upcomingContent.innerHTML = '<p>You have no upcoming bookings.</p>';
+            return;
+        }
+
+        upcomingContent.innerHTML = ''; // Clear the loading message
+
+        querySnapshot.forEach(doc => {
+            const booking = doc.data();
+            const bookingId = doc.id;
+            
+            // Construct the HTML for each booking item
+            const bookingItemHTML = `
+                <div class="card">
+                    <div class="booking-item">
+                        <div class="booking-item-main">
+                            <div class="booking-item-section">
+                                <p>Booking Details</p>
+<span><i class="fas fa-calendar-alt"></i> ${moment(booking.date, 'ddd, D MMM YYYY').format('ddd, D MMM YYYY')}</span><br>
+                                <span><i class="fas fa-clock"></i> ${booking.startTime} - ${booking.endTime}</span>
+                            </div>
+                            <div class="booking-item-section">
+                                <p>Lesson Details</p>
+                                <span><i class="fas fa-car"></i> ${booking.lessonType} (${booking.transmission})</span>
+                            </div>
+                            <div class="booking-item-section">
+                                <p>Learner Details</p>
+                                <div class="learner-details">
+                                    <img src="https://placehold.co/100x100?text=${booking.learnerName.charAt(0)}" alt="Learner">
+                                    <h5>${booking.learnerName}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-item-actions">
+                            <a href="#" class="btn btn-secondary btn-small" data-booking-id="${bookingId}">See more / Manage</a>
+                        </div>
+                    </div>
+                    <div class="booking-item-location">
+                        <span><i class="fas fa-map-marker-alt"></i> ${booking.pickupLocation}</span>
+                    </div>
+                </div>
+            `;
+            upcomingContent.insertAdjacentHTML('beforeend', bookingItemHTML);
+        });
+    });
+}
+
+// --- BOOKING PAGE LOGIC ---
+const bookingPage = document.getElementById('booking-page');
+if (bookingPage) {
+    const bookingForm = document.getElementById('booking-form');
+    const bookingTypeTabs = document.getElementById('booking-type-tabs');
+    const testLocationGroup = document.getElementById('test-location-group');
+    const testWarning = document.getElementById('test-package-warning');
+    const pickupTimeNote = document.getElementById('pickup-time-note');
+    const dateDropdown = document.getElementById('available-dates');
+    const timeDropdown = document.getElementById('available-times');
+    const confirmBookingBtn = document.getElementById('confirm-booking-btn');
+    const sidebarContinueBtn = document.getElementById('sidebar-continue-btn');
+    const summaryLessonType = document.getElementById('summary-lesson-type');
+    const summaryDateTime = document.getElementById('summary-date-time');
+    const summaryPrice = document.getElementById('summary-price');
+    const summaryTotalPrice = document.getElementById('summary-total-price');
+    const pickupDisplay = document.getElementById('pickup-location-display');
+    const dropoffDisplay = document.getElementById('dropoff-location-display');
+
+    let currentLessonType = '1-hour'; // Default to 1-hour lesson
+    const prices = {
+        '1-hour': 70,
+        '2-hour': 140,
+        'test-package': 225
+    };
+
+    // Helper function to update the order summary
+    // --- FIND AND REPLACE this function ---
+function updateOrderSummary() {
+    const selectedDate = dateDropdown.value;
+    const selectedTime = timeDropdown.value;
+    
+    // Use the dynamic pricing object
+    const dynamicPrices = {
+        '1-hour': currentInstructorPricing.lesson,
+        '2-hour': currentInstructorPricing.lesson * 2,
+        'test-package': currentInstructorPricing.testPackage
+    };
+    const price = dynamicPrices[currentLessonType];
+
+    summaryLessonType.textContent = currentLessonType.replace('-', ' ') + (currentLessonType === 'test-package' ? '' : ' lesson');
+    summaryDateTime.textContent = (selectedDate && selectedTime) ? `${selectedDate} at ${selectedTime}` : '-';
+    summaryPrice.textContent = price ? `$${price.toFixed(2)}` : '-';
+    summaryTotalPrice.textContent = price ? `$${price.toFixed(2)}` : '$0.00';
+}
+
+    // A function to check if the form is valid and enable the buttons
+    function validateForm() {
+        const isFormValid = dateDropdown.value !== '' && timeDropdown.value !== '';
+        confirmBookingBtn.disabled = !isFormValid;
+        confirmBookingBtn.classList.toggle('btn-disabled', !isFormValid);
+        sidebarContinueBtn.disabled = !isFormValid;
+        sidebarContinueBtn.classList.toggle('btn-disabled', !isFormValid);
+    }
+    
+    // Event listeners for the booking form dropdowns
+    dateDropdown.addEventListener('change', () => {
+        // In a real app, this would dynamically fetch times for the selected date
+        timeDropdown.innerHTML = `
+            <option value="">Select a time</option>
+            <option value="9:00 am">9:00 am</option>
+            <option value="11:00 am">11:00 am</option>
+            <option value="2:00 pm">2:00 pm</option>
+            <option value="4:00 pm">4:00 pm</option>
+        `;
+        updateOrderSummary();
+        validateForm();
+    });
+
+    timeDropdown.addEventListener('change', () => {
+        updateOrderSummary();
+        validateForm();
+    });
+
+    // Event listener for the booking type tabs
+    bookingTypeTabs.addEventListener('click', (e) => {
+        const clickedTab = e.target.closest('.tab-link');
+        if (!clickedTab) return;
+        
+        // Update active class on tabs
+        bookingTypeTabs.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+        clickedTab.classList.add('active');
+
+        currentLessonType = clickedTab.dataset.lessonType;
+
+        // Toggle visibility of test package specific fields
+        const isTestPackage = currentLessonType === 'test-package';
+        testLocationGroup.style.display = isTestPackage ? 'block' : 'none';
+        testWarning.style.display = isTestPackage ? 'block' : 'none';
+        pickupTimeNote.style.display = isTestPackage ? 'block' : 'none';
+        
+        // Populate dates for the new lesson type (for demonstration purposes, we use same data)
+        populateAvailableDates();
+        
+        updateOrderSummary();
+        validateForm();
+    });
+
+    // Function to populate the available dates dropdown
+    function populateAvailableDates() {
+        const now = moment();
+        dateDropdown.innerHTML = `<option value="">Select a day</option>`;
+        for (let i = 0; i < 7; i++) {
+            const date = now.clone().add(i, 'days');
+            const formattedDate = date.format('ddd, D MMM YYYY');
+            dateDropdown.innerHTML += `<option value="${formattedDate}">${formattedDate}</option>`;
+        }
+    }
+
+    // Initial population when the page loads
+    populateAvailableDates();
+    pickupDisplay.textContent = currentUserLocation;
+    dropoffDisplay.textContent = currentUserLocation;
+
+
+    // Event listener for the booking form submission
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Collect all form data
+        const bookingData = {
+            instructorId: currentInstructorId,
+            lessonType: currentLessonType,
+            transmission: 'Auto', // You may want to fetch this from the instructor data
+            date: dateDropdown.value,
+            startTime: timeDropdown.value,
+            pickupLocation: pickupDisplay.textContent,
+            dropoffLocation: dropoffDisplay.textContent,
+            price: prices[currentLessonType]
+        };
+
+        // Call the confirmBooking function to save to Firestore
+        confirmBooking(bookingData);
+    });
+
+}
+
+// --- START: NEW FUNCTION FOR INSTRUCTOR BOOKING DETAILS ---
+// --- START: REPLACEMENT for renderInstructorBookingDetails function ---
+async function renderInstructorBookingDetails(bookingId) {
+    const detailsView = document.getElementById('instructor-booking-details-view');
+        if(detailsView) detailsView.dataset.bookingId = bookingId;
+
+    if (!detailsView) {
+        console.error("Instructor booking details view not found!");
+        return;
+    }
+
+    try {
+        // Fetch the specific booking document
+        const bookingRef = db.collection('bookings').doc(bookingId);
+        const doc = await bookingRef.get();
+
+        if (!doc.exists) {
+            console.error('Booking document not found:', bookingId);
+            return;
+        }
+
+        const booking = doc.data();
+        
+        // --- DATA POPULATION ---
+
+        // Update main header and breadcrumbs
+        detailsView.querySelector('h2').textContent = `Booking #${bookingId.substring(0, 7)}`;
+        detailsView.querySelector('.breadcrumbs').innerHTML = `<a href="#" class="back-link" data-view="instructor-dashboard-view">Upcoming Bookings</a> > Booking #${bookingId.substring(0, 7)}`;
+        
+        // Update the green confirmation banner
+        const banner = detailsView.querySelector('.booking-confirmation-banner span');
+        if (banner) banner.textContent = `This booking has been confirmed by ${booking.learnerName}.`;
+
+        // Update the main booking details card
+        detailsView.querySelector('.booking-main-details h4').innerHTML = `Booking #${bookingId.substring(0, 7)} <span class="status-badge status-confirmed">${booking.status || 'CONFIRMED'}</span>`;
+        const infoGrid = detailsView.querySelector('.booking-info-grid');
+        infoGrid.querySelector('.booking-info-item:nth-child(1)').innerHTML = `<i class="fas fa-calendar-alt"></i> ${moment(booking.date, 'ddd, D MMM YYYY').format('ddd, D MMM YYYY')}`;
+        infoGrid.querySelector('.booking-info-item:nth-child(2)').innerHTML = `<i class="fas fa-clock"></i> ${booking.startTime} - ${booking.endTime || 'N/A'}`;
+        infoGrid.querySelector('.booking-info-item:nth-child(3)').innerHTML = `<i class="fas fa-car"></i> ${booking.lessonType} (${booking.transmission})`;
+        infoGrid.querySelector('.booking-info-item:nth-child(4)').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${booking.pickupLocation}`;
+        
+        // Update the learner details card
+        const learnerDetailsCard = detailsView.querySelector('.booking-learner-details');
+        learnerDetailsCard.querySelector('img').src = `https://placehold.co/100x100?text=${booking.learnerName.charAt(0)}`;
+        learnerDetailsCard.querySelector('strong').textContent = booking.learnerName;
+        // You can fetch the learner's phone from their user doc if needed, or leave it blank
+        // learnerDetailsCard.querySelector('a').textContent = '04XX XXX XXX'; 
+
+        // Update the payment card
+        const paymentCard = detailsView.querySelector('#payment-details-card'); // This is much more reliable
+
+        const bookingMadeOn = booking.createdAt ? moment(booking.createdAt.toDate()).format('D MMM YYYY, h:mm A') : 'N/A';
+        paymentCard.querySelector('.payment-details-body p').innerHTML = `Booking Made On<br>${bookingMadeOn}`;
+        paymentCard.querySelector('.payment-amount h2').textContent = `$${(booking.price || 0).toFixed(2)}`;
+
+        // Update the "Your Notes" card placeholder
+        const notesCard = detailsView.querySelector('.notes-body p');
+        if(notesCard) notesCard.innerHTML = `Write your first note about ${booking.learnerName}.<br><small>(These notes are only visible by you.)</small>`;
+
+        // Update the booking history
+        const historyRow = detailsView.querySelector('.history-table-row.wide-grid');
+        if(historyRow) historyRow.querySelector('div:nth-child(2)').innerHTML = `<i class="fas fa-user" style="margin-right: 10px;"></i> <strong>${booking.learnerName}</strong> confirmed this booking`;
+
+        // --- END OF DATA POPULATION ---
+
+        showView('instructor-booking-details-view');
+
+    } catch (error) {
+        console.error("Error rendering instructor booking details:", error);
+    }
+}
+// --- END: REPLACEMENT for renderInstructorBookingDetails function ---
+// --- END: NEW FUNCTION FOR INSTRUCTOR BOOKING DETAILS ---
+// --- START: NEW FUNCTION TO CANCEL A BOOKING ---
+async function cancelBooking(bookingId) {
+    // Ask for confirmation before proceeding
+    if (!confirm("Are you sure you want to cancel this booking? This action cannot be undone.")) {
+        return; // Stop if the user clicks "Cancel"
+    }
+
+    try {
+        // Find the booking in Firestore and update its status
+        await db.collection('bookings').doc(bookingId).update({
+            status: 'CANCELLED'
+        });
+
+        alert("Booking has been successfully cancelled.");
+
+        // Go back to the main instructor dashboard view
+        showInstructorView('instructor-dashboard-view');
+
+    } catch (error) {
+        console.error("Error cancelling booking: ", error);
+        alert("There was an error cancelling the booking. Please try again.");
+    }
+}
+// --- END: NEW FUNCTION TO CANCEL A BOOKING ---
+// --- ADD THIS MISSING FUNCTION ---
+// This function handles switching between different views (Dashboard, Calendar, etc.)
+// inside the instructor's main page.
+function showInstructorView(viewId) {
+    // First, hide all views within the instructor dashboard
+    document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => {
+        view.classList.remove('active');
+    });
+
+    // Then, show the specific view that was requested
+    const viewToShow = document.getElementById(viewId);
+    if (viewToShow) {
+        viewToShow.classList.add('active');
+    } else {
+        console.error("Instructor view with ID '" + viewId + "' not found.");
+    }
+}
+
+// --- START: NEW FUNCTION TO RENDER INSTRUCTOR CALENDAR ---
+async function renderInstructorCalendar(uid, viewDate) {
+    const calendarGrid = document.querySelector('#instructor-calendar-view .calendar-grid');
+    if (!calendarGrid) return;
+
+    // 1. Clear any existing events
+    calendarGrid.querySelectorAll('.calendar-event').forEach(eventEl => eventEl.remove());
+
+    const startOfWeek = viewDate.clone().startOf('isoWeek');
+    const endOfWeek = viewDate.clone().endOf('isoWeek');
+
+    try {
+        const snapshot = await db.collection('bookings')
+            .where('instructorId', '==', uid)
+            .where('status', '==', 'CONFIRMED')
+            .get();
+
+        if (snapshot.empty) return;
+
+        snapshot.forEach(doc => {
+            const booking = doc.data();
+            const bookingMoment = moment(booking.date, 'ddd, D MMM YYYY');
+
+            // Only render bookings that are within the current calendar week
+            if (bookingMoment.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
+                const bookingDay = bookingMoment.day();
+                const gridColumn = (bookingDay === 0) ? 7 : bookingDay; // Sun=7, Mon=1...
+
+                const startTime = moment(booking.startTime, 'h:mm a');
+                const minutesFrom6am = (startTime.hours() - 6) * 60 + startTime.minutes();
+                
+                // Set height based on duration (1 pixel per minute)
+                const endTime = moment(booking.endTime, 'h:mm a');
+                const durationInMinutes = endTime.diff(startTime, 'minutes');
+                
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'calendar-event event-lesson';
+                eventDiv.dataset.bookingId = doc.id; // <-- ADD THIS LINE
+                eventDiv.style.gridColumn = gridColumn + 1; // CSS grid columns are 1-indexed, plus 1 for the time labels column
+                eventDiv.style.top = `${minutesFrom6am}px`;
+                eventDiv.style.height = `${durationInMinutes}px`;
+                eventDiv.innerHTML = `
+                    <strong>${booking.startTime} - ${booking.endTime}</strong>
+                    <p>${booking.learnerName} (${booking.transmission.charAt(0)})<br>${booking.pickupLocation.split(',')[0]}</p>
+                `;
+                
+                // Append directly to the grid, not a specific slot
+                calendarGrid.appendChild(eventDiv);
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching calendar bookings:", error);
+    }
+}
+// Add this new function with your other helper functions
+function updateCalendarView(date) {
+    const monthDisplay = document.getElementById('cal-month-display');
+    const dayHeaders = document.querySelectorAll('#instructor-calendar-view .day-header');
+
+    if (monthDisplay) {
+        monthDisplay.textContent = date.format('MMMM YYYY');
+    }
+
+    const startOfWeek = date.clone().startOf('isoWeek'); // Starts on Monday
+
+    dayHeaders.forEach((header, index) => {
+        const day = startOfWeek.clone().add(index, 'days');
+        header.innerHTML = `<strong>${day.format('ddd')}</strong> ${day.format('D')}`;
+        
+        header.classList.toggle('today', day.isSame(moment(), 'day'));
+        if (header.classList.contains('today')) {
+             header.innerHTML = `<strong>${day.format('ddd')}</strong><span>${day.format('D')}</span>`;
+        }
+    });
+
+    if (auth.currentUser) {
+        renderInstructorCalendar(auth.currentUser.uid, date);
+    }
+}
+// --- START: CALENDAR NAVIGATION LISTENERS ---
+document.getElementById('cal-next-week-btn')?.addEventListener('click', () => {
+    currentCalendarDate.add(1, 'week');
+    updateCalendarView(currentCalendarDate);
+});
+
+document.getElementById('cal-prev-week-btn')?.addEventListener('click', () => {
+    currentCalendarDate.subtract(1, 'week');
+    updateCalendarView(currentCalendarDate);
+});
+
+document.getElementById('cal-today-btn')?.addEventListener('click', () => {
+    currentCalendarDate = moment();
+    updateCalendarView(currentCalendarDate);
+});
+// --- END: CALENDAR NAVIGATION LISTENERS ---
+// --- END: NEW FUNCTION TO RENDER INSTRUCTOR CALENDAR ---
+
+// --- START: NEW DYNAMIC LEARNER FUNCTIONS ---
+
+/**
+ * Fetches and displays the list of learners associated with an instructor.
+ * @param {string} instructorId - The UID of the logged-in instructor.
+ */
+async function renderInstructorLearners(instructorId) {
+    const learnersListContainer = document.querySelector('#my-learners-content .learners-list');
+    if (!learnersListContainer) return;
+
+    // Show a loading state
+    learnersListContainer.innerHTML = `
+        <div class="learners-list-header">
+            <div>Learner Details</div><div>Guardian Details</div><div>Booking Hours Completed</div><div>Upcoming Bookings</div><div></div>
+        </div>
+        <div class="learners-list-row"><p style="grid-column: 1 / -1; text-align: center; padding: 20px;">Loading learners...</p></div>`;
+
+    try {
+        // 1. Find all unique learners from the instructor's bookings
+        const bookingsSnapshot = await db.collection('bookings').where('instructorId', '==', instructorId).get();
+        if (bookingsSnapshot.empty) {
+            learnersListContainer.innerHTML = `
+                <div class="learners-list-header">
+                     <div>Learner Details</div><div>Guardian Details</div><div>Booking Hours Completed</div><div>Upcoming Bookings</div><div></div>
+                </div>
+                <div class="learners-list-row"><p style="grid-column: 1 / -1; text-align: center; padding: 20px;">No learners found.</p></div>`;
+            return;
+        }
+
+        const learnerIds = [...new Set(bookingsSnapshot.docs.map(doc => doc.data().learnerId))];
+
+        // 2. Fetch details and stats for each unique learner
+        const learnerDataPromises = learnerIds.map(async (learnerId) => {
+            const userDoc = await db.collection('users').doc(learnerId).get();
+            const completedBookings = bookingsSnapshot.docs.filter(doc => doc.data().learnerId === learnerId && doc.data().status === 'COMPLETED');
+            const upcomingBookings = bookingsSnapshot.docs.filter(doc => doc.data().learnerId === learnerId && doc.data().status === 'CONFIRMED');
+
+            // Simple hour calculation (assumes '1-hour' or '2-hour' in lessonType)
+            const hoursCompleted = completedBookings.reduce((total, booking) => {
+                const type = booking.data().lessonType || '';
+                if (type.includes('2-hour')) return total + 2;
+                if (type.includes('1-hour')) return total + 1;
+                return total;
+            }, 0);
+
+            return {
+                id: learnerId,
+                data: userDoc.data(),
+                hours: hoursCompleted,
+                upcomingCount: upcomingBookings.length
+            };
+        });
+
+        const learners = await Promise.all(learnerDataPromises);
+
+        // 3. Render the list
+        learnersListContainer.innerHTML = `
+            <div class="learners-list-header">
+                <div>Learner Details</div><div>Guardian Details</div><div>Booking Hours Completed</div><div>Upcoming Bookings</div><div></div>
+            </div>`; // Clear loading and add header
+
+        learners.forEach(learner => {
+            const learnerRow = `
+                <div class="learners-list-row" data-learner-id="${learner.id}">
+                    <div class="learner-cell-details">
+                        <h5>${learner.data.firstName || 'N/A'} ${learner.data.surname || ''}</h5>
+                        <span>${learner.data.mobile || 'No phone number'}</span>
+                    </div>
+                    <div>-</div>
+                    <div>${learner.hours}</div>
+                    <div>${learner.upcomingCount}</div>
+                    <div class="learner-actions">
+                        <a href="#" class="view-learner-details-btn">Learner Details</a>
+                        <button class="btn btn-primary propose-booking-btn">Propose Booking</button>
+                    </div>
+                </div>`;
+            learnersListContainer.insertAdjacentHTML('beforeend', learnerRow);
+        });
+
+    } catch (error) {
+        console.error("Error rendering instructor learners: ", error);
+        learnersListContainer.innerHTML = `<div class="learners-list-row"><p style="grid-column: 1 / -1; text-align: center; padding: 20px; color: red;">Could not load learners.</p></div>`;
+    }
+}
+
+
+/**
+ * Fetches and displays the details for a single learner.
+ * @param {string} learnerId - The UID of the learner to display.
+ */
+async function renderLearnerDetailsPage(learnerId) {
+    const detailsView = document.getElementById('instructor-learner-details-view');
+    if (!detailsView) return;
+
+    // Show the view and a loading state
+    showInstructorView('instructor-learner-details-view');
+    detailsView.querySelector('.learner-info h3').textContent = 'Loading...';
+    detailsView.querySelector('.learner-history-table').innerHTML = '<p style="text-align: center; padding: 20px;">Loading booking history...</p>';
+
+
+    try {
+        // 1. Fetch learner's user data
+        const learnerDoc = await db.collection('users').doc(learnerId).get();
+        if (!learnerDoc.exists) throw new Error("Learner not found");
+        const learner = learnerDoc.data();
+        const instructorId = auth.currentUser.uid;
+
+        // Calculate age
+        const age = learner.dob ? moment().diff(moment(learner.dob), 'years') : 'N/A';
+        const initials = `${(learner.firstName || ' ')[0]}${(learner.surname || ' ')[0]}`.toUpperCase();
+
+        // 2. Populate profile card
+        detailsView.querySelector('.learner-avatar').textContent = initials;
+        detailsView.querySelector('.learner-info h3').innerHTML = `${learner.firstName} ${learner.surname || ''} <span class="age-tag">Age ${age}</span>`;
+        detailsView.querySelector('.learner-info p').innerHTML = `<i class="fas fa-phone-alt"></i> ${learner.mobile || 'No phone number'}`;
+        
+        // 3. Fetch and populate booking history
+        const bookingsSnapshot = await db.collection('bookings')
+            .where('learnerId', '==', learnerId)
+            .where('instructorId', '==', instructorId)
+            .where('status', 'in', ['COMPLETED', 'CANCELLED'])
+            .orderBy('createdAt', 'desc')
+            .get();
+            
+        const historyTable = detailsView.querySelector('.learner-history-table');
+        historyTable.innerHTML = `
+            <div class="learner-history-header">
+                <div>Booking</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
+            </div>`; // Reset with header
+
+        if (bookingsSnapshot.empty) {
+            historyTable.innerHTML += '<div class="learner-history-row" style="text-align: center; grid-column: 1 / -1; padding: 20px;">No past bookings found.</div>';
+        } else {
+            bookingsSnapshot.forEach(doc => {
+                const booking = doc.data();
+                const statusClass = booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'; // Example for other statuses
+                const historyRow = `
+                    <div class="learner-history-row">
+                        <div><a href="#" class="booking-id-link">#${doc.id.substring(0, 7)}</a></div>
+                        <div>${booking.date}</div>
+                        <div>${booking.startTime} - ${booking.endTime}</div>
+                        <div>${booking.pickupLocation}</div>
+                        <div><span class="status-badge ${statusClass}">${booking.status}</span></div>
+                        <div><span class="status-badge status-processed">PROCESSED</span></div>
+                    </div>`;
+                historyTable.insertAdjacentHTML('beforeend', historyRow);
+            });
+        }
+        
+        // You would similarly fetch and populate "Upcoming Bookings" if needed
+
+    } catch (error) {
+        console.error("Error rendering learner details: ", error);
+        detailsView.querySelector('.learner-info h3').textContent = 'Error loading details.';
+    }
+}
+
+// --- END: NEW DYNAMIC LEARNER FUNCTIONS ---
     </script>
 
     
