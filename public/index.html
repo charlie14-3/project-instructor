@@ -4197,6 +4197,52 @@ input:checked + .slider:before { transform: translateX(20px); }
     grid-column: 1 / -1; /* Span all columns */
 }
 /* --- END: Learner Details Page Styles --- */
+/* --- START: Add these styles for the Profile Dropdown --- */
+
+/* This makes the user-profile a container for the absolute-positioned dropdown */
+.user-profile {
+    position: relative; 
+}
+
+.profile-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 120%; /* Position it slightly below the user profile info */
+    right: 0;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 240px; /* Adjust width as needed */
+    z-index: 100;
+    overflow: hidden; /* Ensures border-radius is applied to children */
+    border: 1px solid var(--border-color);
+}
+
+/* This is the magic part: When you hover over the .user-profile, the .profile-dropdown inside it becomes visible */
+.user-profile:hover .profile-dropdown {
+    display: block; 
+}
+
+.profile-dropdown a {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align icon and text */
+    padding: 12px 15px;
+    font-size: 14px;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.profile-dropdown a:hover {
+    background-color: var(--light-gray-color);
+}
+
+.profile-dropdown a i {
+    margin-right: 12px; /* Space between icon and text */
+    width: 20px;
+    text-align: center;
+    color: var(--gray-color);
+}
+/* --- END: Add these styles --- */
 </style>
 </head>
 
@@ -4440,6 +4486,16 @@ input:checked + .slider:before { transform: translateX(20px); }
 
                             <img src="https://placehold.co/100x100?text=M"  alt="User Avatar">
                             <span id="instructor-user-name">Mandeep</span> ▾
+
+                            <div class="profile-dropdown">
+                                <a href="#"><i class="fas fa-user-circle"></i> Personal Details</a>
+                                <a href="#"><i class="fas fa-id-card"></i> My Profile & Vehicle</a>
+                                <a href="#"><i class="fas fa-map-marked-alt"></i> Service Area & Availability</a>
+                                <a href="#"><i class="fas fa-dollar-sign"></i> Set Pricing</a>
+                                <a href="#"><i class="fas fa-check-circle"></i> Verifications</a>
+                                <a href="#"><i class="fas fa-university"></i> Banking</a>
+                                <a href="#" class="instructor-logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                            </div>
                         </div>
                     </div>
                 </header>
