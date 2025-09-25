@@ -3858,6 +3858,52 @@ input:checked + .slider:before { transform: translateX(20px); }
 }
 /* --- END: ADD FOR PROFILE DROPDOWN --- */
 /* --- END: CSS REPLACEMENT --- */
+/* --- START: Add these styles for the Profile Dropdown --- */
+
+/* This makes the user-profile a container for the absolute-positioned dropdown */
+.user-profile {
+    position: relative; 
+}
+
+.profile-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 120%; /* Position it slightly below the user profile info */
+    right: 0;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 240px; /* Adjust width as needed */
+    z-index: 100;
+    overflow: hidden; /* Ensures border-radius is applied to children */
+    border: 1px solid var(--border-color);
+}
+
+/* This is the magic part: When you hover over the .user-profile, the .profile-dropdown inside it becomes visible */
+.user-profile:hover .profile-dropdown {
+    display: block; 
+}
+
+.profile-dropdown a {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align icon and text */
+    padding: 12px 15px;
+    font-size: 14px;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.profile-dropdown a:hover {
+    background-color: var(--light-gray-color);
+}
+
+.profile-dropdown a i {
+    margin-right: 12px; /* Space between icon and text */
+    width: 20px;
+    text-align: center;
+    color: var(--gray-color);
+}
+/* --- END: Add these styles --- */
 
 /* --- START: Add these styles for the Notification Page --- */
 .notifications-list {
@@ -3960,289 +4006,6 @@ input:checked + .slider:before { transform: translateX(20px); }
     padding-top: 15px;
 }
 /* --- END: Booking Notification Modal Styles --- */
-
-/* --- START: Add these styles for the Booking Details Page --- */
-.confirmation-banner {
-    background-color: #E6F4EA;
-    color: #34A853;
-    padding: 15px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    margin: 20px 0;
-}
-.booking-main-details-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.booking-details-main-info h4 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 25px;
-}
-.booking-details-main-info .info-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    font-weight: 500;
-}
-.booking-details-main-info .info-item i {
-    color: var(--gray-color);
-    width: 20px;
-    text-align: center;
-}
-.booking-details-learner-info {
-    background-color: var(--light-gray-color);
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.learner-avatar-small {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    color: var(--dark-color);
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-.booking-details-learner-info p {
-    font-size: 13px;
-    color: var(--gray-color);
-    margin: 0 0 4px 0;
-}
-.booking-details-learner-info strong, .booking-details-learner-info span {
-    display: block;
-    font-weight: 600;
-    font-size: 15px;
-}
-.payment-card, .notes-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.payment-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-.payment-amount {
-    text-align: right;
-}
-.payment-amount span {
-    font-size: 36px;
-    font-weight: 700;
-}
-.notes-card p {
-    color: var(--gray-color);
-}
-/* --- END: Booking Details Page Styles --- */
-/* --- START: Add these styles for the Booking History Card --- */
-.booking-history-card {
-    padding-bottom: 10px;
-}
-.booking-history-card h4 {
-    font-size: 16px;
-    font-weight: 600;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-.history-table-dynamic {
-    width: 100%;
-    font-size: 14px;
-}
-.history-table-header-dynamic, .history-table-row-dynamic {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    padding: 12px 20px;
-}
-.history-table-header-dynamic {
-    font-weight: 500;
-    color: var(--gray-color);
-    font-size: 13px;
-    padding-top: 0;
-}
-.history-table-row-dynamic {
-    font-weight: 500;
-}
-.history-event-cell {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.history-event-cell i {
-    font-size: 16px;
-    color: var(--gray-color);
-}
-/* --- END: Booking History Card Styles --- */
-
-/* --- START: Add these styles for the Learner Details Page --- */
-.learner-details-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1.5fr; /* Three columns */
-    grid-template-rows: auto auto; /* Two rows */
-    gap: 25px;
-}
-
-.learner-profile-card {
-    grid-column: 1 / 2; /* Span first column */
-    text-align: center;
-    padding: 30px;
-}
-
-.learner-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    color: var(--dark-color);
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    font-weight: 700;
-    margin: 0 auto 15px auto;
-}
-.learner-tag {
-    display: inline-block;
-    background-color: var(--light-gray-color);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-.learner-info h3 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-.learner-info p {
-    font-size: 14px;
-    color: var(--gray-color);
-    margin-bottom: 20px;
-}
-
-.notes-card-container {
-    grid-column: 2 / 3; /* Span second column */
-}
-.notes-card-container .card-header {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-    margin-bottom: 0;
-}
-#notes-display-view .empty-state-text {
-    text-align: center;
-    color: var(--gray-color);
-    padding: 40px 20px;
-}
-#notes-form-view input[type="date"],
-#notes-form-view textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 14px;
-    font-family: var(--font-family);
-    margin-top: 20px;
-}
-#notes-form-view textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-.note-form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.upcoming-bookings-card {
-    grid-column: 3 / 4; /* Span third column */
-}
-.upcoming-bookings-card h4 {
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-.upcoming-list-item {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-}
-.upcoming-list-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-.upcoming-list-item .lesson-tag {
-    margin-bottom: 10px;
-}
-
-.booking-history-full-width-card {
-    grid-column: 1 / -1; /* Span all columns */
-}
-/* --- END: Learner Details Page Styles --- */
-/* --- START: Add these styles for the Profile Dropdown --- */
-
-/* This makes the user-profile a container for the absolute-positioned dropdown */
-.user-profile {
-    position: relative; 
-}
-
-.profile-dropdown {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 120%; /* Position it slightly below the user profile info */
-    right: 0;
-    background-color: var(--white-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 240px; /* Adjust width as needed */
-    z-index: 100;
-    overflow: hidden; /* Ensures border-radius is applied to children */
-    border: 1px solid var(--border-color);
-}
-
-/* This is the magic part: When you hover over the .user-profile, the .profile-dropdown inside it becomes visible */
-.user-profile:hover .profile-dropdown {
-    display: block; 
-}
-
-.profile-dropdown a {
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Vertically align icon and text */
-    padding: 12px 15px;
-    font-size: 14px;
-    color: var(--dark-color);
-    font-weight: 500;
-}
-
-.profile-dropdown a:hover {
-    background-color: var(--light-gray-color);
-}
-
-.profile-dropdown a i {
-    margin-right: 12px; /* Space between icon and text */
-    width: 20px;
-    text-align: center;
-    color: var(--gray-color);
-}
-/* --- END: Add these styles --- */
 </style>
 </head>
 
@@ -4481,12 +4244,9 @@ input:checked + .slider:before { transform: translateX(20px); }
                     <h3>Dashboard</h3>
                     <div class="user-info">
                         <i id="notification-bell-icon" class="fas fa-bell"></i>
-                        
                         <div class="user-profile">
-
-                            <img src="https://placehold.co/100x100?text=M"  alt="User Avatar">
+                            <img src="https://placehold.co/100x100?text=M" alt="User Avatar">
                             <span id="instructor-user-name">Mandeep</span> ▾
-
                             <div class="profile-dropdown">
                                 <a href="#"><i class="fas fa-user-circle"></i> Personal Details</a>
                                 <a href="#"><i class="fas fa-id-card"></i> My Profile & Vehicle</a>
@@ -4738,130 +4498,34 @@ input:checked + .slider:before { transform: translateX(20px); }
                     </div>
                 
                     <div class="card notifications-list">
-                       
-                        </div>
-                </section>
-
-                <section id="instructor-booking-details-view" class="instructor-view">
-                    <div class="booking-details-header">
-                        <div>
-                            <p class="breadcrumbs" style="margin:0;"><a href="#" data-view="instructor-notifications-view">Notifications</a> > Booking #<span id="details-booking-id-breadcrumb"></span></p>
-                            <h2>Booking #<span id="details-booking-id-header"></span></h2>
-                        </div>
-                        <button class="btn btn-secondary">Modify Booking</button>
-                    </div>
-                
-                    <div class="confirmation-banner">
-                        <i class="fas fa-check-circle"></i>
-                        <span>This booking has been confirmed by <span id="details-learner-name-banner"></span>.</span>
-                    </div>
-                
-                    <div class="card booking-main-details-card">
-                        <div class="booking-details-main-info">
-                            <h4>Booking #<span id="details-booking-id-card"></span> <span class="status-badge status-confirmed">CONFIRMED</span></h4>
-                            <div class="info-item"><i class="fas fa-calendar-alt"></i> <span id="details-date"></span></div>
-                            <div class="info-item"><i class="fas fa-clock"></i> <span id="details-time"></span></div>
-                            <div class="info-item"><i class="fas fa-car"></i> <span id="details-lesson-type"></span></div>
-                            <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span id="details-location"></span></div>
-                        </div>
-                        <div class="booking-details-learner-info">
-                            <div class="learner-avatar-small">S</div>
-                            <div>
-                                <p>Learner details</p>
-                                <strong id="details-learner-name"></strong>
-                                <span id="details-learner-phone"></span>
+                        <div class="notification-item unread">
+                            <div class="notification-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="notification-details">
+                                <p><strong>New Safe Learners Booking</strong></p>
+                                <p>Siddanth G. has made new booking(s).</p>
+                                <span class="notification-time">Notification received at 16 Jun 2025, 1:48 PM</span>
                             </div>
+                            <i class="fas fa-chevron-right"></i>
                         </div>
-                    </div>
-                
-                    <div class="card payment-card">
-                        <h4>Payment <span class="status-badge status-pending">PENDING</span></h4>
-                        <div class="payment-info">
-                            <p>Booking Made On<br><span id="details-booking-made-date"></span></p>
-                            <div class="payment-amount">
-                                <span id="details-net-payment"></span>
-                                <p class="text-primary" style="font-weight: 500;">Your Net Payment</p>
+                        <div class="notification-item unread">
+                            <div class="notification-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="notification-details">
+                                <p><strong>New Safe Learners Booking</strong></p>
+                                <p>Siddanth G. has made new booking(s).</p>
+                                <span class="notification-time">Notification received at 16 Jun 2025, 1:47 PM</span>
                             </div>
+                            <i class="fas fa-chevron-right"></i>
                         </div>
-                    </div>
-                
-                    <div class="card notes-card">
-                        <h4>Your Notes <i class="fas fa-info-circle"></i></h4>
-                        <p>Write your first note about <span id="details-learner-name-notes"></span>.<br>(These notes are only visible by you.)</p>
-                        <button class="btn btn-secondary btn-small">+ Add a Note</button>
-                    </div>
-                </section>
-                <div class="card booking-history-card">
-                    <h4>Booking Update History</h4>
-                    <div class="history-table-dynamic">
-                        <div class="history-table-header-dynamic">
-                            <div>Event</div>
-                            <div>Updated</div>
-                            <div>Status</div>
-                        </div>
-                        
-                        <div class="history-table-row-dynamic">
-                            <div class="history-event-cell">
-                                <i class="fas fa-user"></i>
-                                <span><strong>Siddanth G.</strong> confirmed this booking</span>
+                        <div class="notification-item">
+                            <div class="notification-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="notification-details">
+                                <p><strong>New Safe Learners Booking</strong></p>
+                                <p>Araf A. has made new booking(s).</p>
+                                <span class="notification-time">Notification received at 15 Jun 2025, 7:19 PM</span>
                             </div>
-                            <div>2 days ago</div>
-                            <div><span class="status-badge status-confirmed">CONFIRMED</span></div>
+                            <i class="fas fa-chevron-right"></i>
                         </div>
                         </div>
-                </div>
-
-                <section id="instructor-learner-details-view" class="instructor-view">
-                    <div class="page-view-header">
-                        <div>
-                            <p class="breadcrumbs" style="margin:0;"><a href="#" data-view="instructor-learners-view">Learners</a> > <span id="learner-details-breadcrumb-name"></span></p>
-                            <h2><span id="learner-details-header-name"></span></h2>
-                        </div>
-                    </div>
-                
-                    <div class="learner-details-layout">
-                        <div class="learner-profile-card card">
-                            <div class="learner-avatar" id="learner-details-avatar">SG</div>
-                            <div class="learner-info">
-                                <span class="learner-tag">Learner</span>
-                                <h3 id="learner-details-name"></h3>
-                                <p id="learner-details-phone"></p>
-                            </div>
-                            <button class="btn btn-primary btn-full propose-booking-btn">Propose Booking</button>
-                        </div>
-                
-                        <div class="notes-card-container card">
-                            <div class="card-header">
-                                <h4>Your Notes</h4>
-                                <button id="write-note-btn" class="btn btn-secondary btn-small">Write a Note</button>
-                            </div>
-                            <div id="notes-display-view">
-                                <p class="empty-state-text">Write your first note about <span class="learner-name-in-note"></span>.<br>(These notes are only visible by you.)</p>
-                            </div>
-                            <div id="notes-form-view" style="display: none;">
-                                <form id="learner-note-form">
-                                    <input type="date" id="note-date">
-                                    <textarea id="note-textarea" placeholder="Start typing to leave a note..."></textarea>
-                                    <div class="note-form-actions">
-                                        <button type="button" id="cancel-note-btn" class="btn btn-secondary">Cancel</button>
-                                        <button type="submit" id="save-note-btn" class="btn btn-primary">Save Note</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                
-                        <div class="upcoming-bookings-card card">
-                            <h4>Upcoming Bookings</h4>
-                            <div id="details-upcoming-list" class="upcoming-list">
-                                </div>
-                        </div>
-                
-                        <div class="booking-history-full-width-card card">
-                             <h4>Booking History</h4>
-                             <div id="details-history-table">
-                                </div>
-                        </div>
-                    </div>
                 </section>
 
                   <section id="instructor-propose-booking-view" class="instructor-view">
@@ -7539,7 +7203,7 @@ input:checked + .slider:before { transform: translateX(20px); }
                     <p class="location-modal"><i class="fas fa-map-marker-alt"></i> 8 George St, Seven Hills 2147 NSW</p>
                 </div>
                 <div class="modal-booking-actions">
-                    <button id="modal-view-booking-btn" class="btn btn-secondary btn-small">View booking</button>
+                    <button class="btn btn-secondary btn-small">View booking</button>
                     <button class="btn btn-secondary btn-small">Learner details</button>
                 </div>
             </div>
@@ -7570,13 +7234,6 @@ input:checked + .slider:before { transform: translateX(20px); }
         const db = firebase.firestore();
 
         
-        // --- START: Add this sample data ---
-
-// In the future, you will get this array from your backend/database.
-// This is just a simulation for now.
-
-
-// --- END: Sample data ---
 
         // --- GLOBAL STATE & NAVIGATION ---
         const pages = document.querySelectorAll('.page');
@@ -9443,178 +9100,59 @@ async function renderLearnerDetailsPage(learnerId) {
 }
 
 // --- END: NEW DYNAMIC LEARNER FUNCTIONS ---
-
 // --- START: Add this JavaScript for the notification bell ---
-
+const notificationBell = document.getElementById('notification-bell-icon');
+if (notificationBell) {
+    notificationBell.addEventListener('click', function(e) {
+        e.preventDefault();
+        // This function is already in your code, it switches the visible content
+        showInstructorView('instructor-notifications-view'); 
+    });
+}
 // --- END: Notification Bell JavaScript ---
 // --- START: Add this JavaScript for the notification modal ---
 
 // 1. Get references to the modal and the main notification list
+const bookingNotificationModal = document.getElementById('booking-notification-modal');
+const notificationsList = document.querySelector('.notifications-list');
 
-
-    
-// --- END: Notification Modal JavaScript ---
-
-// --- START: Add this function to your script ---
-
-/**
- * Takes an array of notification data and builds the HTML list.
- * @param {Array} notifications - The array of notification objects.
- */
-
-// --- END: Add this function ---
-// --- START: COMPLETE NOTIFICATION SYSTEM JAVASCRIPT ---
-
-// 1. SIMULATED BACKEND DATA
-// This array holds all the information for our notifications.
-const notificationsData = [
-    { id: '8177749', title: 'New Safe Learners Booking', message: 'Siddanth G. has made new booking(s).', time: 'Notification received at 16 Jun 2025, 1:48 PM', isUnread: true },
-    { id: '8177750', title: 'New Safe Learners Booking', message: 'Siddanth G. has made new booking(s).', time: 'Notification received at 16 Jun 2025, 1:47 PM', isUnread: true },
-    { id: '8177751', title: 'New Safe Learners Booking', message: 'Araf A. has made new booking(s).', time: 'Notification received at 15 Jun 2025, 7:19 PM', isUnread: false },
-    { id: '8177752', title: 'New Safe Learners Booking', message: 'Gabe W. has made new booking(s).', time: 'Notification received at 13 Jun 2025, 6:38 PM', isUnread: false }
-];
-
-// 2. FUNCTION TO BUILD THE NOTIFICATION LIST FROM DATA
-function renderNotifications(notifications) {
-    const listContainer = document.querySelector('.notifications-list');
-    if (!listContainer) return;
-    listContainer.innerHTML = ''; // Clear old content
-    notifications.forEach(notification => {
-        const notificationHTML = `
-            <div class="notification-item ${notification.isUnread ? 'unread' : ''}" data-booking-id="${notification.id}">
-                <div class="notification-icon"><i class="fas fa-calendar-check"></i></div>
-                <div class="notification-details">
-                    <p><strong>${notification.title}</strong></p>
-                    <p>${notification.message}</p>
-                    <span class="notification-time">${notification.time}</span>
-                </div>
-                <i class="fas fa-chevron-right"></i>
-            </div>`;
-        listContainer.insertAdjacentHTML('beforeend', notificationHTML);
-    });
-}
-
-// 3. FUNCTION TO POPULATE AND SHOW THE BOOKING DETAILS PAGE
-function renderBookingDetails(bookingId) {
-    // This is our temporary database.
-    const placeholderData = {
-        '8177749': { id: '8177749', learnerName: 'Siddanth', learnerPhone: '0426649377', date: 'Sat, 21 Jun 2025', time: '2:30 PM - 3:30 PM', lessonType: '1 Hour Driving Lesson (Auto)', location: '8 George St, Seven Hills 2147 NSW', bookingMadeDate: '16 Jun 2025, 1:18 PM', netPayment: '$53.44' },
-        '8177750': { id: '8177750', learnerName: 'Jasper C.', learnerPhone: '0412345678', date: 'Sun, 22 Jun 2025', time: '10:00 AM - 11:00 AM', lessonType: '1 Hour Driving Lesson (Auto)', location: '123 Main St, Sydney 2000 NSW', bookingMadeDate: '17 Jun 2025, 9:30 AM', netPayment: '$53.44' }
-    };
-    const bookingData = placeholderData[bookingId];
-    if (!bookingData) {
-        alert("Details for this booking are not available.");
-        return;
-    }
-    // Populate all the fields on the details page
-    document.getElementById('details-booking-id-breadcrumb').textContent = bookingData.id;
-    document.getElementById('details-booking-id-header').textContent = bookingData.id;
-    document.getElementById('details-booking-id-card').textContent = bookingData.id;
-    document.getElementById('details-learner-name-banner').textContent = bookingData.learnerName;
-    document.getElementById('details-date').textContent = bookingData.date;
-    document.getElementById('details-time').textContent = bookingData.time;
-    document.getElementById('details-lesson-type').textContent = bookingData.lessonType;
-    document.getElementById('details-location').textContent = bookingData.location;
-    document.getElementById('details-learner-name').textContent = bookingData.learnerName;
-    document.getElementById('details-learner-phone').textContent = bookingData.learnerPhone;
-    document.getElementById('details-booking-made-date').textContent = bookingData.bookingMadeDate;
-    document.getElementById('details-net-payment').textContent = bookingData.netPayment;
-    document.getElementById('details-learner-name-notes').textContent = bookingData.learnerName;
-    // Show the page
-    showInstructorView('instructor-booking-details-view');
-}
-
-// 4. MAIN LOGIC AND EVENT LISTENERS
-// --- START: REPLACE your existing DOMContentLoaded block with this one ---
-
-// 4. MAIN LOGIC AND EVENT LISTENERS
-// This block connects all the functions to user clicks.
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- NOTIFICATION SYSTEM ---
-    renderNotifications(notificationsData); // Build the initial notification list
-
-    const notificationBell = document.getElementById('notification-bell-icon');
-    const bookingNotificationModal = document.getElementById('booking-notification-modal');
-    const notificationsList = document.querySelector('.notifications-list');
-    const modalViewBookingBtn = document.getElementById('modal-view-booking-btn');
+if (bookingNotificationModal && notificationsList) {
     const closeModalBtn = bookingNotificationModal.querySelector('.modal-close-btn');
 
-    notificationBell.addEventListener('click', (e) => {
-        e.preventDefault();
-        showInstructorView('instructor-notifications-view');
-        renderNotifications(notificationsData); 
-    });
-
-    notificationsList.addEventListener('click', (e) => {
+    // 2. Listen for clicks on the entire list of notifications
+    notificationsList.addEventListener('click', function(e) {
+        // Find the specific notification item that was clicked
         const clickedItem = e.target.closest('.notification-item');
+        
         if (clickedItem) {
-            const bookingId = clickedItem.dataset.bookingId;
-            clickedItem.classList.remove('unread');
-            bookingNotificationModal.dataset.bookingId = bookingId;
+            // 2a. If the item was unread, remove the 'unread' class to make it white
+            if (clickedItem.classList.contains('unread')) {
+                clickedItem.classList.remove('unread');
+            }
+            
+            // 2b. Open the modal
             bookingNotificationModal.classList.add('active');
+            
+            // Note: In a real application, you would pass the specific booking data
+            // from the clicked notification into the modal here.
         }
     });
 
-    modalViewBookingBtn.addEventListener('click', () => {
-        const bookingId = bookingNotificationModal.dataset.bookingId;
-        if (bookingId) {
-            bookingNotificationModal.classList.remove('active');
-            renderBookingDetails(bookingId);
-        }
-    });
-    
-    const closeBookingModal = () => bookingNotificationModal.classList.remove('active');
+    // 3. Logic to close the modal
+    const closeBookingModal = () => {
+        bookingNotificationModal.classList.remove('active');
+    };
+
     closeModalBtn.addEventListener('click', closeBookingModal);
+
     bookingNotificationModal.addEventListener('click', (e) => {
+        // Close if the dark overlay is clicked, but not the content inside it
         if (e.target === bookingNotificationModal) {
             closeBookingModal();
         }
     });
-
-    // --- LEARNER DETAILS PAGE LOGIC (NOW INSIDE DOMContentLoaded) ---
-    
-
-    // --- "YOUR NOTES" CARD LOGIC (NOW INSIDE DOMContentLoaded) ---
-    const writeNoteBtn = document.getElementById('write-note-btn');
-    const cancelNoteBtn = document.getElementById('cancel-note-btn');
-    const noteForm = document.getElementById('learner-note-form');
-    const notesDisplayView = document.getElementById('notes-display-view');
-    const notesFormView = document.getElementById('notes-form-view');
-
-    if (writeNoteBtn) {
-        writeNoteBtn.addEventListener('click', () => {
-            notesDisplayView.style.display = 'none';
-            writeNoteBtn.style.display = 'none';
-            notesFormView.style.display = 'block';
-        });
-
-        cancelNoteBtn.addEventListener('click', () => {
-            notesFormView.style.display = 'none';
-            notesDisplayView.style.display = 'block';
-            writeNoteBtn.style.display = 'block';
-        });
-
-        noteForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Note saved!');
-            notesFormView.style.display = 'none';
-            notesDisplayView.style.display = 'block';
-            writeNoteBtn.style.display = 'block';
-            noteForm.reset();
-        });
-    }
-});
-
-// --- END: CORRECTED JavaScript ---
-// --- END: COMPLETE NOTIFICATION SYSTEM JAVASCRIPT ---
-// --- START: Add this simplified Learner Details JavaScript ---
-
-
-// --- END: Simplified Learner Details JavaScript ---
-// --- END: "Your Notes" card logic ---
-
-
+}
+// --- END: Notification Modal JavaScript ---
     </script>
 
     
