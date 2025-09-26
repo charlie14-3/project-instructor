@@ -4902,10 +4902,154 @@
     padding-bottom: 20px;
 }
 /* --- END: Payout Accordion Styles --- */
+
+/* --- START: ADD THESE STYLES FOR RESPONSIVENESS --- */
+
+/* --- Main Layout Adjustments for Tablets and Smaller --- */
+
+/* Hide hamburger on desktop by default */
+/* Hide hamburger on desktop by default */
+.mobile-menu-btn {
+    display: none;
+}
+@media (max-width: 992px) {
+
+    /* Hide hamburger on desktop by default */
+
+    .dashboard-layout {
+        grid-template-columns: 220px 1fr; /* Slightly smaller sidebar */
+    }
+    .main-content {
+        padding: 20px;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+    .learner-details-grid {
+        grid-template-columns: 1fr; /* Stack on tablets */
+    }
+    .login-page {
+        grid-template-columns: 1fr; /* Stack login page on smaller screens */
+    }
+    .login-art {
+        display: none; /* Hide the art on smaller screens for focus */
+    }
+}
+
+/* --- Major Layout Changes for Mobile Phones --- */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -100%; /* Hide sidebar off-screen by default */
+        top: 0;
+        height: 100vh;
+        z-index: 1001; /* Ensure it's on top of content */
+        transition: left 0.3s ease-in-out;
+        width: 250px;
+    }
+
+    .sidebar.open {
+        left: 0; /* Bring sidebar into view when open */
+    }
+
+    .main-content {
+        width: 100%;
+        padding-top: 80px; /* Add padding to top to avoid header overlap */
+    }
+
+    .dashboard-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: var(--light-gray-color);
+        padding: 15px 20px;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* Hamburger menu icon styling */
+    .mobile-menu-btn {
+        display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .stats-grid,
+    .support-category-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    
+    #instructor-support-view .support-article-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #instructor-support-view .support-article-sidebar {
+        display: none; /* Hiding this on mobile for simplicity, can be made into a dropdown */
+    }
+
+    .history-table-header, .history-table-row {
+        display: block;
+        border-bottom: 2px solid var(--primary-color);
+        padding: 15px;
+    }
+    .history-table-header { display: none; } /* Hide headers, use data-labels */
+    .history-table-row > div {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+     .history-table-row > div:last-child { border-bottom: none; }
+    .history-table-row > div::before {
+        content: attr(data-label);
+        font-weight: 600;
+        margin-right: 10px;
+    }
+    
+    /* Landing page hero section */
+    .hero {
+        flex-direction: column-reverse;
+        padding: 20px;
+    }
+    .hero-images {
+        margin-bottom: 30px;
+        height: 300px;
+    }
+    .landing-container header {
+        padding: 15px;
+    }
+    .nav-links .btn { display: none; } /* Hide login buttons in nav */
+}
+
+/* Add a class to handle the overlay when the menu is open */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none; /* Hidden by default */
+}
+.overlay.active {
+    display: block;
+}
+/* --- END: RESPONSIVENESS STYLES --- */
     </style>
 </head>
 
 <body>
+    <div id="page-overlay" class="overlay"></div>
+
 
     <div id="landing-page" class="page active">
         <div class="landing-container">
@@ -5139,6 +5283,8 @@
             </aside>
             <main class="main-content">
                 <header class="dashboard-header">
+                    <button class="mobile-menu-btn" id="instructor-hamburger-btn">&#9776;</button>
+
                     <h3>Dashboard</h3>
                     <div class="user-info">
                         <i id="notification-bell-icon" class="fas fa-bell"></i>
@@ -6877,6 +7023,8 @@
             </aside>
             <main class="main-content">
                 <header class="dashboard-header">
+                    <button class="mobile-menu-btn" id="learner-hamburger-btn">&#9776;</button>
+
                     <h3>Dashboard</h3>
                     <div class="user-info">
                         <div class="notification-container">
@@ -10976,9 +11124,57 @@ document.addEventListener('click', (e) => {
     }
 });
 // --- END: ADD THIS SCRIPT ---
-// --- END: NEW SCRIPT ---
 
+// --- START: FINAL SCRIPT FOR ALL RESPONSIVE MENUS ---
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Get references for ALL necessary elements for BOTH dashboards
+    const instructorHamburgerBtn = document.getElementById('instructor-hamburger-btn');
+    const learnerHamburgerBtn = document.getElementById('learner-hamburger-btn');
+    
+    const instructorSidebar = document.querySelector('#instructor-dashboard-page .sidebar');
+    const learnerSidebar = document.querySelector('#dashboard-page .sidebar');
+    
+    const pageOverlay = document.getElementById('page-overlay');
 
+    // Universal function to open a specific menu
+    const openMenu = (sidebar) => {
+        if (sidebar && pageOverlay) {
+            sidebar.classList.add('open');
+            pageOverlay.classList.add('active');
+        } else {
+            console.error("Sidebar or Page Overlay not found!");
+        }
+    };
+
+    // Universal function to close ANY open menu
+    const closeMenu = () => {
+        if (instructorSidebar) instructorSidebar.classList.remove('open');
+        if (learnerSidebar) learnerSidebar.classList.remove('open');
+        if (pageOverlay) pageOverlay.classList.remove('active');
+    };
+
+    // Attach click listeners to each button
+    if (instructorHamburgerBtn) {
+        instructorHamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents other clicks from firing
+            openMenu(instructorSidebar);
+        });
+    }
+
+    if (learnerHamburgerBtn) {
+        learnerHamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openMenu(learnerSidebar);
+        });
+    }
+
+    // Attach a single click listener to the overlay to close any menu
+    if (pageOverlay) {
+        pageOverlay.addEventListener('click', closeMenu);
+    }
+});
+// --- END: FINAL SCRIPT ---
     </script>
 
 
