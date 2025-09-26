@@ -4005,7 +4005,101 @@ input:checked + .slider:before { transform: translateX(20px); }
     align-self: flex-start;
     padding-top: 15px;
 }
+
+/* --- START: ADDED FOR NOTES FORM --- */
+.add-note-form {
+    padding: 20px;
+}
+.note-input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.note-input-group input,
+.note-input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-family);
+}
+.note-input-group input:focus,
+.note-input-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+.note-input-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+.date-input-group i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-color);
+}
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#add-note-form-container input#note-date {
+    background-color: #fff; /* Ensure it's not greyed out */
+}
+/* --- START: ADDED FOR RESCHEDULE PAGE --- */
+.warning-box.danger {
+    background-color: #fef2f2; /* Light red */
+    border: 1px solid #fca5a5; /* Red border */
+    color: #991b1b; /* Dark red text */
+}
+.warning-box.danger p {
+    color: #b91c1c; /* Slightly lighter red for paragraph */
+}
+.new-tag {
+    background-color: #d1fae5; /* Light green */
+    color: #065f46; /* Dark green */
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+#instructor-reschedule-booking-view .booking-details-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* --- START: Added for strikethrough on old booking --- */
+#instructor-reschedule-booking-view .booking-details-grid {
+    text-decoration: line-through;
+    text-decoration-color: #b91c1c; /* A dark red color for the line */
+    text-decoration-thickness: 2px;
+    color: var(--gray-color); /* Fades the text to gray */
+}
+
+/* We don't want to strike through the icons or the "Learner details" title */
+#instructor-reschedule-booking-view .booking-details-grid i,
+#instructor-reschedule-booking-view .booking-details-grid .learner-info strong {
+    text-decoration: none;
+}
+
+#instructor-reschedule-booking-view .booking-details-grid .learner-info strong {
+    color: var(--dark-color); /* Keep the title text dark */
+}
+/* --- END: Added for strikethrough --- */
+/* --- END: ADDED FOR RESCHEDULE PAGE --- */
+/* --- END: ADDED FOR NOTES FORM --- */
 /* --- END: Booking Notification Modal Styles --- */
+
+/* --- START: ADD THESE CSS RULES --- */
+.calendar-event.event-proposed {
+    background-color: #FFF9C4; /* Light yellow background */
+    border-left: 4px solid var(--primary-color); /* Bright yellow left border */
+}
+/* --- END: ADDED CSS RULES --- */
 </style>
 </head>
 
@@ -5000,14 +5094,29 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
 
     <div class="card">
-        <div class="notes-header">
-            <h4>Your Notes <i class="fas fa-info-circle"></i></h4>
-            <button class="btn btn-secondary btn-small">+ Add a Note</button>
-        </div>
-        <div class="notes-body">
-            <p>Write your first note about Ryan B.<br><small>(These notes are only visible by you.)</small></p>
-        </div>
+    <div class="notes-header">
+        <h4>Your Notes <i class="fas fa-info-circle"></i></h4>
+        <button id="add-note-btn" class="btn btn-secondary btn-small">+ Add a Note</button>
     </div>
+    <div id="notes-placeholder" class="notes-body">
+        <p>Write your first note about Ryan B.<br><small>(These notes are only visible by you.)</small></p>
+    </div>
+    <div id="add-note-form-container" class="add-note-form" style="display: none;">
+        <form id="add-note-form">
+            <div class="note-input-group date-input-group">
+                <input type="text" id="note-date" readonly>
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="note-input-group">
+                <textarea id="note-text" placeholder="Start typing to leave a note..."></textarea>
+            </div>
+            <div class="note-actions">
+                <button type="button" id="cancel-note-btn" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Note</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <div class="card" style="padding: 0;">
         <h4 style="padding: 20px;">Booking Update History</h4>
@@ -5023,6 +5132,103 @@ input:checked + .slider:before { transform: translateX(20px); }
                 <div><span class="status-badge status-confirmed">CONFIRMED</span></div>
             </div>
         </div>
+    </div>
+</section>
+<section id="instructor-reschedule-booking-view" class="instructor-view">
+    <div class="page-view-header">
+        <div>
+            <p id="reschedule-breadcrumbs" class="breadcrumbs" style="margin:0;">Upcoming Bookings > Booking #... > Modify Booking</p>
+            <h2>Reschedule Booking</h2>
+        </div>
+        <div class="page-view-actions">
+            <button id="discard-reschedule-btn" class="btn btn-secondary">Discard Changes</button>
+            <button class="btn btn-primary btn-disabled" disabled>Propose Booking +</button>
+        </div>
+    </div>
+
+    <div id="reschedule-warning-box" class="warning-box danger" style="margin-top: 20px; display: flex; align-items: flex-start; gap: 10px;">
+        <i class="fas fa-exclamation-triangle" style="margin-top: 3px;"></i>
+        <div>
+            <strong>This action will CANCEL the current booking and propose a NEW booking.</strong>
+            <p style="margin: 5px 0 0 0; color: inherit;">A learner will be notified that the current booking is cancelled and can either accept or decline the new booking proposal.</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+        <div class="booking-details-title" style="border-bottom: none; padding-bottom: 0;">
+            <h4 id="reschedule-current-booking-id">Booking #8160596 <span class="status-badge status-confirmed">CONFIRMED</span></h4>
+        </div>
+        <div class="booking-details-grid" style="margin-top: 15px;">
+            <div id="reschedule-current-date" class="booking-details-info">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Sat, 21 Jun 2025</span>
+            </div>
+            <div id="reschedule-current-time" class="booking-details-info">
+                <i class="fas fa-clock"></i>
+                <span>11:45 am - 1:45 pm</span>
+            </div>
+            <div id="reschedule-current-type" class="booking-details-info">
+                <i class="fas fa-car"></i>
+                <span>2 Hour Driving Lesson (Auto)</span>
+            </div>
+            <div id="reschedule-current-location" class="booking-details-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Dirrabarri Lane, Parramatta NSW, Parramatta 2150 NSW</span>
+            </div>
+            <div id="reschedule-current-learner" class="booking-details-info learner-info">
+                <img src="https://placehold.co/100x100?text=R" alt="Learner">
+                <div>
+                    <strong>Learner details</strong>
+                    <p>Ryan B.<br>0478922109</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card booking-proposal-card" style="margin-top: 20px;">
+        <div class="card-header" style="padding-bottom: 20px;">
+            <h4>Booking <span class="new-tag">NEW</span></h4>
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="reschedule-learner">Learner *</label>
+                <div class="input-group">
+                    <select id="reschedule-learner" disabled>
+                        <option>Ryan B. - 0478922109</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Booking Type</label>
+                <div class="booking-type-selector">
+                    <input type="radio" id="reschedule-type-1hr" name="reschedule-booking-type" value="1hr">
+                    <label for="reschedule-type-1hr">1-Hour Driving Lesson</label>
+                    
+                    <input type="radio" id="reschedule-type-2hr" name="reschedule-booking-type" value="2hr" checked>
+                    <label for="reschedule-type-2hr">2-Hour Driving Lesson</label>
+
+                    <input type="radio" id="reschedule-type-test" name="reschedule-booking-type" value="test">
+                    <label for="reschedule-type-test">Driving Test Package</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Lesson start time *</label>
+                <div class="form-group-inline">
+                    <select><option>Select a day</option></select>
+                    <select><option>Select a time</option></select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Lesson pick up location</label>
+                <div class="location-field">
+                    <span id="reschedule-new-location">330 Church St, Parramatta NSW 2150</span>
+                    <button class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+                </div>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -7211,6 +7417,89 @@ input:checked + .slider:before { transform: translateX(20px); }
     </div>
 </div>
 
+<div id="propose-booking-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 550px;">
+        <div class="reviews-header" style="padding: 15px 25px;">
+            <h3 id="propose-modal-title">Propose Booking - [Learner Name]</h3>
+            <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="new-event-body">
+
+            <div class="warning-box" style="margin-bottom: 20px;">
+                <p style="margin: 0;" id="propose-modal-warning">Booking(s) will be on hold for [Learner Name] until confirmed.</p>
+            </div>
+
+            <form id="propose-booking-form">
+                <div class="input-group">
+                    <select id="propose-booking-type-select">
+                        <option value="lesson">Driving Lesson</option>
+                        <option value="test">Driving Test Package</option>
+                    </select>
+                </div>
+
+                <div id="propose-lesson-fields">
+                    <div class="form-group">
+                        <label>Lesson duration</label>
+                        <div style="display: flex; gap: 20px; margin-top: 5px;">
+                             <label style="font-weight: 500;"><input type="radio" name="lesson-duration" value="1" checked> 1 hour</label>
+                             <label style="font-weight: 500;"><input type="radio" name="lesson-duration" value="2"> 2 hours</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Available dates</label>
+                        <input type="text" id="propose-lesson-date" readonly style="background-color: #f1f1f1;">
+                    </div>
+                     <div class="form-group">
+                        <label>Available times</label>
+                        <input type="text" id="propose-lesson-time" readonly style="background-color: #f1f1f1;">
+                    </div>
+                </div>
+
+                <div id="propose-test-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="propose-test-location">Which local roads authority have you booked your test at?</label>
+                        <select id="propose-test-location">
+                            <option value="">Select your test location</option>
+                            <option value="Castle Hill">Castle Hill</option>
+                            <option value="Blacktown">Blacktown</option>
+                            <option value="Rockdale">Rockdale</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label>What time does your test start?</label>
+                         <div class="form-group-inline">
+                            <input type="text" id="propose-test-date" readonly style="background-color: #f1f1f1;">
+                            <select id="propose-test-time">
+                                <option>Select start time</option>
+                                <option value="8:00 AM">8:00 AM</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="form-note">* Your pickup time will be 1 hour prior to the test start time.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Lesson pickup location</label>
+                    <div class="location-field">
+                        <span id="propose-pickup-location">2 Green Rd, Castle Hill NSW 2154</span>
+                        <button type="button" class="edit-btn"><i class="fas fa-pencil-alt"></i> Edit</button>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary modal-close-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
@@ -7240,6 +7529,14 @@ input:checked + .slider:before { transform: translateX(20px); }
         let lastDashboardView = 'dashboard-main-content'; 
         const allSidebars = document.querySelectorAll('.sidebar-nav');
         let currentInstructorId = null; // Store the ID of the selected instructor
+        // --- START: ADD THESE GLOBAL VARIABLES ---
+// This object will hold the learner's info when proposing a booking
+let proposalContext = {
+    learnerId: null,
+    learnerName: null,
+    status: 'inactive' // Can be 'inactive' or 'active'
+};
+// --- END: ADDED GLOBAL VARIABLES ---
         // Add this with your other global variables
 let currentCalendarDate = moment();
         // --- ADD THIS GLOBAL VARIABLE ---
@@ -7661,11 +7958,24 @@ if (targetViewId === 'instructor-learners-view') {
         }
     }
     // Handle the "Reschedule Booking" link click
-    else if (e.target.closest('#reschedule-booking-link')) {
-        e.preventDefault();
-        // The UI/UX for rescheduling is complex, so we'll use a placeholder for now.
-        alert('Reschedule functionality is not yet implemented.');
+    if (e.target.closest('#reschedule-booking-link')) {
+    e.preventDefault();
+    const detailsView = document.getElementById('instructor-booking-details-view');
+    const bookingId = detailsView.dataset.bookingId;
+    if (bookingId) {
+        renderReschedulePage(bookingId); // Call the new function
+    } else {
+        alert('Error: Could not find booking ID to reschedule.');
     }
+}
+
+// Add a listener for the new "Discard Changes" button
+if (e.target.closest('#discard-reschedule-btn')) {
+    e.preventDefault();
+    const detailsView = document.getElementById('instructor-booking-details-view');
+    // Go back to the booking details view
+    showInstructorView('instructor-booking-details-view');
+}
          // --- START: Added for Learner Details View ---
             if (e.target.closest('.view-learner-details-btn')) {
     e.preventDefault();
@@ -7807,22 +8117,41 @@ if (targetViewId === 'instructor-learners-view') {
         // --- END: INVITE LEARNER MODAL LOGIC ---
 
         // --- START: PROPOSE BOOKING PAGE NAVIGATION ---
-        document.body.addEventListener('click', (e) => {
-            if (e.target.closest('.propose-booking-btn')) {
-                e.preventDefault();
-                
-                // Hide all other instructor views
-                document.querySelectorAll('#instructor-dashboard-page .instructor-view').forEach(view => {
-                    view.classList.remove('active');
-                });
-                
-                // Show the propose booking view
-                const proposeBookingView = document.getElementById('instructor-propose-booking-view');
-                if (proposeBookingView) {
-                    proposeBookingView.classList.add('active');
-                }
-            }
-        });
+        // --- START: REPLACE THIS ENTIRE CLICK LISTENER BLOCK ---
+document.addEventListener('click', function(e) {
+    // Handle "Propose Booking" button on the learner details page
+    if (e.target.closest('#instructor-learner-details-view .propose-booking-btn')) {
+        e.preventDefault();
+        const detailsView = e.target.closest('#instructor-learner-details-view');
+        // We need to get the learner's ID, which we'll store on the view when we render it.
+        const learnerId = detailsView.dataset.learnerId;
+        const learnerName = detailsView.querySelector('.learner-info h3').innerText.split(' Age')[0]; // Get name
+
+        if (learnerId && learnerName) {
+            // Set the global context
+            proposalContext = { learnerId, learnerName, status: 'active' };
+
+            // Navigate to the calendar
+            showInstructorView('instructor-calendar-view');
+            
+            // Give the instructor a hint
+            alert(`Proposal mode activated for ${learnerName}. Please click an empty time slot on the calendar to create a booking.`);
+        } else {
+            alert('Error: Could not identify the learner.');
+        }
+    }
+
+    // Handle "Learner Details" link on the main learner list
+    if (e.target.closest('.view-learner-details-btn')) {
+        e.preventDefault();
+        const learnerRow = e.target.closest('.learners-list-row');
+        if (learnerRow && learnerRow.dataset.learnerId) {
+            const learnerId = learnerRow.dataset.learnerId;
+            renderLearnerDetailsPage(learnerId);
+        }
+    }
+});
+// --- END: REPLACEMENT BLOCK ---
 
         // --- START: INSTRUCTOR FEEDBACK FLOW ---
 // --- START: INSTRUCTOR FEEDBACK FLOW (Reversed Logic as Requested) ---
@@ -8846,6 +9175,7 @@ function showInstructorView(viewId) {
 }
 
 // --- START: NEW FUNCTION TO RENDER INSTRUCTOR CALENDAR ---
+// --- START: REPLACE THE EXISTING 'renderInstructorCalendar' FUNCTION ---
 async function renderInstructorCalendar(uid, viewDate) {
     const calendarGrid = document.querySelector('#instructor-calendar-view .calendar-grid');
     if (!calendarGrid) return;
@@ -8857,9 +9187,10 @@ async function renderInstructorCalendar(uid, viewDate) {
     const endOfWeek = viewDate.clone().endOf('isoWeek');
 
     try {
+        // Fetch bookings that are either CONFIRMED or PROPOSED
         const snapshot = await db.collection('bookings')
             .where('instructorId', '==', uid)
-            .where('status', '==', 'CONFIRMED')
+            .where('status', 'in', ['CONFIRMED', 'PROPOSED'])
             .get();
 
         if (snapshot.empty) return;
@@ -8868,30 +9199,31 @@ async function renderInstructorCalendar(uid, viewDate) {
             const booking = doc.data();
             const bookingMoment = moment(booking.date, 'ddd, D MMM YYYY');
 
-            // Only render bookings that are within the current calendar week
             if (bookingMoment.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
                 const bookingDay = bookingMoment.day();
-                const gridColumn = (bookingDay === 0) ? 7 : bookingDay; // Sun=7, Mon=1...
+                const gridColumn = (bookingDay === 0) ? 7 : bookingDay; 
 
                 const startTime = moment(booking.startTime, 'h:mm a');
                 const minutesFrom6am = (startTime.hours() - 6) * 60 + startTime.minutes();
                 
-                // Set height based on duration (1 pixel per minute)
                 const endTime = moment(booking.endTime, 'h:mm a');
                 const durationInMinutes = endTime.diff(startTime, 'minutes');
                 
                 const eventDiv = document.createElement('div');
-                eventDiv.className = 'calendar-event event-lesson';
-                eventDiv.dataset.bookingId = doc.id; // <-- ADD THIS LINE
-                eventDiv.style.gridColumn = gridColumn + 1; // CSS grid columns are 1-indexed, plus 1 for the time labels column
+                // *** THE KEY CHANGE IS HERE ***
+                // Apply a different class based on the booking status
+                const eventClass = booking.status === 'PROPOSED' ? 'event-proposed' : 'event-lesson';
+                eventDiv.className = `calendar-event ${eventClass}`;
+                
+                eventDiv.dataset.bookingId = doc.id;
+                eventDiv.style.gridColumn = gridColumn + 1;
                 eventDiv.style.top = `${minutesFrom6am}px`;
                 eventDiv.style.height = `${durationInMinutes}px`;
                 eventDiv.innerHTML = `
                     <strong>${booking.startTime} - ${booking.endTime}</strong>
-                    <p>${booking.learnerName} (${booking.transmission.charAt(0)})<br>${booking.pickupLocation.split(',')[0]}</p>
+                    <p>${booking.learnerName} (${booking.transmission.charAt(0)})<br>${(booking.pickupLocation || '').split(',')[0]}</p>
                 `;
                 
-                // Append directly to the grid, not a specific slot
                 calendarGrid.appendChild(eventDiv);
             }
         });
@@ -8899,6 +9231,7 @@ async function renderInstructorCalendar(uid, viewDate) {
         console.error("Error fetching calendar bookings:", error);
     }
 }
+// --- END: REPLACEMENT FUNCTION ---
 // Add this new function with your other helper functions
 function updateCalendarView(date) {
     const monthDisplay = document.getElementById('cal-month-display');
@@ -9032,33 +9365,31 @@ async function renderInstructorLearners(instructorId) {
  * Fetches and displays the details for a single learner.
  * @param {string} learnerId - The UID of the learner to display.
  */
+// --- START: REPLACE THE EXISTING 'renderLearnerDetailsPage' FUNCTION ---
 async function renderLearnerDetailsPage(learnerId) {
     const detailsView = document.getElementById('instructor-learner-details-view');
     if (!detailsView) return;
 
-    // Show the view and a loading state
+    // *** ADD THIS LINE ***
+    detailsView.dataset.learnerId = learnerId; // Store the ID on the view element
+
     showInstructorView('instructor-learner-details-view');
     detailsView.querySelector('.learner-info h3').textContent = 'Loading...';
     detailsView.querySelector('.learner-history-table').innerHTML = '<p style="text-align: center; padding: 20px;">Loading booking history...</p>';
 
-
     try {
-        // 1. Fetch learner's user data
         const learnerDoc = await db.collection('users').doc(learnerId).get();
         if (!learnerDoc.exists) throw new Error("Learner not found");
         const learner = learnerDoc.data();
         const instructorId = auth.currentUser.uid;
 
-        // Calculate age
         const age = learner.dob ? moment().diff(moment(learner.dob), 'years') : 'N/A';
         const initials = `${(learner.firstName || ' ')[0]}${(learner.surname || ' ')[0]}`.toUpperCase();
 
-        // 2. Populate profile card
         detailsView.querySelector('.learner-avatar').textContent = initials;
         detailsView.querySelector('.learner-info h3').innerHTML = `${learner.firstName} ${learner.surname || ''} <span class="age-tag">Age ${age}</span>`;
         detailsView.querySelector('.learner-info p').innerHTML = `<i class="fas fa-phone-alt"></i> ${learner.mobile || 'No phone number'}`;
         
-        // 3. Fetch and populate booking history
         const bookingsSnapshot = await db.collection('bookings')
             .where('learnerId', '==', learnerId)
             .where('instructorId', '==', instructorId)
@@ -9070,14 +9401,14 @@ async function renderLearnerDetailsPage(learnerId) {
         historyTable.innerHTML = `
             <div class="learner-history-header">
                 <div>Booking</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
-            </div>`; // Reset with header
+            </div>`;
 
         if (bookingsSnapshot.empty) {
             historyTable.innerHTML += '<div class="learner-history-row" style="text-align: center; grid-column: 1 / -1; padding: 20px;">No past bookings found.</div>';
         } else {
             bookingsSnapshot.forEach(doc => {
                 const booking = doc.data();
-                const statusClass = booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'; // Example for other statuses
+                const statusClass = booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled';
                 const historyRow = `
                     <div class="learner-history-row">
                         <div><a href="#" class="booking-id-link">#${doc.id.substring(0, 7)}</a></div>
@@ -9090,14 +9421,12 @@ async function renderLearnerDetailsPage(learnerId) {
                 historyTable.insertAdjacentHTML('beforeend', historyRow);
             });
         }
-        
-        // You would similarly fetch and populate "Upcoming Bookings" if needed
-
     } catch (error) {
         console.error("Error rendering learner details: ", error);
         detailsView.querySelector('.learner-info h3').textContent = 'Error loading details.';
     }
 }
+// --- END: REPLACEMENT FUNCTION ---
 
 // --- END: NEW DYNAMIC LEARNER FUNCTIONS ---
 // --- START: Add this JavaScript for the notification bell ---
@@ -9152,7 +9481,200 @@ if (bookingNotificationModal && notificationsList) {
         }
     });
 }
+
+// --- START: ADD NOTE FUNCTIONALITY ---
+const addNoteBtn = document.getElementById('add-note-btn');
+const addNoteFormContainer = document.getElementById('add-note-form-container');
+const notesPlaceholder = document.getElementById('notes-placeholder');
+const cancelNoteBtn = document.getElementById('cancel-note-btn');
+const addNoteForm = document.getElementById('add-note-form');
+const noteDateInput = document.getElementById('note-date');
+
+if (addNoteBtn) {
+    addNoteBtn.addEventListener('click', () => {
+        // Hide placeholder and show form
+        notesPlaceholder.style.display = 'none';
+        addNoteFormContainer.style.display = 'block';
+
+        // Set current date using moment.js
+        noteDateInput.value = moment().format('DD-MM-YYYY');
+    });
+}
+
+if (cancelNoteBtn) {
+    cancelNoteBtn.addEventListener('click', () => {
+        // Hide form and show placeholder
+        addNoteFormContainer.style.display = 'none';
+        notesPlaceholder.style.display = 'block';
+        addNoteForm.reset(); // Clear the textarea
+    });
+}
+
+if (addNoteForm) {
+    addNoteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // For this demo, just show an alert and close the form.
+        // In a real app, you would save the data here.
+        alert('Note saved!');
+        addNoteFormContainer.style.display = 'none';
+        notesPlaceholder.style.display = 'block';
+        addNoteForm.reset();
+    });
+}
+// --- END: ADD NOTE FUNCTIONALITY ---
 // --- END: Notification Modal JavaScript ---
+// --- START: NEW FUNCTION TO RENDER RESCHEDULE PAGE ---
+async function renderReschedulePage(bookingId) {
+    const rescheduleView = document.getElementById('instructor-reschedule-booking-view');
+    if (!rescheduleView) return;
+
+    try {
+        const doc = await db.collection('bookings').doc(bookingId).get();
+        if (!doc.exists) {
+            alert('Booking not found.');
+            return;
+        }
+        const booking = doc.data();
+        
+        // Populate breadcrumbs
+        rescheduleView.querySelector('#reschedule-breadcrumbs').innerHTML = `
+            <a href="#" data-view="instructor-dashboard-view">Upcoming Bookings</a> > 
+            <a href="#" data-view="instructor-booking-details-view" onclick="showInstructorView('instructor-booking-details-view')">Booking #${bookingId.substring(0,7)}</a> > 
+            Modify Booking
+        `;
+        
+        // Populate warning box
+        rescheduleView.querySelector('#reschedule-warning-box p').textContent = `${booking.learnerName} will be notified that the current booking is cancelled and can either accept or decline the new booking proposal.`;
+        
+        // Populate current booking summary
+        rescheduleView.querySelector('#reschedule-current-booking-id').innerHTML = `Booking #${bookingId.substring(0,7)} <span class="status-badge status-confirmed">CONFIRMED</span>`;
+        rescheduleView.querySelector('#reschedule-current-date span').textContent = moment(booking.date, 'ddd, D MMM YYYY').format('ddd, D MMM YYYY');
+        rescheduleView.querySelector('#reschedule-current-time span').textContent = `${booking.startTime} - ${booking.endTime}`;
+        rescheduleView.querySelector('#reschedule-current-type span').textContent = `${booking.lessonType} (${booking.transmission})`;
+        rescheduleView.querySelector('#reschedule-current-location span').textContent = booking.pickupLocation;
+        rescheduleView.querySelector('#reschedule-current-learner img').src = `https://placehold.co/100x100?text=${booking.learnerName.charAt(0)}`;
+        rescheduleView.querySelector('#reschedule-current-learner p').innerHTML = `${booking.learnerName}<br>0478922109`; // Placeholder phone
+
+        // Pre-fill new booking form
+        rescheduleView.querySelector('#reschedule-learner option').textContent = `${booking.learnerName} - 0478922109`;
+        rescheduleView.querySelector('#reschedule-new-location').textContent = booking.pickupLocation;
+        
+        // Finally, show the page
+        showInstructorView('instructor-reschedule-booking-view');
+
+    } catch (error) {
+        console.error("Error rendering reschedule page: ", error);
+        alert('Could not load reschedule page data.');
+    }
+}
+// --- START: ADD THIS ENTIRE NEW BLOCK ---
+// --- CALENDAR CLICK LISTENER FOR PROPOSING BOOKINGS ---
+const calendarGrid = document.querySelector('#instructor-calendar-view .calendar-grid');
+if (calendarGrid) {
+    calendarGrid.addEventListener('click', (e) => {
+        // Only proceed if we are in proposal mode
+        if (proposalContext.status !== 'active') {
+            return;
+        }
+
+        // Make sure the click is on a slot, not an existing event
+        if (e.target.classList.contains('time-slot') && !e.target.classList.contains('with-event')) {
+            const slot = e.target;
+            
+            // Calculate which day column was clicked (1=Mon, 7=Sun)
+            const dayIndex = Array.from(slot.parentNode.children).indexOf(slot) - 1;
+
+            // Calculate which hour row was clicked
+            const timeSlotIndex = Array.from(slot.parentElement.children).indexOf(slot.parentNode);
+            const hour = 6 + Math.floor(timeSlotIndex); // Assuming calendar starts at 6am
+
+            // Get the date from the calendar's current state
+            const clickedDate = currentCalendarDate.clone().startOf('isoWeek').add(dayIndex, 'days');
+            const clickedTime = moment().hour(hour).minute(0);
+            
+            // Open the modal with the calculated info
+            openProposeBookingModal(clickedDate, clickedTime);
+        }
+    });
+}
+
+// --- START: ADD THIS ENTIRE NEW BLOCK OF FUNCTIONS ---
+// --- PROPOSE BOOKING MODAL LOGIC ---
+const proposeBookingModal = document.getElementById('propose-booking-modal');
+const proposeBookingForm = document.getElementById('propose-booking-form');
+let proposalData = {}; // To store temporary data for submission
+
+function openProposeBookingModal(date, time) {
+    if (!proposeBookingModal) return;
+
+    // Store data for submission
+    proposalData = { date, time };
+
+    // Populate the modal with context
+    proposeBookingModal.querySelector('#propose-modal-title').textContent = `Propose Booking - ${proposalContext.learnerName}`;
+    proposeBookingModal.querySelector('#propose-modal-warning').textContent = `Booking(s) will be on hold for ${proposalContext.learnerName} until 5:30 PM, ${date.clone().add(1, 'day').format('D MMM YYYY')}.`;
+    proposeBookingModal.querySelector('#propose-lesson-date').value = date.format('dddd, D MMM YYYY');
+    proposeBookingModal.querySelector('#propose-lesson-time').value = time.format('h:mm A');
+    proposeBookingModal.querySelector('#propose-test-date').value = date.format('dddd, D MMM YYYY');
+    
+    proposeBookingModal.classList.add('active');
+}
+
+function closeProposeBookingModal() {
+    if (!proposeBookingModal) return;
+    proposeBookingModal.classList.remove('active');
+    proposeBookingForm.reset();
+    // Reset proposal context to exit "proposal mode"
+    proposalContext = { learnerId: null, learnerName: null, status: 'inactive' };
+}
+
+// Handle switching between lesson/test package in the modal
+proposeBookingModal.querySelector('#propose-booking-type-select').addEventListener('change', (e) => {
+    const isLesson = e.target.value === 'lesson';
+    proposeBookingModal.querySelector('#propose-lesson-fields').style.display = isLesson ? 'block' : 'none';
+    proposeBookingModal.querySelector('#propose-test-fields').style.display = isLesson ? 'none' : 'block';
+});
+
+// Handle form submission
+proposeBookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const duration = parseInt(proposeBookingForm.querySelector('input[name="lesson-duration"]:checked').value);
+    const startTime = proposalData.time;
+    const endTime = startTime.clone().add(duration, 'hours');
+    
+    const newBookingData = {
+        instructorId: auth.currentUser.uid,
+        learnerId: proposalContext.learnerId,
+        learnerName: proposalContext.learnerName,
+        date: proposalData.date.format('ddd, D MMM YYYY'),
+        startTime: startTime.format('h:mm a'),
+        endTime: endTime.format('h:mm a'),
+        lessonType: `${duration}-hour Driving Lesson`,
+        transmission: 'Auto', // Assuming auto for now
+        pickupLocation: proposeBookingModal.querySelector('#propose-pickup-location').textContent,
+        status: 'PROPOSED', // The crucial new status
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+        await db.collection('bookings').add(newBookingData);
+        alert('Booking proposal sent successfully!');
+        closeProposeBookingModal();
+        // Refresh the calendar to show the new yellow event
+        renderInstructorCalendar(auth.currentUser.uid, currentCalendarDate);
+    } catch (error) {
+        console.error("Error creating proposal: ", error);
+        alert('Failed to send proposal. Please try again.');
+    }
+});
+
+// Add listeners to close buttons
+proposeBookingModal.querySelectorAll('.modal-close-btn').forEach(btn => {
+    btn.addEventListener('click', closeProposeBookingModal);
+});
+// --- END: ADDED BLOCK OF FUNCTIONS ---
+// --- END: ADDED BLOCK ---
+// --- END: NEW FUNCTION TO RENDER RESCHEDULE PAGE ---
     </script>
 
     
