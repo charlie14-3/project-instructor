@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnR1zekmfJ04AnY4FeJUVRGildidvU0rg&libraries=places&callback=initMap" async defer></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <style>
@@ -1034,6 +1036,7 @@
             border: 1px solid var(--border-color);
             padding: 20px;
             border-radius: 12px;
+            
         }
 
         .instructor-photo-new {
@@ -5043,6 +5046,147 @@
 .overlay.active {
     display: block;
 }
+
+ .location-tags-container {
+            padding: 5px 20px 20px 20px;
+        }
+
+        .location-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f1f1f1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 5px;
+        }
+
+        .location-tag button {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            margin-left: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .day-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+         .day-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .day-row > .checkbox-container {
+            flex-basis: 120px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+        
+        .time-slots-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .time-slot-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .time-slot-group select {
+             padding: 8px;
+             border: 1px solid var(--border-color);
+             border-radius: 6px;
+             font-size: 14px;
+        }
+
+        .day-actions {
+            flex-basis: 150px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+        
+        .day-actions a {
+            margin-left: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-color);
+            text-decoration: underline;
+        }
+         #service-area-map {
+            height: 450px; /* You can adjust this height */
+            width: 100%;
+            border-radius: 8px;
+            background-color: var(--light-gray-color);
+        }
+
+        /* --- START: NEW AVAILABILITY CALENDAR STYLES --- */
+#new-availability-container {
+    padding: 10px 20px 20px 20px;
+}
+
+.availability-day-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: opacity 0.3s ease;
+}
+
+.availability-day-row:last-of-type {
+    border-bottom: none;
+}
+
+.availability-day-row.day-disabled {
+    opacity: 0.5;
+}
+
+.day-label {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.time-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-inputs input[type="time"] {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: var(--font-family);
+    width: 120px;
+}
+
+.time-inputs input:disabled {
+    background-color: #f1f1f1;
+    cursor: not-allowed;
+}
+
+/* --- START: CALENDAR AVAILABILITY STYLES --- */
+.time-slot.slot-unavailable {
+    background-color: #f0f0f0; /* Light gray for unavailable times */
+}
+
+.time-slot.slot-available {
+    background-color: #A5D6A7;; /* Light green for available times */
+}
+/* --- END: CALENDAR AVAILABILITY STYLES --- */
+
+/* --- END: NEW AVAILABILITY CALENDAR STYLES --- */
 /* --- END: RESPONSIVENESS STYLES --- */
     </style>
 </head>
@@ -5292,14 +5436,13 @@
                             <img src="https://placehold.co/100x100?text=M" alt="User Avatar">
                             <span id="instructor-user-name">Mandeep</span> ▾
                             <div class="profile-dropdown">
-                                <a href="#"><i class="fas fa-user-circle"></i> Personal Details</a>
-                                <a href="#"><i class="fas fa-id-card"></i> My Profile & Vehicle</a>
-                                <a href="#"><i class="fas fa-map-marked-alt"></i> Service Area & Availability</a>
-                                <a href="#"><i class="fas fa-dollar-sign"></i> Set Pricing</a>
-                                <a href="#"><i class="fas fa-check-circle"></i> Verifications</a>
-                                <a href="#"><i class="fas fa-university"></i> Banking</a>
-                                <a href="#" class="instructor-logout-btn"><i class="fas fa-sign-out-alt"></i> Log
-                                    Out</a>
+                              <a href="#" data-view="instructor-personal-details-view"><i class="fas fa-user-circle"></i> Personal Details</a>
+                                <a href="#" data-view="instructor-profile-edit-view"><i class="fas fa-id-card"></i> My Profile & Vehicle</a>
+                                <a href="#" data-view="instructor-service-area-view"><i class="fas fa-map-marked-alt"></i> Service Area & Availability</a>
+                                <a href="#" data-view="instructor-pricing-view"><i class="fas fa-dollar-sign"></i> Set Pricing</a>
+                                <a href="#" data-view="instructor-verifications-view"><i class="fas fa-check-circle"></i> Verifications</a>
+                                <a href="#" data-view="instructor-banking-view"><i class="fas fa-university"></i> Banking</a>
+                                <a href="#" class="instructor-logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -6039,11 +6182,9 @@
                     <div class="card calendar-container">
                         <div class="calendar-controls">
                             <div class="calendar-nav">
-                                <button id="cal-today-btn" class="btn btn-secondary btn-small">Today</button>
-                                <button id="cal-prev-week-btn" class="btn btn-secondary btn-small"><i
-                                        class="fas fa-chevron-left"></i></button>
-                                <button id="cal-next-week-btn" class="btn btn-secondary btn-small"><i
-                                        class="fas fa-chevron-right"></i></button>
+                               <button id="cal-today-btn" class="btn btn-secondary btn-small" onclick="goToToday()">Today</button>
+<button id="cal-prev-week-btn" class="btn btn-secondary btn-small" onclick="goToPrevWeek()"><i class="fas fa-chevron-left"></i></button>
+<button id="cal-next-week-btn" class="btn btn-secondary btn-small" onclick="goToNextWeek()"><i class="fas fa-chevron-right"></i></button>
                                 <span id="cal-month-display" class="month-display">June 2025</span>
                             </div>
                             <div class="view-switcher">
@@ -6054,88 +6195,9 @@
                         </div>
 
                         <div class="calendar-grid-container">
-                            <div class="calendar-grid">
-                                <!-- Day Headers -->
-                                <div class="day-header-spacer"></div>
-                                <div class="day-header"><strong>Mon</strong> 16</div>
-                                <div class="day-header"><strong>Tue</strong> 17</div>
-                                <div class="day-header today"><strong>Wed</strong><span>18</span></div>
-                                <div class="day-header"><strong>Thu</strong> 19</div>
-                                <div class="day-header"><strong>Fri</strong> 20</div>
-                                <div class="day-header"><strong>Sat</strong> 21</div>
-                                <div class="day-header"><strong>Sun</strong> 22</div>
-
-                                <!-- Time Slots & Events (Placeholders) -->
-                                <!-- This structure makes it easy to populate from a database -->
-                                <div class="time-label">6am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">7am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">8am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">9am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">10am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot with-event">
-
-                                </div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">11am</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">12pm</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-label">1pm</div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <div class="time-slot"></div>
-                                <!-- Add more time slots as needed -->
-                            </div>
-                        </div>
+    <div id="dynamic-calendar-grid" class="calendar-grid">
+        </div>
+</div>
                     </div>
                     <footer class="main-content-footer">
                         © Safe Learners Pty Ltd
@@ -6870,6 +6932,78 @@
                         </div>
                     </div>
                 </section>
+                </section> <section id="instructor-personal-details-view" class="instructor-view">
+                    <div class="page-view-header">
+                        <div>
+                            <p class="breadcrumbs" style="margin:0;"><a href="#" data-view="instructor-dashboard-view">Dashboard</a> > Personal Details</p>
+                            <h2>Personal Details</h2>
+                        </div>
+                    </div>
+                    <div class="card" style="padding: 20px;">
+                        <form id="personal-details-form">
+                            <h4>Personal Details</h4>
+                            <div class="form-row" style="margin-top: 20px;">
+                                <div class="input-group">
+                                    <label for="pd-first-name"><i class="fas fa-user" style="margin-right: 5px; color: var(--gray-color);"></i> First Name</label>
+                                    <input type="text" id="pd-first-name" placeholder="Enter First Name">
+                                </div>
+                                <div class="input-group">
+                                    <label for="pd-surname"><i class="fas fa-user" style="margin-right: 5px; color: var(--gray-color);"></i> Surname</label>
+                                    <input type="text" id="pd-surname" placeholder="Enter Surname">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="pd-email"><i class="fas fa-envelope" style="margin-right: 5px; color: var(--gray-color);"></i> Email Address</label>
+                                <input type="email" id="pd-email" placeholder="Enter Email Address" disabled style="background-color: #f1f1f1; cursor: not-allowed;">
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="pd-mobile"><i class="fas fa-mobile-alt" style="margin-right: 5px; color: var(--gray-color);"></i> Mobile Number</label>
+                                    <input type="tel" id="pd-mobile" placeholder="Enter Mobile Number">
+                                </div>
+                                <div class="input-group">
+                                    <label for="pd-dob"><i class="fas fa-calendar-alt" style="margin-right: 5px; color: var(--gray-color);"></i> Date of Birth</label>
+                                    <input type="text" id="pd-dob" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                 <div class="input-group">
+                                    <label for="pd-gender"><i class="fas fa-venus-mars" style="margin-right: 5px; color: var(--gray-color);"></i> Gender</label>
+                                    <select id="pd-gender">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                    <label for="pd-pincode"><i class="fas fa-map-marker-alt" style="margin-right: 5px; color: var(--gray-color);"></i> Pin Code</label>
+                    <input type="number" id="pd-pincode" placeholder="Enter Pin Code">
+                </div>
+                            </div>
+                            
+                            <hr style="margin: 30px 0; border-color: var(--border-color);">
+
+                            <h4>Change Password</h4>
+                            <p class="form-note" style="margin: 10px 0 20px;">Leave this blank if you do not wish to change your password.</p>
+                            <div class="input-group">
+                                <label for="pd-new-password"><i class="fas fa-lock" style="margin-right: 5px; color: var(--gray-color);"></i> New Password</label>
+                                <input type="password" id="pd-new-password" placeholder="Enter Password">
+                            </div>
+                             <div class="input-group">
+                                <label for="pd-confirm-password"><i class="fas fa-lock" style="margin-right: 5px; color: var(--gray-color);"></i> Confirm New Password</label>
+                                <input type="password" id="pd-confirm-password" placeholder="Enter Password">
+                            </div>
+                             <div class="input-group">
+                                <label for="pd-current-password"><i class="fas fa-lock" style="margin-right: 5px; color: var(--gray-color);"></i> Your Current Password To Confirm To Change</label>
+                                <input type="password" id="pd-current-password" placeholder="Enter Password">
+                            </div>
+                            <div class="form-actions" style="text-align: right; margin-top: 30px;">
+                                 <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
 
                 <section id="instructor-profile-edit-view" class="instructor-view">
                     <h2>My Profile and Vehicle Details</h2>
@@ -6989,6 +7123,143 @@
                 </section>
 
 
+                <section id="instructor-service-area-view" class="instructor-view">
+                    <div class="page-view-header">
+                        <h2>Service Area & Availability</h2>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Service Area</h4>
+                        </div>
+                        <div style="padding: 20px;">
+                            <p id="service-area-summary" style="color: var(--gray-color); margin-bottom: 20px;">Loading service area details...</p>
+                            <div id="service-area-map"></div>
+                        </div>
+                    </div>
+
+                     <div class="card">
+                        <div class="card-header">
+                            <h4>Serviced Suburbs / Test Locations</h4>
+                        </div>
+                        <div style="padding: 20px;">
+                            <label for="suburb-autocomplete-input" style="font-weight: 500; display: block; margin-bottom: 8px;">Add a suburb</label>
+                            <div class="input-group" style="margin-bottom: 15px;">
+                                <input type="text" id="suburb-autocomplete-input" placeholder="Start typing a suburb name...">
+                            </div>
+                            <div id="location-tags-container" class="location-tags-container">
+                               <p style="padding: 0;">Loading suburbs...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Availability</h4>
+                        </div>
+                        <div style="padding: 20px;">
+                            <p style="color: var(--gray-color); line-height: 1.6;">The management of your real-time availability within your operating hours is done via your instructor calendar. You may have an event in your calendar to represent any time that you're unavailable for bookings that fall outside of your operating hours. Your calendar is the source of truth and needs to be updated by you. We use this to prevent double bookings. Your Safe Learners calendar needs to be updated by you each time you make new or have any changes to your personal life appointments and the duration of the lessons, not any corner detail. We also provide the opportunity to nominate travel times.</p>
+                        </div>
+                    </div>
+
+                   <div class="card">
+    <div class="card-header">
+        <h4>Your Weekly Availability</h4>
+    </div>
+    <div id="new-availability-container">
+        <div class="availability-day-row" data-day="sunday">
+            <span class="day-label">Sunday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="monday">
+            <span class="day-label">Monday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="tuesday">
+            <span class="day-label">Tuesday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="wednesday">
+            <span class="day-label">Wednesday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="thursday">
+            <span class="day-label">Thursday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="friday">
+            <span class="day-label">Friday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="availability-day-row" data-day="saturday">
+            <span class="day-label">Saturday</span>
+            <div class="time-inputs">
+                <input type="time" class="start-time" value="09:00" disabled>
+                <span>-</span>
+                <input type="time" class="end-time" value="17:00" disabled>
+            </div>
+            <label class="switch">
+                <input type="checkbox" class="day-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+                    <div class="form-actions" style="text-align: right; margin-top: 20px;">
+                        <button id="save-availability-btn" class="btn btn-primary">Save and Change</button>
+                    </div>
+                </section>
+
+
 
                 <!-- END: INSTRUCTOR CALENDAR VIEW -->
             </main>
@@ -7049,33 +7320,39 @@
                 <section id="dashboard-main-content" class="dashboard-body content-view active">
                     <h2 id="welcome-message">Welcome back, Shikhar!</h2>
                     <div class="cards-grid">
-                        <div class="card instructor-card">
-                            <div class="card-header">
-                                <h4>My Instructor</h4>
-                                <button class="btn btn-primary btn-small open-booking-btn">Book Now</button>
-                            </div>
-                            <div class="card-body instructor-details">
-                                <div class="instructor-info">
-                                    <img src="https://img.freepik.com/free-photo/handsome-man-smiling-happy-face-portrait-close-up_53876-145493.jpg"
-                                        alt="Instructor Fazley">
-                                    <div>
-                                        <h5>Fazley</h5>
-                                        <p>$70/Hr</p>
-                                    </div>
-                                </div>
-                                <div class="vehicle-info">
-                                    <img src="https://di-uploads-pod25.dealerinspire.com/edmarktoyota/uploads/2024/02/2024-toyota-corolla-banner.jpg"
-                                        alt="Toyota Corolla">
-                                    <div>
-                                        <h5>Toyota Corolla 2021</h5>
-                                        <p>5-Star ANCAP Rating<br>Dual Controls Fitted</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" id="switch-instructor-link">Switch Instructor &rarr;</a>
-                            </div>
-                        </div>
+                        <div id="my-instructor-card" class="card instructor-card">
+    <div class="card-header">
+        <h4>My Instructor</h4>
+        <button id="instructor-card-book-btn" class="btn btn-primary btn-small">Book Now</button>
+    </div>
+
+    <div id="instructor-details-content" style="display: none;">
+        <div class="card-body instructor-details">
+            <div class="instructor-info">
+                <img id="my-instructor-photo" src="" alt="Instructor Photo">
+                <div>
+                    <h5 id="my-instructor-name"></h5>
+                    <p id="my-instructor-price"></p>
+                </div>
+            </div>
+            <div class="vehicle-info">
+                <img id="my-vehicle-photo" src="" alt="Vehicle Photo">
+                <div>
+                    <h5 id="my-vehicle-name"></h5>
+                    <p id="my-vehicle-details"></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="#" id="switch-instructor-link">Switch Instructor &rarr;</a>
+        </div>
+    </div>
+
+    <div id="no-instructor-content" style="padding: 40px 20px; text-align: center; display: none;">
+        <p style="color: var(--gray-color); margin-bottom: 15px;">You haven't booked an instructor yet.</p>
+        <button id="find-instructor-btn" class="btn btn-primary">Find an Instructor Now</button>
+    </div>
+</div>
                         <div class="card wallet-card">
                             <div class="card-header">
                                 <h4>My Wallet</h4>
@@ -7091,24 +7368,23 @@
                         </div>
                     </div>
                     <div class="card test-package-card">
-                        <div class="test-package-details">
-                            <div class="package-icon"><span>P</span></div>
-                            <div class="package-info">
-                                <h4>Driving Test Package</h4>
-                                <ul>
-                                    <li>2.5hr Test Package</li>
-                                    <li>Use Instructor's Vehicle for Test</li>
-                                    <li>Pick Up & Drop Off Included</li>
-                                    <li>45 Minute Pre-Test Warm Up Lesson</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="test-package-action">
-                            <span class="price">$ 200</span>
-                            <button class="btn btn-primary open-booking-btn"
-                                data-instructor-id="your-primary-instructor-id">Book Now</button>
-                        </div>
-                    </div>
+    <div class="test-package-details">
+        <div class="package-icon"><span>P</span></div>
+        <div class="package-info">
+            <h4>Driving Test Package</h4>
+            <ul>
+                <li>2.5hr Test Package</li>
+                <li>Use Instructor's Vehicle for Test</li>
+                <li>Pick Up & Drop Off Included</li>
+                <li>45 Minute Pre-Test Warm Up Lesson</li>
+            </ul>
+        </div>
+    </div>
+    <div class="test-package-action">
+        <span class="price">$ 200</span>
+        <button class="btn btn-primary open-booking-btn dynamic-booking-btn">Book Now</button>
+    </div>
+</div>
                     <div class="booking-section">
                         <h3>Booking</h3>
                         <div class="tabs">
@@ -7122,31 +7398,28 @@
                         </div>
 
                         <div id="services-content" class="tab-pane active">
-                            <div class="services-grid">
-                                <div class="service-card">
-                                    <div class="illustration"
-                                        style="background-image: url('Screenshot 2025-09-20 at 6.48.47 PM.png');"></div>
-                                    <h4>1 hour <br>Driving Lesson</h4>
-                                    <p>Price <strong>$70</strong><br>Transmission <strong>Auto</strong></p>
-                                    <button class="btn btn-primary btn-full">Book with Fazley</button>
-                                </div>
-                                <div class="service-card">
-                                    <span class="popular-tag">MOST POPULAR</span>
-                                    <div class="illustration"
-                                        style="background-image: url('Screenshot 2025-09-20 at 7.00.41 PM.png');"></div>
-                                    <h4>2 hour <br>Driving Lesson</h4>
-                                    <p>Price <strong>$140</strong><br>Transmission <strong>Auto</strong></p>
-                                    <button class="btn btn-primary btn-full">Book with Fazley</button>
-                                </div>
-                                <div class="service-card">
-                                    <div class="illustration"
-                                        style="background-image: url('Screenshot 2025-09-20 at 7.01.05 PM.png');"></div>
-                                    <h4>2.5 hours <br>Test Package</h4>
-                                    <p>Price <strong>$225</strong><br>Transmission <strong>Auto</strong></p>
-                                    <button class="btn btn-primary btn-full">Book with Fazley</button>
-                                </div>
-                            </div>
-                        </div>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 6.48.47 PM.png');"></div>
+            <h4>1 hour <br>Driving Lesson</h4>
+            <p>Price <strong>$70</strong><br>Transmission <strong>Auto</strong></p>
+            <button class="btn btn-primary btn-full open-booking-btn dynamic-booking-btn">Book with Fazley</button>
+        </div>
+        <div class="service-card">
+            <span class="popular-tag">MOST POPULAR</span>
+            <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 7.00.41 PM.png');"></div>
+            <h4>2 hour <br>Driving Lesson</h4>
+            <p>Price <strong>$140</strong><br>Transmission <strong>Auto</strong></p>
+            <button class="btn btn-primary btn-full open-booking-btn dynamic-booking-btn">Book with Fazley</button>
+        </div>
+        <div class="service-card">
+            <div class="illustration" style="background-image: url('Screenshot 2025-09-20 at 7.01.05 PM.png');"></div>
+            <h4>2.5 hours <br>Test Package</h4>
+            <p>Price <strong>$225</strong><br>Transmission <strong>Auto</strong></p>
+            <button class="btn btn-primary btn-full open-booking-btn dynamic-booking-btn">Book with Fazley</button>
+        </div>
+    </div>
+</div>
 
                         <div id="history-content" class="tab-pane tab-content">
                             <div class="booking-history-container">
@@ -7192,23 +7465,25 @@
                         </a>
                     </div>
                     <header class="instructor-filters">
-                        <div class="filter-group">
-                            <label>Time</label>
-                            <button class="filter-btn active">Anytime</button>
-                            <button class="filter-btn">AM</button>
-                            <button class="filter-btn">PM</button>
-                        </div>
-                        <div class="filter-group">
-                            <label>Day</label>
-                            <button class="filter-btn">Today - Sun</button>
-                            <button class="filter-btn">Mon - Thu</button>
-                            <button class="filter-btn">Custom</button>
-                        </div>
-                        <button class="btn btn-secondary">Clear Filter</button>
-                        <select class="filter-sort">
-                            <option>Sort</option>
-                        </select>
-                    </header>
+    <div class="filter-group">
+        <label>Time</label>
+        <button class="filter-btn active" data-time-filter="any">Anytime</button>
+        <button class="filter-btn" data-time-filter="am">AM</button>
+        <button class="filter-btn" data-time-filter="pm">PM</button>
+    </div>
+    <div class="filter-group">
+        <label>Day</label>
+        <button class="filter-btn">Today - Sun</button>
+        <button class="filter-btn">Mon - Thu</button>
+        <button class="filter-btn">Custom</button>
+    </div>
+    <button id="clear-filters-btn" class="btn btn-secondary">Clear Filter</button>
+    <select id="sort-filter" class="filter-sort">
+        <option value="default">Sort</option>
+        <option value="price-asc">Price (Low to High)</option>
+        <option value="price-desc">Price (High to Low)</option>
+    </select>
+</header>
                     <section class="instructor-page-layout">
                         <div class="instructor-list-container">
                             <!-- ADD: back button for instructor list page -->
@@ -7224,27 +7499,33 @@
                             </div>
                         </div>
                         <aside class="instructor-search-sidebar">
-                            <div class="card">
-                                <div class="form-group">
-                                    <select>
-                                        <option>Auto</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select>
-                                        <option>Any spoken languages</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Region</label>
-                                    <div class="location-field">
-                                        <span>Quickers Hill 2763</span>
-                                        <button class="edit-btn">edit</button>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary btn-full">Search</button>
-                            </div>
-                        </aside>
+    <div class="card">
+        <div class="form-group">
+            <label for="transmission-filter">Transmission</label>
+            <select id="transmission-filter">
+                <option value="any">Any</option>
+                <option value="Auto">Auto</option>
+                <option value="Manual">Manual</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language-filter">Spoken Languages</label>
+            <select id="language-filter">
+                <option value="any">Any spoken languages</option>
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Spanish">Spanish</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="region-input">Region</label>
+            <div class="location-field">
+                <input type="text" id="region-input" placeholder="Enter suburb or postcode..." style="border:none; width:100%;">
+            </div>
+        </div>
+        <button id="region-search-btn" class="btn btn-primary btn-full">Search</button>
+    </div>
+</aside>
                     </section>
                 </div>
             </main>
@@ -7590,11 +7871,9 @@
 
                                 <div class="form-group">
                                     <label>Pick Up Location</label>
-                                    <div class="location-field">
-                                        <span id="pickup-location-display">5 Hogan PL, Quakers Hill NSW 2763</span>
-                                        <button type="button" class="edit-btn" id="edit-pickup-btn"><i
-                                                class="fas fa-pencil-alt"></i> Edit</button>
-                                    </div>
+                                    <select id="pickup-location-select" name="pickupLocation">
+    <option value="">Select a pickup location...</option>
+</select>
                                 </div>
                                 <div class="form-group">
                                     <label>Drop Off Location</label>
@@ -8934,12 +9213,29 @@
         const db = firebase.firestore();
 
 
+        let map; // Make map a global variable
+
+        // This function is called by the Google Maps script tag once it's loaded
+       // REPLACE your old initMap function with this
+function initMap() {
+    const mapContainer = document.getElementById('service-area-map');
+    if (!mapContainer || typeof google === 'undefined') return;
+
+    // Create the map object here, one time only.
+    const defaultCenter = { lat: -33.8688, lng: 151.2093 };
+    map = new google.maps.Map(mapContainer, { center: defaultCenter, zoom: 10 });
+
+    // Now, load the data and populate the map.
+    loadServiceAreaAndAvailability();
+}
 
         // --- GLOBAL STATE & NAVIGATION ---
         const pages = document.querySelectorAll('.page');
         let lastDashboardView = 'dashboard-main-content';
         const allSidebars = document.querySelectorAll('.sidebar-nav');
         let currentInstructorId = null; // Store the ID of the selected instructor
+        // Add this with your other global variables like 'currentInstructorId'
+let currentInstructorAvailability = {};
         // --- START: ADD THESE GLOBAL VARIABLES ---
         // This object will hold the learner's info when proposing a booking
         let proposalContext = {
@@ -9118,59 +9414,73 @@
         }
 
         // --- LOGIC FOR BOOKING TABS ---
-        const bookingSection = document.querySelector('.booking-section');
-        if (bookingSection) {
-            bookingSection.addEventListener('click', (e) => {
-                const clickedTab = e.target.closest('.tab-link');
-                if (!clickedTab) return;
-                const targetId = clickedTab.dataset.target;
-                bookingSection.querySelectorAll('.tabs .tab-link').forEach(link => link.classList.toggle('active', link === clickedTab));
-                bookingSection.querySelectorAll('.tab-pane').forEach(pane => pane.classList.toggle('active', pane.id === targetId));
-            });
+        // --- Replacement for the booking section tab click listener ---
+const bookingSection = document.querySelector('.booking-section');
+if (bookingSection) {
+    bookingSection.addEventListener('click', (e) => {
+        const clickedTab = e.target.closest('.tab-link');
+        if (!clickedTab) return;
+        const targetId = clickedTab.dataset.target;
+
+        bookingSection.querySelectorAll('.tabs .tab-link').forEach(link => link.classList.toggle('active', link === clickedTab));
+        bookingSection.querySelectorAll('.tab-pane').forEach(pane => pane.classList.toggle('active', pane.id === targetId));
+
+        // **THE NEW LOGIC IS HERE**: Check if the "Upcoming" tab was clicked
+        if (targetId === 'upcoming-content') {
+            const currentUser = auth.currentUser;
+            if (currentUser) {
+                // Refresh the bookings list
+                renderLearnerUpcomingBookings(currentUser.uid);
+            }
         }
+    });
+}
 
         // --- AUTHENTICATION & USER DATA ---
         // --- AUTHENTICATION & ROLE-BASED ROUTING ---
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                db.collection('users').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        const userData = doc.data();
-                        const displayName = userData.firstName || user.email.split('@')[0];
+        // --- Replacement for the auth.onAuthStateChanged function ---
+auth.onAuthStateChanged(user => {
+    if (user) {
+        db.collection('users').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const userData = doc.data();
+                const displayName = userData.firstName || user.email.split('@')[0];
 
-                        if (userData.role === 'instructor') {
-                            // --- INSTRUCTOR LOGGED IN ---
-                            document.getElementById('instructor-user-name').textContent = displayName;
-                            showPage('instructor-dashboard-page');
+                if (userData.role === 'instructor') {
+                    document.getElementById('instructor-user-name').textContent = displayName;
+                    showPage('instructor-dashboard-page');
+                    renderUpcomingBookings(user.uid);
+                } else {
+                    // --- LEARNER LOGGED IN ---
+                    document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
+                    document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
+                    
+                    renderLearnerDashboard(user.uid);
+                    // **THE NEW LINE IS HERE**: Load bookings when the user logs in
+                    renderLearnerUpcomingBookings(user.uid);
 
-                            // --- ADD THIS LINE ---
-                            // This tells the dashboard to fetch and display the bookings for this instructor.
-                            renderUpcomingBookings(user.uid);
-
-                        } else {
-                            // --- LEARNER LOGGED IN ---
-                            document.querySelectorAll('[id^="user-name"]').forEach(el => el.textContent = displayName);
-                            if (document.getElementById('welcome-message')) {
-                                document.getElementById('welcome-message').textContent = `Welcome back, ${displayName}!`;
-                            }
-                            showPage('dashboard-page');
-                            showView('dashboard-main-content');
-
-                        }
-                    } else {
-                        // Fallback if user has no data in Firestore
-                        console.error("User data not found in Firestore!");
-                        showPage('login-page');
-                    }
-                }).catch(error => {
-                    console.error("Error fetching user data:", error);
-                    showPage('login-page');
-                });
+                    showPage('dashboard-page');
+                    showView('dashboard-main-content');
+                }
             } else {
-                // User is signed out
-                showPage('landing-page');
+                showPage('login-page');
             }
+        }).catch(error => {
+            console.error("Error fetching user data:", error);
+            showPage('login-page');
         });
+    } else {
+        showPage('landing-page');
+    }
+});
+
+// Also, make the new "Find an Instructor" button work
+document.addEventListener('click', (e) => {
+    if (e.target.matches('#find-instructor-btn')) {
+        e.preventDefault();
+        showView('switch-instructor-content');
+    }
+});
 
         function fetchUserData(user) {
             db.collection('users').doc(user.uid).get().then(doc => {
@@ -9189,38 +9499,69 @@
                 e.preventDefault();
                 const [email, password] = [loginForm.email.value, loginForm.password.value];
                 const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = '';
+                errorMessage.textContent = ''; // Clear previous errors
+
                 auth.signInWithEmailAndPassword(email, password)
-                    .catch(err => errorMessage.textContent = err.message);
+                    .catch(err => {
+                        console.error("Login Error:", err.code); // Keep this for debugging
+                        
+                        // Check for common authentication error codes and show a friendly message
+                        switch (err.code) {
+                            case 'auth/user-not-found':
+                            case 'auth/wrong-password':
+                            case 'auth/invalid-credential':
+                                errorMessage.textContent = 'Invalid email or password. Please try again.';
+                                break;
+                            case 'auth/invalid-email':
+                                 errorMessage.textContent = 'Please enter a valid email address.';
+                                 break;
+                            default:
+                                errorMessage.textContent = 'Invalid email or password. Please try again.';
+                                break;
+                        }
+                    });
             });
         }
         const signupForm = document.getElementById('signup-form');
         if (signupForm) {
             signupForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+                // Get all values from the form fields
                 const firstName = signupForm.firstName.value;
+                const surname = signupForm.surname.value;
                 const email = signupForm.email.value;
                 const password = signupForm.password.value;
+                const mobile = signupForm.mobile.value;
+                const dob = signupForm.dob.value; // Date is in "YYYY-MM-DD" format
+                const gender = signupForm.gender.value;
+                
                 const signupErrorMessage = document.getElementById('signup-error-message');
                 signupErrorMessage.textContent = '';
 
                 auth.createUserWithEmailAndPassword(email, password)
                     .then(cred => {
-                        // Set user data in Firestore with role 'learner'
+                        // **THE FIX IS HERE**: Save all collected data to the new user's document
                         return db.collection('users').doc(cred.user.uid).set({
                             firstName: firstName,
+                            surname: surname,
                             email: email,
-                            role: 'learner'
+                            role: 'learner',
+                            mobile: mobile, // Saves the mobile number
+                            dob: dob,       // Saves the date of birth
+                            gender: gender
                         });
                     })
                     .catch(err => signupErrorMessage.textContent = err.message);
             });
+
+            // This part remains the same
             document.getElementById('go-to-login').addEventListener('click', (e) => {
                 e.preventDefault();
-                setupLoginPage('learner'); // Default to learner login
+                setupLoginPage('learner');
             });
         }
 
+        
         // --- AVAILABILITY MODAL ---
         const availabilityModal = document.getElementById('availability-modal');
         const checkAvailabilityBtn = document.getElementById('check-availability-btn');
@@ -9236,7 +9577,17 @@
             }
         }
         function closeModal() { if (availabilityModal) availabilityModal.classList.remove('active'); }
-        if (checkAvailabilityBtn) checkAvailabilityBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+        document.body.addEventListener('click', function(e){
+    if(e.target.id === 'check-availability-btn'){
+        e.preventDefault();
+        const instructorId = e.target.dataset.id;
+        if (instructorId) {
+            showAvailabilityForInstructor(instructorId);
+        } else {
+            alert("Could not find instructor ID.");
+        }
+    }
+});
         if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
         if (availabilityModal) availabilityModal.addEventListener('click', (e) => { if (e.target === availabilityModal) closeModal(); });
 
@@ -9328,7 +9679,7 @@
 
             // --- START: REPLACE THE DELETED BLOCK WITH THIS ---
             // --- START: DELETE THIS ENTIRE BLOCK ---
-            const instructorNavLink = e.target.closest('#instructor-dashboard-page a[data-view]');
+          const instructorNavLink = e.target.closest('#instructor-dashboard-page a[data-view]');
             if (instructorNavLink) {
 
                 e.preventDefault(); // Stop the link from trying to navigate
@@ -9337,11 +9688,25 @@
 
                 // Update the active state in the sidebar
                 const sidebar = instructorNavLink.closest('.sidebar-nav');
-                sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-                instructorNavLink.closest('li').classList.add('active');
+                if (sidebar) { // Check if the link is in the main sidebar
+                    sidebar.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+                    instructorNavLink.closest('li').classList.add('active');
+                }
+
+                 if (targetViewId === 'instructor-service-area-view') {
+                    loadServiceAreaAndAvailability();
+                }
+
 
                 // Call the function to show the correct view
                 showInstructorView(targetViewId);
+
+                // --- START: ADDED LOGIC ---
+                // If the view is Personal Details, load the user's data
+                if (targetViewId === 'instructor-personal-details-view') {
+                    loadPersonalDetails();
+                }
+                // --- END: ADDED LOGIC ---
 
                 // If the view being opened is the calendar, render the events.
                 if (targetViewId === 'instructor-calendar-view') {
@@ -10105,120 +10470,125 @@
         }
 
         // --- START: DYNAMIC LEARNER-FACING PROFILE PAGE ---
-        async function displayInstructorProfile(instructorId) {
-            const page = document.getElementById('instructor-profile-page');
-            if (!page) return;
+        // Find and replace your existing displayInstructorProfile function with this corrected version
 
-            try {
-                const doc = await db.collection('users').doc(instructorId).get();
-                if (!doc.exists) {
-                    console.error("Instructor not found!");
-                    return;
-                }
+async function displayInstructorProfile(instructorId) {
+    const page = document.getElementById('instructor-profile-page');
+    if (!page) return;
 
-                const data = doc.data();
+    try {
+        const doc = await db.collection('users').doc(instructorId).get();
+        if (!doc.exists) {
+            console.error("Instructor not found!");
+            return;
+        }
 
-                // Use the uploaded photos, or fall back to placeholders
-                const instructorPhoto = data.instructorPhotoUrl || "https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=";
-                const vehiclePhoto = data.vehiclePhotoUrl || "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Urban-Cruiser/12237/1735368926257/front-left-side-47.jpg";
+        const data = doc.data();
 
-                // Populate the profile page with the instructor's data
-                page.querySelector('.profile-photo').src = instructorPhoto;
-                page.querySelector('.profile-car-photo').src = vehiclePhoto;
-                page.querySelector('.profile-header-info h2').textContent = data.firstName || 'Instructor';
-                page.querySelector('.profile-section p').textContent = data.bio || 'Bio not provided.';
-                page.querySelector('.language-tag').textContent = data.languages || 'English';
+        // --- START OF THE FIX ---
+        // Store the instructor's ID on the check availability button
+        const checkAvailabilityBtn = page.querySelector('#check-availability-btn');
+        if (checkAvailabilityBtn) {
+            checkAvailabilityBtn.dataset.id = instructorId;
+        }
+        // --- END OF THE FIX ---
 
-                // Example for checkmark list - you can make this more dynamic
-                const checkmarkList = page.querySelector('.checkmark-list');
-                checkmarkList.innerHTML = `
+
+        // (The rest of your existing function code for populating the profile page remains here...)
+        const instructorPhoto = data.instructorPhotoUrl || "https://media.istockphoto.com/id/509481682/photo/close-up-portrait-of-arabic-nice-man.jpg?s=612x612&w=0&k=20&c=5wx2Qf0J3oXzTiSBRTR3Xjm6ANzLOMhPOboOZZnU6fw=";
+        const vehiclePhoto = data.vehiclePhotoUrl || "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Urban-Cruiser/12237/1735368926257/front-left-side-47.jpg";
+
+        page.querySelector('.profile-photo').src = instructorPhoto;
+        page.querySelector('.profile-car-photo').src = vehiclePhoto;
+        page.querySelector('.profile-header-info h2').textContent = data.firstName || 'Instructor';
+        page.querySelector('.profile-section p').textContent = data.bio || 'Bio not provided.';
+        page.querySelector('.language-tag').textContent = data.languages || 'English';
+        
+        const checkmarkList = page.querySelector('.checkmark-list');
+        checkmarkList.innerHTML = `
             <li><i class="fas fa-check"></i> ${data.transmission || 'Auto'} Lessons & Test Packages</li>
             <li><i class="fas fa-check"></i> Verified Working with Children Check</li>
             <li><i class="fas fa-check"></i> Driving Instructor's Licence</li>
             <li><i class="fas fa-check"></i> Instructing since ${data.startYear || '2024'}</li>
         `;
 
-                // Show the page after populating it
-                showPage('instructor-profile-page');
+        showPage('instructor-profile-page');
 
-            } catch (error) {
-                console.error("Error fetching instructor details: ", error);
-            }
-        }
+    } catch (error) {
+        console.error("Error fetching instructor details: ", error);
+    }
+}
         // --- END: DYNAMIC LEARNER-FACING PROFILE PAGE ---
         // --- END: INSTRUCTOR PROFILE EDIT LOGIC ---
         // --- END: TRANSACTION REPORT LOGIC ---
         // --- DYNAMICALLY POPULATE BOOKING PAGE WITH INSTRUCTOR DATA ---
         // --- DYNAMICALLY POPULATE BOOKING PAGE WITH INSTRUCTOR DATA ---
         async function renderBookingPageInstructor(instructorId) {
-            const bookingPage = document.getElementById('booking-page');
-            if (!bookingPage) return;
+    const bookingPage = document.getElementById('booking-page');
+    if (!bookingPage) return;
 
-            // First, clear any previous instructor data
-            const instructorInfoCard = bookingPage.querySelector('.instructor-details');
-            instructorInfoCard.querySelector('.instructor-info h5').textContent = 'Loading...';
-            instructorInfoCard.querySelector('.instructor-info p').textContent = '';
-            instructorInfoCard.querySelector('.vehicle-info h5').textContent = '';
-            instructorInfoCard.querySelector('.vehicle-info p').textContent = '';
+    const instructorInfoCard = bookingPage.querySelector('.instructor-details');
+    const pickupLocationSelect = document.getElementById('pickup-location-select');
 
-            // Handle the case where a specific instructor is not selected
-            if (!instructorId || instructorId === 'placeholder-id-for-default-instructor') {
-                try {
-                    const learnerDoc = await db.collection('users').doc(auth.currentUser.uid).get();
-                    const learnerData = learnerDoc.data();
-                    instructorId = learnerData.instructorId; // Fetch from learner's data
-                    if (!instructorId) {
-                        alert('Please select an instructor first.');
-                        showView('switch-instructor-content');
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Could not fetch default instructor ID for learner.", error);
-                    return;
-                }
+    // Clear previous data
+    instructorInfoCard.querySelector('.instructor-info h5').textContent = 'Loading...';
+    pickupLocationSelect.innerHTML = '<option value="">Loading locations...</option>';
+
+    if (!instructorId) {
+        // This part remains the same, handling default instructor logic
+        try {
+            const learnerDoc = await db.collection('users').doc(auth.currentUser.uid).get();
+            instructorId = learnerDoc.data().instructorId;
+            if (!instructorId) {
+                alert('Please select an instructor first.');
+                showView('switch-instructor-content');
+                return;
             }
-
-            // Now fetch and display instructor data
-            try {
-                const docRef = db.collection('users').doc(instructorId);
-                const doc = await docRef.get();
-
-                if (doc.exists) {
-                    const instructor = doc.data();
-                    const instructorPhoto = instructor.instructorPhotoUrl || "https://placehold.co/100x100?text=I";
-                    const vehiclePhoto = instructor.vehiclePhotoUrl || "https://placehold.co/100x100?text=Car";
-                    currentInstructorPricing = instructor.pricing || { lesson: 70, testPackage: 225 };
-
-
-                    // Update the HTML elements with the fetched data
-                    instructorInfoCard.querySelector('.instructor-info img').src = instructorPhoto;
-                    instructorInfoCard.querySelector('.instructor-info h5').textContent = instructor.firstName || 'Instructor';
-                    instructorInfoCard.querySelector('.instructor-info p').textContent = `$70/hr<br>Offers ${instructor.transmission || 'Auto'} lessons`; // Example price
-
-                    instructorInfoCard.querySelector('.vehicle-info img').src = vehiclePhoto;
-                    instructorInfoCard.querySelector('.vehicle-info h5').textContent = `${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}`;
-                    instructorInfoCard.querySelector('.vehicle-info p').textContent = `${instructor.ancap || '5-star ANCAP rating'}<br>${instructor.dualControls === 'Yes' ? 'Dual controls fitted' : 'No dual controls'}`;
-
-                    // --- START OF FIX ---
-                    // These lines will now run every time, making the form functional.
-                    const bookingFormLogic = document.querySelector('#booking-page');
-                    if (bookingFormLogic) {
-                        // Find the populateAvailableDates function and call it
-                        // This function is defined within the `if (bookingPage)` block
-                        updateOrderSummary();
-
-                        populateAvailableDates();
-                    }
-                    // --- END OF FIX ---
-
-                } else {
-                    console.error('Instructor not found in Firestore.');
-                }
-
-            } catch (error) {
-                console.error('Error rendering booking page instructor:', error);
-            }
+        } catch (error) {
+            console.error("Could not fetch default instructor ID.", error);
+            return;
         }
+    }
+
+    try {
+        const doc = await db.collection('users').doc(instructorId).get();
+        if (doc.exists) {
+            const instructor = doc.data();
+                        currentInstructorAvailability = instructor.operatingHours || {};
+
+            
+            // --- START: NEW LOGIC ---
+            const suburbs = instructor.servicedSuburbs || [];
+            pickupLocationSelect.innerHTML = '<option value="">Select a pickup location...</option>'; // Reset
+            
+            if (suburbs.length > 0) {
+                suburbs.forEach(suburb => {
+                    const option = document.createElement('option');
+                    option.value = suburb;
+                    option.textContent = suburb;
+                    pickupLocationSelect.appendChild(option);
+                });
+            } else {
+                 pickupLocationSelect.innerHTML = '<option value="">Instructor has not set service areas.</option>';
+            }
+            // --- END: NEW LOGIC ---
+
+            // The rest of the function remains mostly the same
+            const instructorPhoto = instructor.instructorPhotoUrl || "https://placehold.co/100x100?text=I";
+            currentInstructorPricing = instructor.pricing || { lesson: 70, testPackage: 225 };
+
+            instructorInfoCard.querySelector('.instructor-info img').src = instructorPhoto;
+            instructorInfoCard.querySelector('.instructor-info h5').textContent = instructor.firstName || 'Instructor';
+            
+            updateOrderSummary();
+            populateAvailableDates();
+        } else {
+            console.error('Instructor not found in Firestore.');
+        }
+    } catch (error) {
+        console.error('Error rendering booking page instructor:', error);
+    }
+}
 
 
         // --- NEW BOOKING PAGE LOGIC ---
@@ -10385,18 +10755,12 @@
             }
 
             // Event listeners for the booking form dropdowns
-            dateDropdown.addEventListener('change', () => {
-                // In a real app, this would dynamically fetch times for the selected date
-                timeDropdown.innerHTML = `
-            <option value="">Select a time</option>
-            <option value="9:00 am">9:00 am</option>
-            <option value="11:00 am">11:00 am</option>
-            <option value="2:00 pm">2:00 pm</option>
-            <option value="4:00 pm">4:00 pm</option>
-        `;
-                updateOrderSummary();
-                validateForm();
-            });
+           dateDropdown.addEventListener('change', () => {
+    // When the date changes, populate the times for that date
+    populateAvailableTimesForDate(dateDropdown.value);
+    updateOrderSummary();
+    validateForm();
+});
 
             timeDropdown.addEventListener('change', () => {
                 updateOrderSummary();
@@ -10404,28 +10768,28 @@
             });
 
             // Event listener for the booking type tabs
-            bookingTypeTabs.addEventListener('click', (e) => {
-                const clickedTab = e.target.closest('.tab-link');
-                if (!clickedTab) return;
+           bookingTypeTabs.addEventListener('click', (e) => {
+    const clickedTab = e.target.closest('.tab-link');
+    if (!clickedTab) return;
 
-                // Update active class on tabs
-                bookingTypeTabs.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
-                clickedTab.classList.add('active');
+    bookingTypeTabs.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+    clickedTab.classList.add('active');
 
-                currentLessonType = clickedTab.dataset.lessonType;
+    // --- THIS IS THE KEY CHANGE ---
+    // When the lesson type changes (e.g., from 1hr to 2hr), we must
+    // re-calculate the available time slots.
+    populateAvailableTimesForDate(dateDropdown.value);
 
-                // Toggle visibility of test package specific fields
-                const isTestPackage = currentLessonType === 'test-package';
-                testLocationGroup.style.display = isTestPackage ? 'block' : 'none';
-                testWarning.style.display = isTestPackage ? 'block' : 'none';
-                pickupTimeNote.style.display = isTestPackage ? 'block' : 'none';
+    // (The rest of the tab logic remains the same)
+    currentLessonType = clickedTab.dataset.lessonType;
+    const isTestPackage = currentLessonType === 'test-package';
+    testLocationGroup.style.display = isTestPackage ? 'block' : 'none';
+    testWarning.style.display = isTestPackage ? 'block' : 'none';
+    pickupTimeNote.style.display = isTestPackage ? 'block' : 'none';
 
-                // Populate dates for the new lesson type (for demonstration purposes, we use same data)
-                populateAvailableDates();
-
-                updateOrderSummary();
-                validateForm();
-            });
+    updateOrderSummary();
+    validateForm();
+});
 
             // Function to populate the available dates dropdown
             function populateAvailableDates() {
@@ -10583,102 +10947,130 @@
 
         // --- START: NEW FUNCTION TO RENDER INSTRUCTOR CALENDAR ---
         // --- START: REPLACE THE EXISTING 'renderInstructorCalendar' FUNCTION ---
-        async function renderInstructorCalendar(uid, viewDate) {
-            const calendarGrid = document.querySelector('#instructor-calendar-view .calendar-grid');
-            if (!calendarGrid) return;
+       // --- START: REPLACE THE EXISTING 'renderInstructorCalendar' FUNCTION ---
+// --- START: REPLACE THE EXISTING 'renderInstructorCalendar' FUNCTION ---
+// --- START: FULLY CORRECTED RENDERINSTRUCTORCALENDAR FUNCTION ---
+async function renderInstructorCalendar(uid, viewDate = moment()) {
+    const calendarGrid = document.querySelector('#instructor-calendar-view .calendar-grid');
+    if (!calendarGrid) return;
 
-            // 1. Clear any existing events
-            calendarGrid.querySelectorAll('.calendar-event').forEach(eventEl => eventEl.remove());
+    calendarGrid.querySelectorAll('.calendar-event').forEach(eventEl => eventEl.remove());
 
-            const startOfWeek = viewDate.clone().startOf('isoWeek');
-            const endOfWeek = viewDate.clone().endOf('isoWeek');
+    const startOfWeek = viewDate.clone().startOf('isoWeek');
+    const endOfWeek = viewDate.clone().endOf('isoWeek');
 
-            try {
-                // Fetch bookings that are either CONFIRMED or PROPOSED
-                const snapshot = await db.collection('bookings')
-                    .where('instructorId', '==', uid)
-                    .where('status', 'in', ['CONFIRMED', 'PROPOSED'])
-                    .get();
+    const gridContentWidth = calendarGrid.clientWidth - 60;
+    const dayColumnWidth = gridContentWidth / 7;
 
-                if (snapshot.empty) return;
+    try {
+        const snapshot = await db.collection('bookings')
+            .where('instructorId', '==', uid)
+            .where('status', 'in', ['CONFIRMED', 'PROPOSED'])
+            .get();
 
-                snapshot.forEach(doc => {
-                    const booking = doc.data();
-                    const bookingMoment = moment(booking.date, 'ddd, D MMM YYYY');
+        if (snapshot.empty) return;
 
-                    if (bookingMoment.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
-                        const bookingDay = bookingMoment.day();
-                        const gridColumn = (bookingDay === 0) ? 7 : bookingDay;
+        snapshot.forEach(doc => {
+            const booking = doc.data();
+            const bookingMoment = moment(booking.date, 'ddd, D MMM YYYY');
 
-                        const startTime = moment(booking.startTime, 'h:mm a');
-                        const minutesFrom6am = (startTime.hours() - 6) * 60 + startTime.minutes();
+            if (bookingMoment.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
+                const bookingDay = bookingMoment.day();
+                const gridColumnIndex = (bookingDay === 0) ? 6 : bookingDay - 1;
 
-                        const endTime = moment(booking.endTime, 'h:mm a');
-                        const durationInMinutes = endTime.diff(startTime, 'minutes');
+                const startTime = moment(booking.startTime, 'h:mm a');
+                let endTime;
+                if (booking.endTime && moment(booking.endTime, 'h:mm a').isValid()) {
+                    endTime = moment(booking.endTime, 'h:mm a');
+                } else {
+                    endTime = startTime.clone().add(1, 'hour');
+                }
 
-                        const eventDiv = document.createElement('div');
-                        // *** THE KEY CHANGE IS HERE ***
-                        // Apply a different class based on the booking status
-                        const eventClass = booking.status === 'PROPOSED' ? 'event-proposed' : 'event-lesson';
-                        eventDiv.className = `calendar-event ${eventClass}`;
+                const minutesFrom6am = (startTime.hours() - 6) * 60 + startTime.minutes();
+                const durationInMinutes = endTime.diff(startTime, 'minutes');
 
-                        eventDiv.dataset.bookingId = doc.id;
-                        eventDiv.style.gridColumn = gridColumn + 1;
-                        eventDiv.style.top = `${minutesFrom6am}px`;
-                        eventDiv.style.height = `${durationInMinutes}px`;
-                        eventDiv.innerHTML = `
-                    <strong>${booking.startTime} - ${booking.endTime}</strong>
+                // --- THIS IS THE FIX ---
+                // Before: if (durationInMinutes <= 0) continue;
+                // After: 'return' correctly skips this iteration of the .forEach loop.
+                if (durationInMinutes <= 0) return; 
+                
+                const eventDiv = document.createElement('div');
+                const eventClass = booking.status === 'PROPOSED' ? 'event-proposed' : 'event-lesson';
+                eventDiv.className = `calendar-event ${eventClass}`;
+                eventDiv.dataset.bookingId = doc.id;
+
+                const leftPosition = 60 + (gridColumnIndex * dayColumnWidth);
+                
+                eventDiv.style.top = `${minutesFrom6am}px`;
+                eventDiv.style.height = `${durationInMinutes}px`;
+                eventDiv.style.left = `${leftPosition + 5}px`;
+                eventDiv.style.width = `${dayColumnWidth - 10}px`;
+                eventDiv.style.right = 'auto';
+
+                eventDiv.innerHTML = `
+                    <strong>${booking.startTime} - ${endTime.format('h:mm a')}</strong>
                     <p>${booking.learnerName} (${booking.transmission.charAt(0)})<br>${(booking.pickupLocation || '').split(',')[0]}</p>
                 `;
-
-                        calendarGrid.appendChild(eventDiv);
-                    }
-                });
-            } catch (error) {
-                console.error("Error fetching calendar bookings:", error);
+                calendarGrid.appendChild(eventDiv);
             }
-        }
+        });
+    } catch (error) {
+        console.error("Error fetching calendar bookings:", error);
+    }
+}
+// --- END: FULLY CORRECTED RENDERINSTRUCTORCALENDAR FUNCTION ---
+// --- END: REPLACEMENT FUNCTION ---
+// --- END: REPLACEMENT FUNCTION ---
         // --- END: REPLACEMENT FUNCTION ---
         // Add this new function with your other helper functions
-        function updateCalendarView(date) {
-            const monthDisplay = document.getElementById('cal-month-display');
-            const dayHeaders = document.querySelectorAll('#instructor-calendar-view .day-header');
+        async function updateCalendarView(date) {
+    // 1. Build the basic grid structure
+    buildCalendarGrid(date);
 
-            if (monthDisplay) {
-                monthDisplay.textContent = date.format('MMMM YYYY');
+    // 2. Fetch user's availability and apply background colors
+    if (auth.currentUser) {
+        try {
+            const doc = await db.collection('users').doc(auth.currentUser.uid).get();
+            if (doc.exists) {
+                renderCalendarAvailability(doc.data().operatingHours);
             }
-
-            const startOfWeek = date.clone().startOf('isoWeek'); // Starts on Monday
-
-            dayHeaders.forEach((header, index) => {
-                const day = startOfWeek.clone().add(index, 'days');
-                header.innerHTML = `<strong>${day.format('ddd')}</strong> ${day.format('D')}`;
-
-                header.classList.toggle('today', day.isSame(moment(), 'day'));
-                if (header.classList.contains('today')) {
-                    header.innerHTML = `<strong>${day.format('ddd')}</strong><span>${day.format('D')}</span>`;
-                }
-            });
-
-            if (auth.currentUser) {
-                renderInstructorCalendar(auth.currentUser.uid, date);
-            }
+        } catch (error) {
+            console.error("Could not load operating hours for calendar.", error);
         }
+    }
+    
+    // 3. Render the actual booked events on top of the availability
+    renderInstructorCalendar(auth.currentUser.uid, date);
+}
         // --- START: CALENDAR NAVIGATION LISTENERS ---
-        document.getElementById('cal-next-week-btn')?.addEventListener('click', () => {
+       // --- START: CALENDAR NAVIGATION LISTENERS (CORRECTED) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const nextWeekBtn = document.getElementById('cal-next-week-btn');
+    const prevWeekBtn = document.getElementById('cal-prev-week-btn');
+    const todayBtn = document.getElementById('cal-today-btn');
+
+    if (nextWeekBtn) {
+        nextWeekBtn.addEventListener('click', () => {
             currentCalendarDate.add(1, 'week');
             updateCalendarView(currentCalendarDate);
         });
+    }
 
-        document.getElementById('cal-prev-week-btn')?.addEventListener('click', () => {
+    if (prevWeekBtn) {
+        prevWeekBtn.addEventListener('click', () => {
             currentCalendarDate.subtract(1, 'week');
             updateCalendarView(currentCalendarDate);
         });
+    }
 
-        document.getElementById('cal-today-btn')?.addEventListener('click', () => {
+    if (todayBtn) {
+        todayBtn.addEventListener('click', () => {
             currentCalendarDate = moment();
             updateCalendarView(currentCalendarDate);
         });
+    }
+});
+// --- END: CALENDAR NAVIGATION LISTENERS (CORRECTED) ---
         // --- END: CALENDAR NAVIGATION LISTENERS ---
         // --- END: NEW FUNCTION TO RENDER INSTRUCTOR CALENDAR ---
 
@@ -10773,30 +11165,41 @@
          * @param {string} learnerId - The UID of the learner to display.
          */
         // --- START: REPLACE THE EXISTING 'renderLearnerDetailsPage' FUNCTION ---
-        async function renderLearnerDetailsPage(learnerId) {
+      async function renderLearnerDetailsPage(learnerId) {
             const detailsView = document.getElementById('instructor-learner-details-view');
             if (!detailsView) return;
 
-            // *** ADD THIS LINE ***
-            detailsView.dataset.learnerId = learnerId; // Store the ID on the view element
+            // Store the current learner's ID on the view for other functions to access
+            detailsView.dataset.learnerId = learnerId;
 
+            // Show the learner details view and display a loading state
             showInstructorView('instructor-learner-details-view');
             detailsView.querySelector('.learner-info h3').textContent = 'Loading...';
+            detailsView.querySelector('.learner-info p').textContent = '';
             detailsView.querySelector('.learner-history-table').innerHTML = '<p style="text-align: center; padding: 20px;">Loading booking history...</p>';
 
             try {
+                // Fetch the learner's document from the 'users' collection in Firestore
                 const learnerDoc = await db.collection('users').doc(learnerId).get();
                 if (!learnerDoc.exists) throw new Error("Learner not found");
+                
                 const learner = learnerDoc.data();
                 const instructorId = auth.currentUser.uid;
 
-                const age = learner.dob ? moment().diff(moment(learner.dob), 'years') : 'N/A';
+                // **FIX 1: Calculate age from the 'dob' field**
+                // It uses the moment.js library to find the difference in years.
+                // If the 'dob' field doesn't exist, it gracefully defaults to 'N/A'.
+                const age = learner.dob ? moment().diff(moment(learner.dob, "YYYY-MM-DD"), 'years') : 'N/A';
+                
+                // **FIX 2: Get the learner's initials for the avatar**
                 const initials = `${(learner.firstName || ' ')[0]}${(learner.surname || ' ')[0]}`.toUpperCase();
 
+                // **FIX 3: Populate the HTML with the fetched data**
                 detailsView.querySelector('.learner-avatar').textContent = initials;
                 detailsView.querySelector('.learner-info h3').innerHTML = `${learner.firstName} ${learner.surname || ''} <span class="age-tag">Age ${age}</span>`;
                 detailsView.querySelector('.learner-info p').innerHTML = `<i class="fas fa-phone-alt"></i> ${learner.mobile || 'No phone number'}`;
 
+                // Fetch the learner's booking history with the current instructor
                 const bookingsSnapshot = await db.collection('bookings')
                     .where('learnerId', '==', learnerId)
                     .where('instructorId', '==', instructorId)
@@ -10805,26 +11208,28 @@
                     .get();
 
                 const historyTable = detailsView.querySelector('.learner-history-table');
+                // Clear loading state and add table header
                 historyTable.innerHTML = `
-            <div class="learner-history-header">
-                <div>Booking</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
-            </div>`;
+                    <div class="learner-history-header">
+                        <div>Booking</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
+                    </div>`;
 
                 if (bookingsSnapshot.empty) {
                     historyTable.innerHTML += '<div class="learner-history-row" style="text-align: center; grid-column: 1 / -1; padding: 20px;">No past bookings found.</div>';
                 } else {
+                    // Populate the booking history table
                     bookingsSnapshot.forEach(doc => {
                         const booking = doc.data();
                         const statusClass = booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled';
                         const historyRow = `
-                    <div class="learner-history-row">
-                        <div><a href="#" class="booking-id-link">#${doc.id.substring(0, 7)}</a></div>
-                        <div>${booking.date}</div>
-                        <div>${booking.startTime} - ${booking.endTime}</div>
-                        <div>${booking.pickupLocation}</div>
-                        <div><span class="status-badge ${statusClass}">${booking.status}</span></div>
-                        <div><span class="status-badge status-processed">PROCESSED</span></div>
-                    </div>`;
+                            <div class="learner-history-row">
+                                <div><a href="#" class="booking-id-link">#${doc.id.substring(0, 7)}</a></div>
+                                <div>${booking.date}</div>
+                                <div>${booking.startTime} - ${booking.endTime}</div>
+                                <div>${booking.pickupLocation}</div>
+                                <div><span class="status-badge ${statusClass}">${booking.status}</span></div>
+                                <div><span class="status-badge status-processed">PROCESSED</span></div>
+                            </div>`;
                         historyTable.insertAdjacentHTML('beforeend', historyRow);
                     });
                 }
@@ -11174,10 +11579,1574 @@ document.addEventListener('DOMContentLoaded', () => {
         pageOverlay.addEventListener('click', closeMenu);
     }
 });
+
+
+async function loadPersonalDetails() {
+            if (!auth.currentUser) return;
+            const uid = auth.currentUser.uid;
+            const form = document.getElementById('personal-details-form');
+            
+            try {
+                const doc = await db.collection('users').doc(uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    form.querySelector('#pd-first-name').value = data.firstName || '';
+                    form.querySelector('#pd-surname').value = data.surname || '';
+                    form.querySelector('#pd-email').value = data.email || '';
+                    form.querySelector('#pd-mobile').value = data.mobile || '';
+                    form.querySelector('#pd-dob').value = data.dob || ''; // Assumes DD-MM-YYYY format
+                    form.querySelector('#pd-gender').value = data.gender || '';
+                    // Note: Pincode loading might be more complex if it's a dynamic list
+                }
+            } catch (error) {
+                console.error("Error loading personal details: ", error);
+                alert("Could not load your details.");
+            }
+        }
+
+        // Function to save instructor personal details
+       // --- START: REPLACE THE OLD savePersonalDetails FUNCTION WITH THIS ---
+        
+        // Function to save instructor personal details AND handle password changes
+        async function savePersonalDetails(e) {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const form = document.getElementById('personal-details-form');
+            let detailsUpdated = false;
+
+            // --- Part 1: Update non-sensitive profile details ---
+            const updatedData = {
+                firstName: form.querySelector('#pd-first-name').value,
+                surname: form.querySelector('#pd-surname').value,
+                mobile: form.querySelector('#pd-mobile').value,
+                dob: form.querySelector('#pd-dob').value,
+                gender: form.querySelector('#pd-gender').value
+            };
+
+            try {
+                await db.collection('users').doc(user.uid).update(updatedData);
+                detailsUpdated = true; // Mark that details were saved
+            } catch (error) {
+                console.error("Error updating personal details: ", error);
+                alert("Could not update your profile details. Please try again.");
+            }
+
+            // --- Part 2: Handle the secure password change ---
+            const currentPass = form.querySelector('#pd-current-password').value;
+            const newPass = form.querySelector('#pd-new-password').value;
+            const confirmPass = form.querySelector('#pd-confirm-password').value;
+
+            // Only proceed if the user actually entered a new password
+            if (newPass) {
+                // Validation checks
+                if (!currentPass || !confirmPass) {
+                    alert("To change your password, please fill all three password fields.");
+                    return;
+                }
+                if (newPass.length < 6) {
+                    alert("Your new password must be at least 6 characters long.");
+                    return;
+                }
+                if (newPass !== confirmPass) {
+                    alert("The new passwords do not match. Please try again.");
+                    return;
+                }
+
+                // Step 1: Create a credential with the user's current password
+                const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+
+                // Step 2: Re-authenticate the user with this credential
+                user.reauthenticateWithCredential(credential).then(() => {
+                    // Step 3: If re-authentication is successful, update the password
+                    return user.updatePassword(newPass);
+                }).then(() => {
+                    // Step 4: Success!
+                    alert("Profile details and password updated successfully! ✅");
+                    // Clear password fields for security
+                    form.querySelector('#pd-current-password').value = '';
+                    form.querySelector('#pd-new-password').value = '';
+                    form.querySelector('#pd-confirm-password').value = '';
+                }).catch((error) => {
+                    // Handle errors, especially wrong password
+                    console.error("Password change error:", error);
+                    if (error.code === 'auth/wrong-password') {
+                        alert("The current password you entered is incorrect. Please try again.");
+                    } else {
+                        alert("An error occurred while changing your password.");
+                    }
+                });
+            } else if (detailsUpdated) {
+                // If only details were updated (no password change attempt)
+                alert("Profile details updated successfully!");
+            }
+        }
+        
+        // --- END: REPLACEMENT FUNCTION ---
+
+        // Attach listener to the form
+        const personalDetailsForm = document.getElementById('personal-details-form');
+        if (personalDetailsForm) {
+            personalDetailsForm.addEventListener('submit', savePersonalDetails);
+        }
+
+        // --- START: ADD THIS SCRIPT FOR SERVICE AREA PAGE INTERACTIVITY ---
+        const operatingHoursContainer = document.getElementById('operating-hours-container');
+        if (operatingHoursContainer) {
+            
+            // Handle clicking "Add More" or "Remove"
+            operatingHoursContainer.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target;
+                const timeSlotsWrapper = target.closest('.day-row')?.querySelector('.time-slots-wrapper');
+                
+                if (!timeSlotsWrapper) return;
+
+                if (target.classList.contains('add-more-link')) {
+                    const newTimeSlot = document.createElement('div');
+                    newTimeSlot.className = 'time-slot-group';
+                    newTimeSlot.innerHTML = `<select><option>09</option></select> : <select><option>00</option></select> - <select><option>09</option></select> : <select><option>00</option></select>`;
+                    timeSlotsWrapper.appendChild(newTimeSlot);
+                }
+
+                if (target.classList.contains('remove-link')) {
+                    if (timeSlotsWrapper.children.length > 1) {
+                         timeSlotsWrapper.removeChild(timeSlotsWrapper.lastElementChild);
+                    }
+                }
+            });
+
+            // Handle enabling/disabling time slots with the checkbox
+            operatingHoursContainer.addEventListener('change', (e) => {
+                const target = e.target;
+                if (target.type === 'checkbox') {
+                    const dayRow = target.closest('.day-row');
+                    const selects = dayRow.querySelectorAll('select');
+                    selects.forEach(select => select.disabled = !target.checked);
+                }
+            });
+        }
+
+        // --- START: ADD THESE NEW FUNCTIONS FOR SERVICE AREA MAP & TAGS ---
+
+
+          /**
+         * Initializes the Google Places Autocomplete on the input field.
+         */
+        function initSuburbAutocomplete() {
+            const input = document.getElementById('suburb-autocomplete-input');
+            if (!input || typeof google === 'undefined') return;
+
+            const options = {
+                types: ['(regions)'], // Restricts search to geographical regions like suburbs
+                componentRestrictions: { country: 'au' } // Restricts search to Australia
+            };
+
+            const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+            // Listen for when a user selects a suburb from the dropdown
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+                if (place && place.name) {
+                    addSuburb(place.name); // Add the selected suburb to Firestore
+                    input.value = ''; // Clear the input field
+                }
+            });
+        }
+
+        /**
+         * Adds a new suburb to the instructor's list in Firestore.
+         * @param {string} suburbName - The name of the suburb to add.
+         */
+        async function addSuburb(suburbName) {
+            if (!auth.currentUser) return;
+            const uid = auth.currentUser.uid;
+            const userRef = db.collection('users').doc(uid);
+
+            try {
+                // arrayUnion adds the element only if it's not already present.
+                await userRef.update({
+                    servicedSuburbs: firebase.firestore.FieldValue.arrayUnion(suburbName)
+                });
+                // After successfully adding, reload the whole section to reflect the change
+                loadServiceAreaAndAvailability();
+            } catch (error) {
+                console.error("Error adding suburb: ", error);
+            }
+        }
+
+        /**
+         * Removes a suburb from the instructor's list in Firestore.
+         * @param {string} suburbName - The name of the suburb to remove.
+         */
+        async function removeSuburb(suburbName) {
+            if (!auth.currentUser) return;
+            const uid = auth.currentUser.uid;
+            const userRef = db.collection('users').doc(uid);
+
+            try {
+                // arrayRemove removes all instances of the element from the array.
+                await userRef.update({
+                    servicedSuburbs: firebase.firestore.FieldValue.arrayRemove(suburbName)
+                });
+                // After successfully removing, reload the section
+                loadServiceAreaAndAvailability();
+            } catch (error) {
+                console.error("Error removing suburb: ", error);
+            }
+        }
+
+        /**
+         * Renders the suburb names as clickable tags with remove buttons.
+         * @param {string[]} suburbs - An array of suburb names.
+         */
+        function renderSuburbTags(suburbs) {
+            const tagsContainer = document.getElementById('location-tags-container');
+            if (!tagsContainer) return;
+            
+            if (!suburbs || suburbs.length === 0) {
+                tagsContainer.innerHTML = `<p style="color: var(--gray-color);">No suburbs added yet. Use the search box above to add one.</p>`;
+                return;
+            }
+
+            tagsContainer.innerHTML = ''; // Clear previous tags
+            suburbs.forEach(suburb => {
+                // Add data-suburb attribute to the button for easy identification
+                const tagHTML = `
+                    <span class="location-tag">
+                        ${suburb} 
+                        <button class="remove-suburb-btn" data-suburb="${suburb}">&times;</button>
+                    </span>`;
+                tagsContainer.insertAdjacentHTML('beforeend', tagHTML);
+            });
+        }
+
+        /**
+         * Initializes the map, geocodes suburbs, and places markers and circles.
+         * @param {string[]} suburbs - An array of suburb names to display on the map.
+         */
+   
+        /**
+         * Fetches instructor data and triggers the rendering of the map and tags.
+         */
+        // --- START: REPLACEMENT FOR THE loadServiceAreaAndAvailability FUNCTION ---
+
+// REPLACE your old loadServiceAreaAndAvailability function with this
+async function loadServiceAreaAndAvailability() {
+    if (!auth.currentUser) return;
+    const uid = auth.currentUser.uid;
+
+    try {
+        const doc = await db.collection('users').doc(uid).get();
+        if (doc.exists) {
+            const data = doc.data();
+            const suburbs = data.servicedSuburbs || [];
+            
+            // Render the text summary, tags, and availability calendar (this is unchanged)
+            document.getElementById('service-area-summary').innerHTML = `You are servicing <strong>${suburbs.length} suburbs</strong> around Sydney...`;
+            renderSuburbTags(suburbs);
+            initSuburbAutocomplete();
+            loadNewAvailability(data.operatingHours);
+
+            // This now calls the new, separate function to UPDATE the map
+            updateMapWithObjects(suburbs);
+
+        } else {
+             document.getElementById('new-availability-container').innerHTML = '<p>Could not find user profile data.</p>';
+        }
+    } catch (error) {
+        console.error("Error loading service area and availability data: ", error);
+        document.getElementById('new-availability-container').innerHTML = '<p style="color: red;">Could not load availability.</p>';
+    }
+}
+
+// --- END: REPLACEMENT FUNCTION ---
+        
+        // Add a single, delegated event listener to handle all remove button clicks
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-suburb-btn')) {
+                const suburbToRemove = e.target.dataset.suburb;
+                if (suburbToRemove) {
+                    removeSuburb(suburbToRemove);
+                }
+            }
+        });
+        // --- END: REPLACEMENT JAVASCRIPT BLOCK ---
+        /**
+         * Renders the suburb names as clickable tags.
+         * @param {string[]} suburbs - An array of suburb names.
+         */
+        
+
+        /**
+         * Initializes the map, geocodes suburbs, and places markers and circles.
+         * @param {string[]} suburbs - An array of suburb names to display on the map.
+         */
+      
+
+        /**
+         * Fetches instructor data and triggers the rendering of the map and tags.
+         */
+        
+        // --- END: ADDED FUNCTIONS ---
+        // --- END: ADDED SCRIPT ---
 // --- END: FINAL SCRIPT ---
+
+// --- START: REPLACEMENT SCRIPT FOR OPERATING HOURS ---
+
+
+
+/**
+ * Reads the current state of the 7-day availability form and saves it to Firestore.
+ */
+async function saveAvailability() {
+    if (!auth.currentUser) return alert('You must be logged in to save changes.');
+    
+    const uid = auth.currentUser.uid;
+    const container = document.getElementById('new-availability-container');
+    const newHoursData = {};
+
+    // Loop through each day row to build the data object to save
+    container.querySelectorAll('.availability-day-row').forEach(row => {
+        const day = row.dataset.day;
+        const checkbox = row.querySelector('.day-toggle');
+
+        if (checkbox.checked) {
+            // If the day is toggled ON, save the start and end times
+            const start = row.querySelector('.start-time').value;
+            const end = row.querySelector('.end-time').value;
+            newHoursData[day] = [{ start, end }];
+        } else {
+            // If the day is toggled OFF, save an empty array to indicate no availability
+            newHoursData[day] = [];
+        }
+    });
+
+    try {
+        // Update the 'operatingHours' field in the user's document
+        await db.collection('users').doc(uid).update({ operatingHours: newHoursData });
+        alert('✅ Availability updated successfully!');
+
+        // If the main calendar view is currently active, refresh it to show new availability
+        if (document.getElementById('instructor-calendar-view').classList.contains('active')) {
+            updateCalendarView(currentCalendarDate);
+        }
+    } catch (error) {
+        console.error("Error saving availability: ", error);
+        alert('❌ Failed to save changes. Please try again.');
+    }
+}
+
+// This ensures the code runs only after the entire page is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const saveBtn = document.getElementById('save-availability-btn');
+    const availabilityContainer = document.getElementById('new-availability-container');
+
+    // Attach listener to the main "Save and Change" button
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveAvailability);
+    }
+
+    // Attach a single listener to the container to handle all toggle switches
+    if (availabilityContainer) {
+        availabilityContainer.addEventListener('change', (e) => {
+            const target = e.target;
+            // Check if the changed element was one of our day toggles
+            if (target.classList.contains('day-toggle')) {
+                const dayRow = target.closest('.availability-day-row');
+                const isEnabled = target.checked;
+
+                // Enable or disable the time inputs in the same row
+                dayRow.querySelector('.start-time').disabled = !isEnabled;
+                dayRow.querySelector('.end-time').disabled = !isEnabled;
+                
+                // Add or remove the visual greyed-out style
+                dayRow.classList.toggle('day-disabled', !isEnabled);
+            }
+        });
+    }
+});
+
+// --- END: NEW AND IMPROVED AVAILABILITY SCRIPT ---
+
+
+
+
+/**
+ * Dynamically builds the HTML for the calendar grid for a given week.
+ * This replaces the static HTML.
+ */
+function buildCalendarGrid(date) {
+    const grid = document.getElementById('dynamic-calendar-grid');
+    if (!grid) return;
+        document.getElementById('cal-month-display').textContent = date.format('MMMM YYYY');
+
+    grid.innerHTML = ''; // Clear old grid
+    const startOfWeek = date.clone().startOf('isoWeek'); // Starts on Monday
+
+    // 1. Create Headers
+    grid.insertAdjacentHTML('beforeend', '<div class="day-header-spacer"></div>');
+    for (let i = 0; i < 7; i++) {
+        const day = startOfWeek.clone().add(i, 'days');
+        const isToday = day.isSame(moment(), 'day');
+        const dayName = day.format('ddd');
+        const dayNum = day.format('D');
+        const todayClass = isToday ? 'today' : '';
+        const headerHTML = `
+            <div class="day-header ${todayClass}" data-day="${dayName.toLowerCase()}">
+                <strong>${dayName}</strong>
+                ${isToday ? `<span>${dayNum}</span>` : dayNum}
+            </div>`;
+        grid.insertAdjacentHTML('beforeend', headerHTML);
+    }
+
+    // 2. Create Time Slots (from 6 AM to 8 PM for example)
+    for (let hour = 6; hour <= 20; hour++) {
+        const timeLabel = moment({ hour }).format('ha');
+        grid.insertAdjacentHTML('beforeend', `<div class="time-label">${timeLabel}</div>`);
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+            const day = startOfWeek.clone().add(dayIndex, 'days').format('dddd').toLowerCase();
+            const slotHTML = `<div class="time-slot" data-day="${day}" data-hour="${hour}"></div>`;
+            grid.insertAdjacentHTML('beforeend', slotHTML);
+        }
+    }
+}
+
+/**
+ * Applies 'available' or 'unavailable' styles to the calendar time slots.
+ * @param {object} operatingHours - The instructor's operating hours object from Firestore.
+ */
+function renderCalendarAvailability(operatingHours = {}) {
+    // First, set all slots to unavailable by default
+    document.querySelectorAll('.time-slot').forEach(slot => {
+        slot.classList.add('slot-unavailable');
+        slot.classList.remove('slot-available');
+    });
+
+    // Now, loop through the operating hours and mark available slots
+    for (const day in operatingHours) {
+        const slots = operatingHours[day];
+        if (slots && slots.length > 0) {
+            const startHour = parseInt(slots[0].start.split(':')[0]);
+            const endHour = parseInt(slots[0].end.split(':')[0]);
+
+            // Apply the 'available' class to the slots within the time range
+            for (let hour = startHour; hour < endHour; hour++) {
+                const daySlot = document.querySelector(`.time-slot[data-day="${day}"][data-hour="${hour}"]`);
+                if (daySlot) {
+                    daySlot.classList.remove('slot-unavailable');
+                    daySlot.classList.add('slot-available');
+                }
+            }
+        }
+    }
+}
+
+// ADD THIS NEW FUNCTION
+/**
+ * Clears old markers/circles and adds new ones based on the suburb list.
+ * It assumes the global 'map' object has already been created.
+ * @param {string[]} suburbs - An array of suburb names to display on the map.
+ */
+function updateMapWithObjects(suburbs) {
+    if (!map || typeof google === 'undefined') return;
+
+    // This part is new: We'd need to keep track of old markers to remove them.
+    // For simplicity now, we'll just recenter and redraw.
+    // In a more complex app, you'd loop through an array of old markers and setMap(null).
+
+    const defaultCenter = { lat: -33.8688, lng: 151.2093 };
+    map.setCenter(defaultCenter);
+    map.setZoom(10);
+    
+    if (!suburbs || suburbs.length === 0) return;
+
+    const geocoder = new google.maps.Geocoder();
+    const bounds = new google.maps.LatLngBounds();
+
+    suburbs.forEach(suburb => {
+        geocoder.geocode({ 'address': `${suburb}, NSW, Australia` }, (results, status) => {
+            if (status === 'OK') {
+                const location = results[0].geometry.location;
+                // Note: We are not creating a new map, just new markers and circles on the existing one.
+                new google.maps.Marker({ map: map, position: location, title: suburb });
+                new google.maps.Circle({
+                    strokeColor: '#FFC700', strokeOpacity: 0.8, strokeWeight: 2,
+                    fillColor: '#FFC700', fillOpacity: 0.25,
+                    map: map, center: location, radius: 2000
+                });
+                bounds.extend(location);
+                map.fitBounds(bounds);
+            }
+        });
+    });
+}
+
+
+// --- START: FINAL AVAILABILITY SCRIPT ---
+
+/**
+ * Loads the user's operating hours and populates the 7-day availability form.
+ * @param {object} [hoursData={}] - The operatingHours map from the user's Firestore document.
+ */
+function loadNewAvailability(hoursData = {}) {
+    const container = document.getElementById('new-availability-container');
+    if (!container) return;
+
+    container.querySelectorAll('.availability-day-row').forEach(row => {
+        const day = row.dataset.day;
+        const daySlots = hoursData[day] || [];
+        const isEnabled = daySlots.length > 0;
+
+        const toggle = row.querySelector('.day-toggle');
+        const startTimeInput = row.querySelector('.start-time');
+        const endTimeInput = row.querySelector('.end-time');
+
+        toggle.checked = isEnabled;
+        startTimeInput.disabled = !isEnabled;
+        endTimeInput.disabled = !isEnabled;
+        row.classList.toggle('day-disabled', !isEnabled);
+
+        if (isEnabled) {
+            startTimeInput.value = daySlots[0].start;
+            endTimeInput.value = daySlots[0].end;
+        } else {
+            startTimeInput.value = '09:00';
+            endTimeInput.value = '17:00';
+        }
+    });
+}
+
+/**
+ * Reads the current state of the 7-day availability form and saves it to Firestore.
+ */
+async function saveAvailability() {
+    if (!auth.currentUser) return alert('You must be logged in to save changes.');
+    
+    const uid = auth.currentUser.uid;
+    const container = document.getElementById('new-availability-container');
+    const newHoursData = {};
+
+    container.querySelectorAll('.availability-day-row').forEach(row => {
+        const day = row.dataset.day;
+        const checkbox = row.querySelector('.day-toggle');
+
+        if (checkbox.checked) {
+            const start = row.querySelector('.start-time').value;
+            const end = row.querySelector('.end-time').value;
+            newHoursData[day] = [{ start, end }];
+        } else {
+            newHoursData[day] = [];
+        }
+    });
+
+    try {
+        await db.collection('users').doc(uid).update({ operatingHours: newHoursData });
+        alert('✅ Availability updated successfully!');
+
+        if (document.getElementById('instructor-calendar-view').classList.contains('active')) {
+            updateCalendarView(currentCalendarDate);
+        }
+    } catch (error) {
+        console.error("Error saving availability: ", error);
+        alert('❌ Failed to save changes. Please try again.');
+    }
+}
+
+// This event listener ensures the HTML is fully loaded before attaching our controls.
+document.addEventListener('DOMContentLoaded', () => {
+    const saveBtn = document.getElementById('save-availability-btn');
+    const availabilityContainer = document.getElementById('new-availability-container');
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveAvailability);
+    }
+
+    if (availabilityContainer) {
+        availabilityContainer.addEventListener('change', (e) => {
+            const target = e.target;
+            // This is the logic that fixes your problem: it listens for a change on the toggle.
+            if (target.classList.contains('day-toggle')) {
+                const dayRow = target.closest('.availability-day-row');
+                const isEnabled = target.checked;
+
+                // It then correctly enables or disables the time inputs in the same row.
+                dayRow.querySelector('.start-time').disabled = !isEnabled;
+                dayRow.querySelector('.end-time').disabled = !isEnabled;
+                
+                dayRow.classList.toggle('day-disabled', !isEnabled);
+            }
+        });
+    }
+}); 
+
+ 
+/**
+ * Fetches data and dynamically renders the learner's main dashboard.
+ * @param {string} uid - The UID of the logged-in learner.
+ */
+async function renderLearnerDashboard(uid) {
+    const instructorCard = document.getElementById('my-instructor-card');
+    const detailsContent = document.getElementById('instructor-details-content');
+    const noInstructorContent = document.getElementById('no-instructor-content');
+    const dynamicBookingBtns = document.querySelectorAll('.dynamic-booking-btn');
+
+    if (!instructorCard) return;
+
+    try {
+        const learnerDoc = await db.collection('users').doc(uid).get();
+        if (!learnerDoc.exists) return;
+
+        const learnerData = learnerDoc.data();
+        const instructorId = learnerData.instructorId;
+
+        if (instructorId) {
+            // --- STATE 1: INSTRUCTOR IS ASSIGNED ---
+            const instructorDoc = await db.collection('users').doc(instructorId).get();
+            if (instructorDoc.exists) {
+                const instructor = instructorDoc.data();
+                const instructorName = instructor.firstName || 'Your Instructor';
+
+                // **THE FIX IS HERE**: Update all booking buttons with the instructor's name and ID
+                dynamicBookingBtns.forEach(btn => {
+                    btn.textContent = `Book with ${instructorName}`;
+                    btn.dataset.id = instructorId; // This makes the button work for this instructor
+                });
+
+                // Populate the "My Instructor" card (existing logic)
+                document.getElementById('my-instructor-photo').src = instructor.instructorPhotoUrl || 'https://placehold.co/100x100?text=I';
+                document.getElementById('my-instructor-name').textContent = instructorName;
+                document.getElementById('my-instructor-price').textContent = `$${(instructor.pricing?.lesson || 70).toFixed(2)}/Hr`;
+                document.getElementById('my-vehicle-photo').src = instructor.vehiclePhotoUrl || 'https://placehold.co/100x100?text=Car';
+                document.getElementById('my-vehicle-name').textContent = `${instructor.vehicleMake || 'Vehicle'} ${instructor.vehicleModel || ''}`;
+
+                detailsContent.style.display = 'block';
+                noInstructorContent.style.display = 'none';
+            }
+        } else {
+            // --- STATE 2: NO INSTRUCTOR ASSIGNED ---
+            
+            // **THE FIX IS HERE**: Change buttons to prompt user to find an instructor
+            dynamicBookingBtns.forEach(btn => {
+                btn.textContent = 'Find an Instructor to Book';
+                // Remove the data-id so it doesn't trigger a booking
+                btn.removeAttribute('data-id'); 
+                // We'll make these buttons link to the search page
+                btn.onclick = () => showView('switch-instructor-content'); 
+            });
+
+            // Show the "You haven't booked..." message (existing logic)
+            detailsContent.style.display = 'none';
+            noInstructorContent.style.display = 'block';
+        }
+
+    } catch (error) {
+        console.error("Error rendering learner dashboard:", error);
+    }
+}
+
+
+/**
+ * Fetches and renders the current learner's upcoming bookings.
+ * @param {string} uid - The UID of the logged-in learner.
+ */
+
+ 
+// --- END: FINAL AVAILABILITY SCRIPT ---
+
+// Add these two new functions to your JavaScript
+
+/**
+ * Takes an instructor's operating hours and applies styles to the availability modal.
+ * @param {object} operatingHours - The instructor's operating hours object from Firestore.
+ */
+function paintModalAvailability(operatingHours = {}) {
+    const modalGrid = document.querySelector('#availability-modal .schedule-grid');
+    if (!modalGrid) return;
+
+    // Reset all slots to unavailable first
+    modalGrid.querySelectorAll('.time-slot').forEach(slot => {
+        slot.classList.remove('slot-available'); // Use a new class for modal
+        slot.classList.add('unavailable');
+    });
+
+    // Loop through the fetched hours and mark available slots
+    for (const day in operatingHours) {
+        const slotsForDay = operatingHours[day];
+        if (slotsForDay && slotsForDay.length > 0) {
+            const startHour = parseInt(slotsForDay[0].start.split(':')[0]);
+            const endHour = parseInt(slotsForDay[0].end.split(':')[0]);
+
+            const dayIndex = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].indexOf(day.substring(0, 3));
+            
+            // This logic is specific to your modal's HTML structure
+            const dayColumn = modalGrid.querySelectorAll('.day-column')[dayIndex];
+            if (dayColumn) {
+                 for (let hour = startHour; hour < endHour; hour++) {
+                    // Calculate the correct time slot div to color (5am is the 1st, 6am is the 2nd, etc.)
+                    const slotIndex = hour - 5; 
+                    if (slotIndex >= 0 && dayColumn.children[slotIndex + 1]) { // +1 to skip the header
+                        const timeSlotDiv = dayColumn.children[slotIndex + 1];
+                        timeSlotDiv.classList.remove('unavailable');
+                        timeSlotDiv.classList.add('slot-available'); // Apply the green background
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Fetches data for a specific instructor and displays their availability in the modal.
+ * @param {string} instructorId - The UID of the instructor to look up.
+ */
+async function showAvailabilityForInstructor(instructorId) {
+    const modal = document.getElementById('availability-modal');
+    const modalTitle = modal.querySelector('h4');
+
+    // Show a loading state and open the modal immediately
+    modalTitle.textContent = 'Loading availability...';
+    openModal(); // This is your existing function to make the modal visible
+
+    try {
+        const doc = await db.collection('users').doc(instructorId).get();
+        if (!doc.exists) {
+            modalTitle.textContent = 'Instructor not found.';
+            return;
+        }
+
+        const instructor = doc.data();
+        modalTitle.textContent = `To begin the booking process please select "Book with ${instructor.firstName}".`;
+        
+        // Call the helper function to color the grid
+        paintModalAvailability(instructor.operatingHours);
+
+    } catch (error) {
+        console.error("Error fetching availability:", error);
+        modalTitle.textContent = 'Could not load availability.';
+    }
+}
+
+// --- START: ADD THIS NEW FUNCTION FOR LEARNER BOOKING HISTORY ---
+/**
+ * Fetches and renders the current learner's past (completed or cancelled) bookings.
+ * @param {string} uid - The UID of the logged-in learner.
+ */
+async function renderLearnerBookingHistory(uid) {
+    const historyContent = document.getElementById('history-content');
+    if (!historyContent) return;
+
+    // The container where the rows will be injected
+    const historyTable = historyContent.querySelector('.booking-history-table');
+    
+    // 1. Show a loading state
+    historyTable.innerHTML = `
+        <div class="history-header">
+            <div>Booking</div><div>Instructor</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
+        </div>
+        <div class="history-row" style="text-align: center; display: block; padding: 20px;">
+            Loading your past bookings...
+        </div>
+    `;
+
+    try {
+        // 2. Fetch all completed or cancelled bookings for this learner, newest first
+        const snapshot = await db.collection('bookings')
+            .where('learnerId', '==', uid)
+            .where('status', 'in', ['COMPLETED', 'CANCELLED'])
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        // 3. Clear the loading message and prepare to build the list
+        historyTable.innerHTML = `
+            <div class="history-header">
+                <div>Booking</div><div>Instructor</div><div>Date</div><div>Time</div><div>Location</div><div>Status</div><div>Payment</div>
+            </div>
+        `;
+
+        if (snapshot.empty) {
+            historyTable.innerHTML += `<div class="history-row" style="text-align: center; display: block; padding: 20px;">You have no past bookings.</div>`;
+            return;
+        }
+
+        // 4. Loop through the results and create an HTML row for each one
+        for (const doc of snapshot.docs) {
+            const booking = doc.data();
+            const bookingId = doc.id;
+            
+            // Fetch the instructor's photo for a nicer display
+            const instructorDoc = await db.collection('users').doc(booking.instructorId).get();
+            const photoUrl = instructorDoc.exists ? instructorDoc.data().instructorPhotoUrl : 'https://placehold.co/100x100?text=I';
+
+            // Determine the CSS class for the status badge
+            const statusClass = booking.status.toLowerCase() === 'completed' ? 'status-completed' : 'status-cancelled';
+
+            const rowHtml = `
+                <div class="history-row">
+                    <div class="history-cell" data-label="Booking"><a href="#" class="booking-id-link">#${bookingId.substring(0, 7)}</a></div>
+                    <div class="history-cell instructor-cell" data-label="Instructor">
+                        <img src="${photoUrl}" alt="${booking.instructorName}">
+                        <span>${booking.instructorName || 'Instructor'}</span>
+                    </div>
+                    <div class="history-cell" data-label="Date">${booking.date}</div>
+                    <div class="history-cell" data-label="Time">${booking.startTime}</div>
+                    <div class="history-cell" data-label="Location">${booking.pickupLocation}</div>
+                    <div class="history-cell" data-label="Status"><span class="status-badge ${statusClass}">${booking.status}</span></div>
+                    <div class="history-cell" data-label="Payment"><span class="status-badge status-processed">PROCESSED</span></div>
+                </div>
+            `;
+            historyTable.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+    } catch (error) {
+        console.error("Error fetching learner booking history:", error);
+        historyTable.innerHTML += `<div class="history-row" style="text-align: center; display: block; padding: 20px; color: red;">Could not load booking history.</div>`;
+    }
+}
+// --- END: NEW FUNCTION FOR LEARNER BOOKING HISTORY ---
+// --- END: OPERATING HOURS SCRIPT BLOCK ---
     </script>
 
+<script>
+    // --- START: OVERRIDE SCRIPT FOR AVAILABILITY ---
+    window.onload = function() {
+        const availabilityContainer = document.getElementById('new-availability-container');
 
+        if (availabilityContainer) {
+            console.log("Fix script is running!");
+
+            // 1. Force-correct the initial state of the inputs on page load
+            availabilityContainer.querySelectorAll('.availability-day-row').forEach(row => {
+                const toggle = row.querySelector('.day-toggle');
+                const isEnabled = toggle.checked;
+
+                // This fixes the visual bug where inputs are greyed out even if the toggle is on
+                row.querySelector('.start-time').disabled = !isEnabled;
+                row.querySelector('.end-time').disabled = !isEnabled;
+            });
+
+            // 2. Add a new, reliable event listener to handle clicks
+            // This will take priority because it's loaded last.
+            availabilityContainer.addEventListener('change', (e) => {
+                if (e.target.classList.contains('day-toggle')) {
+                    const dayRow = e.target.closest('.availability-day-row');
+                    const isEnabled = e.target.checked;
+
+                    // This makes the toggles work when you click them
+                    dayRow.querySelector('.start-time').disabled = !isEnabled;
+                    dayRow.querySelector('.end-time').disabled = !isEnabled;
+                    dayRow.classList.toggle('day-disabled', !isEnabled);
+                }
+            });
+        }
+    };
+
+    // --- END: OVERRIDE SCRIPT ---
+</script>
+<script>
+    // --- START: OVERRIDE SCRIPT FOR SAVE BUTTON ---
+    window.addEventListener('load', function() {
+        const saveButton = document.getElementById('save-availability-btn');
+
+        if (saveButton) {
+            console.log("Save button fix script is running!");
+
+            // 1. We define the correct save function here, inside a protected scope
+            //    so the other broken scripts can't interfere with it.
+            const correctSaveFunction = async function() {
+                if (!auth.currentUser) {
+                    return alert('You must be logged in to save changes.');
+                }
+                
+                const uid = auth.currentUser.uid;
+                const container = document.getElementById('new-availability-container');
+                const newHoursData = {};
+
+                container.querySelectorAll('.availability-day-row').forEach(row => {
+                    const day = row.dataset.day;
+                    const checkbox = row.querySelector('.day-toggle');
+
+                    if (checkbox.checked) {
+                        const start = row.querySelector('.start-time').value;
+                        const end = row.querySelector('.end-time').value;
+                        newHoursData[day] = [{ start: start, end: end }];
+                    } else {
+                        newHoursData[day] = [];
+                    }
+                });
+
+                try {
+                    await db.collection('users').doc(uid).update({ operatingHours: newHoursData });
+                    alert('✅ Availability updated successfully!');
+                } catch (error) {
+                    console.error("Error saving availability: ", error);
+                    alert('❌ Failed to save changes. Please try again.');
+                }
+            };
+
+            // 2. This is a trick to remove all old, broken event listeners from the button.
+            // We create a clean copy of the button.
+            const cleanSaveButton = saveButton.cloneNode(true);
+            saveButton.parentNode.replaceChild(cleanSaveButton, saveButton);
+
+            // 3. Finally, we attach our single, correct function to the clean button.
+            cleanSaveButton.addEventListener('click', correctSaveFunction);
+        }
+    });
+
+    
+    // --- END: OVERRIDE SCRIPT FOR SAVE BUTTON ---
+</script>
+
+<script>
+    // --- START: UPDATED OVERRIDE SCRIPT FOR REMOVING SUBURBS ---
+    window.addEventListener('load', function() {
+        const tagsContainer = document.getElementById('location-tags-container');
+
+        if (tagsContainer) {
+            console.log("UPDATED Remove suburb fix script is running!");
+
+            tagsContainer.addEventListener('click', async function(event) {
+                if (event.target.classList.contains('remove-suburb-btn')) {
+                    const suburbToRemove = event.target.dataset.suburb;
+                    if (!suburbToRemove || !auth.currentUser) return;
+
+                    const uid = auth.currentUser.uid;
+                    const userRef = db.collection('users').doc(uid);
+
+                    if (confirm(`Are you sure you want to remove "${suburbToRemove}"?`)) {
+                        try {
+                            // Step 1: Remove the suburb from the database (Same as before)
+                            await userRef.update({
+                                servicedSuburbs: firebase.firestore.FieldValue.arrayRemove(suburbToRemove)
+                            });
+                            
+                            // Step 2: Remove the tag from the list (Same as before)
+                            event.target.closest('.location-tag').remove();
+
+                            // Step 3: **THE NEW FIX**
+                            // After removing, get the fresh list of suburbs from the database.
+                            const updatedDoc = await userRef.get();
+                            const updatedSuburbs = updatedDoc.data().servicedSuburbs || [];
+                            
+                            // Now, tell the existing map function to redraw with the new list.
+                            updateMapWithObjects(updatedSuburbs);
+
+                        } catch (error) {
+                            console.error("Error removing suburb: ", error);
+                            alert(`Failed to remove ${suburbToRemove}. Please try again.`);
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+
+    
+    // --- END: UPDATED OVERRIDE SCRIPT FOR REMOVING SUBURBS ---
+</script>
+
+<script>
+// --- START: INSTRUCTOR FILTERING LOGIC (FINAL CORRECTED FIX) ---
+window.addEventListener('load', function() {
+    
+    let allFetchedInstructors = []; 
+    const instructorGrid = document.querySelector('#switch-instructor-content .instructor-grid');
+    const instructorCounter = document.querySelector('#switch-instructor-content h3');
+
+    const transmissionFilter = document.getElementById('transmission-filter');
+    const languageFilter = document.getElementById('language-filter');
+    const regionInput = document.getElementById('region-input');
+    const regionSearchBtn = document.getElementById('region-search-btn');
+    const clearFiltersBtn = document.getElementById('clear-filters-btn');
+    const timeFilterBtns = document.querySelectorAll('[data-time-filter]');
+
+
+    function initFilterAutocomplete() {
+        if (!regionInput || typeof google === 'undefined') return;
+        const options = { types: ['(regions)'], componentRestrictions: { country: 'au' } };
+        const autocomplete = new google.maps.places.Autocomplete(regionInput, options);
+        autocomplete.addListener('place_changed', applyAllFilters);
+    }
+
+   function renderFilteredInstructors(instructors) {
+        if (!instructorGrid || !instructorCounter) return;
+        instructorGrid.innerHTML = '';
+        instructorCounter.textContent = `${instructors.length} Auto instructors available in the next 7 days`;
+        if (instructors.length === 0) {
+            instructorGrid.innerHTML = '<p>No instructors match your criteria.</p>';
+            return;
+        }
+        instructors.forEach(instructor => {
+            const data = instructor.data;
+            const id = instructor.id;
+            // **THE FIX IS HERE**: The 'open-booking-btn' now has a data-id attribute
+            const instructorCardHTML = `
+                <div class="instructor-card-new" data-id="${id}">
+                    <div class="instructor-photo-new"><img src="${data.instructorPhotoUrl || 'https://placehold.co/100x100?text=I'}" alt="Instructor ${data.firstName}"></div>
+                    <div class="instructor-details-new">
+                        <h4>${data.firstName || 'Instructor'}</h4>
+                        <p class="instructor-meta price">$${(data.pricing?.lesson || 70).toFixed(2)} / hr</p>
+                        <p class="instructor-meta"><i class="fas fa-star"></i> New Instructor</p> 
+                        <p class="instructor-meta"><i class="fas fa-check-circle"></i> Verified Instructor</p>
+                        <a href="#" class="availability-link" data-id="${id}"><strong>Check Availability ></strong></a>
+                    </div>
+                    <div class="instructor-actions-new" style="flex-direction: row; align-items: center; justify-content: space-between;">
+                        <button class="btn btn-secondary view-profile-btn" data-id="${id}">View Profile</button>
+                        <button class="btn btn-primary open-booking-btn" data-id="${id}">Book Online Now</button>
+                    </div>
+                </div>
+            `;
+            instructorGrid.insertAdjacentHTML('beforeend', instructorCardHTML);
+        });
+    }
+
+    function applyAllFilters() {
+        let filteredList = [...allFetchedInstructors];
+        
+        // Region/Suburb Filter
+        const regionQuery = regionInput.value.trim().toLowerCase();
+        if (regionQuery) {
+            const searchTermSimple = regionQuery.split(',')[0].trim();
+            
+            filteredList = filteredList.filter(inst => {
+                if (!inst.data.servicedSuburbs) return false;
+                
+                return inst.data.servicedSuburbs.some(suburb => {
+                    const instructorSuburbSimple = suburb.toLowerCase().split(',')[0].trim();
+                    
+                    // **THIS IS THE CORRECTED LOGIC**
+                    // It checks if the user's (potentially long) search term starts with
+                    // the instructor's (potentially short) suburb.
+                    return searchTermSimple.startsWith(instructorSuburbSimple);
+                });
+            });
+        }
+
+        // Other filters
+        const transmission = transmissionFilter.value;
+        if (transmission && transmission !== 'any') {
+            filteredList = filteredList.filter(inst => inst.data.transmission === transmission);
+        }
+        const language = languageFilter.value;
+        if (language && language !== 'any') {
+            filteredList = filteredList.filter(inst => inst.data.languages && inst.data.languages.includes(language));
+        }
+        
+        renderFilteredInstructors(filteredList);
+    }
+    
+    async function initializeFilters() {
+        try {
+            const querySnapshot = await db.collection('users').where('role', '==', 'instructor').get();
+            allFetchedInstructors = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+            renderFilteredInstructors(allFetchedInstructors);
+            initFilterAutocomplete(); 
+            transmissionFilter.addEventListener('change', applyAllFilters);
+            languageFilter.addEventListener('change', applyAllFilters);
+            regionSearchBtn.addEventListener('click', applyAllFilters);
+            clearFiltersBtn.addEventListener('click', () => {
+                transmissionFilter.value = 'any';
+                languageFilter.value = 'any';
+                regionInput.value = '';
+                timeFilterBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-time-filter="any"]').classList.add('active');
+                applyAllFilters();
+            });
+             timeFilterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    timeFilterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyAllFilters();
+                });
+            });
+        } catch (error) {
+            console.error("Error initializing instructor filters: ", error);
+        }
+    }
+
+    const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const targetElement = mutation.target;
+                if (targetElement.id === 'switch-instructor-content' && targetElement.classList.contains('active')) {
+                    if (allFetchedInstructors.length === 0) {
+                        initializeFilters();
+                    }
+                }
+            }
+        }
+    });
+    const switchInstructorView = document.getElementById('switch-instructor-content');
+    if (switchInstructorView) {
+        observer.observe(switchInstructorView, { attributes: true });
+    }
+});
+// --- END: INSTRUCTOR FILTERING LOGIC (FINAL CORRECTED FIX) ---
+</script>
+<script>
+
+// --- START: FINAL, STABLE BOOKING FLOW (CORRECTED) ---
+document.addEventListener('DOMContentLoaded', () => {
+
+    let instructorIdForBooking = null; // Stores the instructor ID for the current booking flow
+
+    // This listener handles clicking "Book Now" on an instructor card
+    document.body.addEventListener('click', function(e) {
+        const bookingBtn = e.target.closest('.open-booking-btn');
+        if (bookingBtn) {
+            e.preventDefault();
+            instructorIdForBooking = bookingBtn.dataset.id;
+            if (instructorIdForBooking) {
+                showPage('booking-page');
+                // Pre-fill the booking page with the selected instructor's details
+                renderBookingPageInstructor(instructorIdForBooking);
+            } else {
+                alert("Could not identify the instructor. Please try again.");
+            }
+        }
+    });
+
+    // This listener handles the final confirmation on the booking page form
+    const bookingForm = document.getElementById('booking-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentUser = auth.currentUser;
+
+            if (!currentUser || !instructorIdForBooking) {
+                alert("Error: You must be logged in and have selected an instructor.");
+                return;
+            }
+
+            // 1. Gather all the data from the booking form
+            const dateDropdown = document.getElementById('available-dates');
+            const timeDropdown = document.getElementById('available-times');
+            const pickupLocationSelect = document.getElementById('pickup-location-select');
+            
+            // This determines the end time based on the lesson type
+            const lessonType = document.querySelector('#booking-type-tabs .tab-link.active').dataset.lessonType;
+            let durationHours = 1;
+            if (lessonType.includes('2-hour')) {
+                durationHours = 2;
+            } else if (lessonType.includes('test-package')) {
+                durationHours = 2.5;
+            }
+            const startTime = moment(timeDropdown.value, 'h:mm a');
+            const endTime = startTime.clone().add(durationHours, 'hours').format('h:mm a');
+
+            // 2. Create the booking data object
+            const bookingData = {
+                instructorId: instructorIdForBooking,
+                learnerId: currentUser.uid,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                date: dateDropdown.value,
+                startTime: timeDropdown.value,
+                endTime: endTime,
+                pickupLocation: pickupLocationSelect.value,
+                lessonType: lessonType.replace('-', ' '),
+                status: 'CONFIRMED',
+                transmission: 'Auto' // This can be made dynamic later
+            };
+
+            // Fetch instructor and learner names to store in the booking for easier display later
+            try {
+                const instructorDoc = await db.collection('users').doc(instructorIdForBooking).get();
+                const learnerDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (instructorDoc.exists) bookingData.instructorName = instructorDoc.data().firstName;
+                if (learnerDoc.exists) bookingData.learnerName = learnerDoc.data().firstName;
+            } catch (error) {
+                console.warn("Could not fetch user names for booking document.", error);
+            }
+
+
+            try {
+                // 3. **THE FIX**: Add the new booking document to the 'bookings' collection
+                await db.collection('bookings').add(bookingData);
+                
+                // 4. Update the learner's profile with their chosen instructor
+                await db.collection('users').doc(currentUser.uid).update({
+                    instructorId: instructorIdForBooking
+                });
+                
+                alert('✅ Booking Confirmed! Your appointment has been saved.');
+
+                // 5. Reset and navigate back to the dashboard
+                await renderLearnerDashboard(currentUser.uid); // Refresh the dashboard
+                showPage('dashboard-page');
+                showView('dashboard-main-content');
+                instructorIdForBooking = null; // Clear the temporary ID
+
+            } catch (error) {
+                console.error("Error confirming booking:", error);
+                alert("❌ There was a problem confirming your booking. Please try again.");
+            }
+        });
+    }
+});
+// --- END: FINAL, STABLE BOOKING FLOW (CORRECTED) ---
+</script>
+
+<script>
+// --- START: CORRECTED LEARNER BOOKING TABS SCRIPT ---
+
+// --- END: CORRECTED LEARNER BOOKING TABS SCRIPT ---
+</script>
+<script>
+// --- START: FINAL LEARNER BOOKING SCRIPT ---
+
+/**
+ * Correctly fetches and renders ONLY the logged-in learner's upcoming bookings.
+ * @param {string} uid - The UID of the logged-in learner.
+ */
+async function renderLearnerUpcomingBookings(uid) {
+    const upcomingContent = document.getElementById('upcoming-content');
+    if (!upcomingContent) return;
+
+    upcomingContent.innerHTML = '<p>Loading your bookings...</p>';
+
+    try {
+        const today = moment().startOf('day');
+        // This query correctly filters for the specific learner's confirmed bookings.
+        const bookingsSnapshot = await db.collection('bookings')
+            .where('learnerId', '==', uid)
+            .where('status', '==', 'CONFIRMED')
+            .get();
+
+        let upcomingBookingsHTML = '';
+        let hasUpcomingBookings = false;
+
+        for (const doc of bookingsSnapshot.docs) {
+            const booking = doc.data();
+            const bookingDate = moment(booking.date, 'ddd, D MMM YYYY');
+
+            if (bookingDate.isSameOrAfter(today)) {
+                hasUpcomingBookings = true;
+                const instructorDoc = await db.collection('users').doc(booking.instructorId).get();
+                const instructorPhoto = instructorDoc.exists ? instructorDoc.data().instructorPhotoUrl : 'https://placehold.co/100x100?text=I';
+
+                upcomingBookingsHTML += `
+                    <div class="card" style="margin-bottom: 15px; text-align: left;">
+                        <div class="booking-item">
+                            <div class="booking-item-main">
+                                <div class="booking-item-section">
+                                    <p>Instructor</p>
+                                    <div class="instructor-cell">
+                                        <img src="${instructorPhoto}" alt="Instructor">
+                                        <span>${booking.instructorName || 'Instructor'}</span>
+                                    </div>
+                                </div>
+                                <div class="booking-item-section">
+                                    <p>Date & Time</p>
+                                    <span>${booking.date}</span><br>
+                                    <span style="font-weight: 400;">${booking.startTime}</span>
+                                </div>
+                                <div class="booking-item-section">
+                                    <p>Lesson</p>
+                                    <span>${booking.lessonType || 'Driving Lesson'}</span>
+                                </div>
+                            </div>
+                            <div class="booking-item-actions">
+                                <a href="#" class="btn btn-secondary btn-small" data-booking-id="${doc.id}">Manage</a>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+        upcomingContent.innerHTML = hasUpcomingBookings ? upcomingBookingsHTML : '<p>You have no upcoming bookings to view at this time.</p>';
+    } catch (error) {
+        console.error("Error fetching learner bookings:", error);
+        upcomingContent.innerHTML = '<p style="color:red;">Could not load your bookings.</p>';
+    }
+}
+
+// This is the corrected controller for the learner dashboard tabs.
+document.addEventListener('DOMContentLoaded', () => {
+    const bookingSection = document.querySelector('#dashboard-page .booking-section');
+    if (bookingSection) {
+        const tabs = bookingSection.querySelector('.tabs');
+        tabs.addEventListener('click', (e) => {
+            const clickedTab = e.target.closest('.tab-link');
+            if (!clickedTab) return;
+
+            const targetId = clickedTab.dataset.target;
+            bookingSection.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
+            clickedTab.classList.add('active');
+            bookingSection.querySelectorAll('.tab-pane').forEach(pane => pane.classList.toggle('active', pane.id === targetId));
+
+            if (targetId === 'upcoming-content') {
+                const currentUser = firebase.auth().currentUser;
+                if (currentUser) {
+                    renderLearnerUpcomingBookings(currentUser.uid);
+                }
+            }
+                        if (targetId === 'history-content') {
+                const currentUser = firebase.auth().currentUser;
+                if (currentUser) {
+                    renderLearnerBookingHistory(currentUser.uid);
+                }
+            }
+
+        });
+    }
+});
+// --- END: FINAL LEARNER BOOKING SCRIPT ---
+</script>
+
+<script>
+// --- START: FINAL OVERRIDE SCRIPT FOR BOOKING TABS ---
+window.addEventListener('load', function() {
+    const bookingSection = document.querySelector('#dashboard-page .booking-section');
+    if (!bookingSection) return;
+
+    // This is the ONE AND ONLY correct function to get your bookings.
+    // By defining it here, we make sure no other broken version is ever called.
+   const getCorrectUpcomingBookings = async function(uid) {
+    
+    const upcomingContent = document.getElementById('upcoming-content');
+    if (!upcomingContent) {
+        console.error("Debug: 'upcoming-content' div not found.");
+        return;
+    }
+    
+    // --- Start of Debugging ---
+    console.log(`%cDEBUGGING UPCOMING BOOKINGS`, 'color: blue; font-weight: bold;');
+    console.log(`Step 1: Fetching bookings for learner UID: ${uid}`);
+    
+    upcomingContent.innerHTML = '<p>Loading upcoming bookings...</p>';
+
+    try {
+        const today = moment().startOf('day');
+        console.log(`Step 2: Current date for comparison is: ${today.format('YYYY-MM-DD')}`);
+
+        // This is the Firestore query
+        const snapshot = await firebase.firestore().collection('bookings')
+            .where('learnerId', '==', uid)
+            .where('status', '==', 'CONFIRMED')
+            .get();
+
+        console.log(`Step 3: Firestore query completed. Found ${snapshot.size} confirmed booking(s) for this learner (before date filtering).`);
+
+        if (snapshot.empty) {
+            upcomingContent.innerHTML = '<p>You have no upcoming bookings to view at this time.</p>';
+            return;
+        }
+            
+        let html = '';
+        let upcomingBookingCount = 0;
+
+        const bookingPromises = snapshot.docs.map(async (doc) => {
+            const booking = doc.data();
+            console.log(`- - - - \nProcessing booking ID: ${doc.id}`, booking);
+
+            // This part now handles different date types from Firestore
+            let bookingDate;
+            if (booking.date && typeof booking.date.toDate === 'function') { // Handles Firestore Timestamp
+                bookingDate = moment(booking.date.toDate());
+                console.log(`   > Date format is Timestamp. Parsed date: ${bookingDate.format('YYYY-MM-DD')}`);
+            } else if (typeof booking.date === 'string') { // Handles String date
+                bookingDate = moment(booking.date, 'ddd, D MMM YYYY');
+                console.log(`   > Date format is String. Parsed date: ${bookingDate.format('YYYY-MM-DD')}`);
+            } else {
+                 console.warn(`   > SKIPPING: Booking ${doc.id} has an invalid or missing date field.`);
+                 return null;
+            }
+
+            // Compares the booking date to today's date
+            const isUpcoming = bookingDate.isSameOrAfter(today);
+            console.log(`   > Is this booking upcoming? ${isUpcoming}`);
+
+            if (isUpcoming) {
+                upcomingBookingCount++;
+                const instructorDoc = await firebase.firestore().collection('users').doc(booking.instructorId).get();
+                const instructorPhoto = instructorDoc.exists && instructorDoc.data().instructorPhotoUrl ? instructorDoc.data().instructorPhotoUrl : 'https://placehold.co/100x100?text=I';
+                
+                // Uses the original date string/object for display to preserve formatting
+                const displayDate = booking.date.toDate ? moment(booking.date.toDate()).format('ddd, D MMM YYYY') : booking.date;
+
+                return `
+                    <div class="card" style="margin-bottom: 15px; padding: 0;">
+                        <div class="booking-item">
+                            <div class="booking-item-main">
+                                <div class="booking-item-section instructor-cell" style="flex: 1.5;"><img src="${instructorPhoto}" alt="Instructor"><span>${booking.instructorName || 'Instructor'}</span></div>
+                                <div class="booking-item-section" style="flex: 1.5;"><span>${displayDate}<br>${booking.startTime}</span></div>
+                                <div class="booking-item-section" style="flex: 1;"><span>${booking.lessonType || 'Driving Lesson'}</span></div>
+                            </div>
+                            <div class="booking-item-actions"><a href="#" class="btn btn-secondary btn-small">Manage</a></div>
+                        </div>
+                    </div>`;
+            }
+            return null;
+        });
+
+        const results = (await Promise.all(bookingPromises)).filter(Boolean);
+        console.log(`Step 4: Finished processing. Found ${upcomingBookingCount} upcoming booking(s) to display.`);
+        html = results.join('');
+        
+        upcomingContent.innerHTML = upcomingBookingCount > 0 ? html : '<p>You have no upcoming bookings to view at this time.</p>';
+
+    } catch (error) {
+        console.error("FINAL DEBUG ERROR: An error occurred while fetching bookings.", error);
+        upcomingContent.innerHTML = `<p style="color:red;">Error loading bookings. Check the console (F12) for details.</p>`;
+    }
+};
+
+    // This part takes direct control of the tab buttons, overwriting any old scripts.
+    const upcomingTab = bookingSection.querySelector('[data-target="upcoming-content"]');
+    const servicesTab = bookingSection.querySelector('[data-target="services-content"]');
+    const historyTab = bookingSection.querySelector('[data-target="history-content"]');
+
+    const allTabs = [upcomingTab, servicesTab, historyTab];
+    const allPanes = bookingSection.querySelectorAll('.tab-pane');
+
+    if (upcomingTab) {
+        upcomingTab.onclick = function(e) {
+            e.preventDefault(); e.stopPropagation(); // Stop all other scripts from running
+            allTabs.forEach(t => t.classList.remove('active'));
+            allPanes.forEach(p => p.classList.remove('active'));
+            upcomingTab.classList.add('active');
+            document.getElementById('upcoming-content').classList.add('active');
+            
+            const user = firebase.auth().currentUser;
+            if (user) {
+                getCorrectUpcomingBookings(user.uid); // Call OUR correct function
+            }
+        };
+    }
+    // We also take control of the other tabs to make sure they still work.
+    if (servicesTab) {
+        servicesTab.onclick = function(e) {
+            e.preventDefault(); e.stopPropagation();
+            allTabs.forEach(t => t.classList.remove('active'));
+            allPanes.forEach(p => p.classList.remove('active'));
+            servicesTab.classList.add('active');
+            document.getElementById('services-content').classList.add('active');
+        };
+    }
+    if (historyTab) {
+        historyTab.onclick = function(e) {
+            e.preventDefault(); e.stopPropagation();
+            allTabs.forEach(t => t.classList.remove('active'));
+            allPanes.forEach(p => p.classList.remove('active'));
+            historyTab.classList.add('active');
+            document.getElementById('history-content').classList.add('active');
+             const user = firebase.auth().currentUser;
+            if (user) {
+                renderLearnerBookingHistory(user.uid);
+            }
+        };
+        
+    }
+});
+
+// --- ADD THIS NEW FUNCTION to your main script ---
+/**
+ * Populates the 'Available Times' dropdown based on the instructor's schedule
+ * for the selected date.
+ * @param {string} selectedDateString - The date selected by the user (e.g., "Sat, 27 Sep 2025").
+ */
+async function populateAvailableTimesForDate(selectedDateString) {
+    const timeDropdown = document.getElementById('available-times');
+    timeDropdown.innerHTML = '<option value="">Loading...</option>'; // Show loading state
+
+    if (!selectedDateString) {
+        timeDropdown.innerHTML = '<option value="">Select a date first</option>';
+        return;
+    }
+
+    const dayOfWeek = moment(selectedDateString, 'ddd, D MMM YYYY').format('dddd').toLowerCase();
+    const availabilityForDay = currentInstructorAvailability[dayOfWeek];
+
+    if (!availabilityForDay || availabilityForDay.length === 0) {
+        timeDropdown.innerHTML = '<option value="">Not available on this day</option>';
+        return;
+    }
+
+    // **THE FIX BEGINS HERE**
+    try {
+        // 1. Fetch all confirmed bookings for the instructor on the selected date
+        const bookingsSnapshot = await db.collection('bookings')
+            .where('instructorId', '==', currentInstructorId)
+            .where('date', '==', selectedDateString)
+            .where('status', '==', 'CONFIRMED')
+            .get();
+
+        const bookedIntervals = [];
+        bookingsSnapshot.forEach(doc => {
+            const booking = doc.data();
+            // Store the start and end times of each existing booking
+            bookedIntervals.push({
+                start: moment(booking.startTime, 'h:mm a'),
+                end: moment(booking.endTime, 'h:mm a')
+            });
+        });
+
+        // 2. Generate potential slots and check them against the booked intervals
+        timeDropdown.innerHTML = ''; // Clear loading message
+        const lessonType = document.querySelector('#booking-type-tabs .tab-link.active').dataset.lessonType;
+        const lessonDurationHours = lessonType.includes('2-hour') ? 2 : (lessonType.includes('test-package') ? 2.5 : 1);
+        
+        const operatingStart = moment(availabilityForDay[0].start, 'HH:mm');
+        const operatingEnd = moment(availabilityForDay[0].end, 'HH:mm');
+        
+        let potentialSlotStart = operatingStart.clone();
+        let slotsAdded = 0;
+
+        while (potentialSlotStart.clone().add(lessonDurationHours, 'hours').isSameOrBefore(operatingEnd)) {
+            const potentialSlotEnd = potentialSlotStart.clone().add(lessonDurationHours, 'hours');
+            let isOverlapping = false;
+
+            // 3. Check for overlaps with any existing bookings
+            for (const booked of bookedIntervals) {
+                if (potentialSlotStart.isBefore(booked.end) && potentialSlotEnd.isAfter(booked.start)) {
+                    isOverlapping = true;
+                    break; // Found an overlap, so this slot is unavailable
+                }
+            }
+
+            // 4. If the slot is not booked, add it to the dropdown
+            if (!isOverlapping) {
+                const timeString = potentialSlotStart.format('h:mm a');
+                const option = document.createElement('option');
+                option.value = timeString;
+                option.textContent = timeString;
+                timeDropdown.appendChild(option);
+                slotsAdded++;
+            }
+
+            potentialSlotStart.add(30, 'minutes'); // Check for the next potential slot
+        }
+
+        if (slotsAdded === 0) {
+            timeDropdown.innerHTML = '<option value="">No available times today</option>';
+        }
+
+    } catch (error) {
+        console.error("Error fetching available times:", error);
+        timeDropdown.innerHTML = '<option value="">Error loading times</option>';
+    }
+}
+// --- END: FINAL OVERRIDE SCRIPT ---
+</script>
+
+<script>
+    function goToNextWeek() {
+        currentCalendarDate.add(1, 'week');
+        updateCalendarView(currentCalendarDate);
+    }
+
+    function goToPrevWeek() {
+        currentCalendarDate.subtract(1, 'week');
+        updateCalendarView(currentCalendarDate);
+    }
+
+    function goToToday() {
+        currentCalendarDate = moment();
+        updateCalendarView(currentCalendarDate);
+    }
+</script>
 </body>
 
 </html>
