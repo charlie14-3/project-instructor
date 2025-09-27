@@ -13047,85 +13047,51 @@ window.addEventListener('load', function() {
  * for the selected date.
  * @param {string} selectedDateString - The date selected by the user (e.g., "Sat, 27 Sep 2025").
  */
-async function populateAvailableTimesForDate(selectedDateString) {
+function populateAvailableTimesForDate(selectedDateString) {
     const timeDropdown = document.getElementById('available-times');
-    timeDropdown.innerHTML = '<option value="">Loading...</option>'; // Show loading state
+    timeDropdown.innerHTML = '<option value="">-</option>'; // Clear previous options and add a placeholder
 
     if (!selectedDateString) {
         timeDropdown.innerHTML = '<option value="">Select a date first</option>';
         return;
     }
 
-    const dayOfWeek = moment(selectedDateString, 'ddd, D MMM YYYY').format('dddd').toLowerCase();
+    // 1. Figure out which day of the week was selected (e.g., "saturday")
+    const selectedMoment = moment(selectedDateString, 'ddd, D MMM YYYY');
+    const dayOfWeek = selectedMoment.format('dddd').toLowerCase();
+
+    // 2. Get the instructor's hours for that specific day
     const availabilityForDay = currentInstructorAvailability[dayOfWeek];
 
+    // 3. Check if the instructor works on that day
     if (!availabilityForDay || availabilityForDay.length === 0) {
-        timeDropdown.innerHTML = '<option value="">Not available on this day</option>';
-        return;
+        timeDropdown.innerHTML = '<option value="">No availability on this day</option>';
+        return; // Stop the function
     }
 
-    // **THE FIX BEGINS HERE**
-    try {
-        // 1. Fetch all confirmed bookings for the instructor on the selected date
-        const bookingsSnapshot = await db.collection('bookings')
-            .where('instructorId', '==', currentInstructorId)
-            .where('date', '==', selectedDateString)
-            .where('status', '==', 'CONFIRMED')
-            .get();
+    // 4. Generate the time slots
+    const lessonType = document.querySelector('#booking-type-tabs .tab-link.active').dataset.lessonType;
+    const lessonDurationHours = lessonType.includes('2-hour') ? 2 : 1;
+    
+    const startTime = moment(availabilityForDay[0].start, 'HH:mm');
+    const endTime = moment(availabilityForDay[0].end, 'HH:mm');
+    
+    let timeSlot = startTime.clone();
+    let slotsAdded = 0;
 
-        const bookedIntervals = [];
-        bookingsSnapshot.forEach(doc => {
-            const booking = doc.data();
-            // Store the start and end times of each existing booking
-            bookedIntervals.push({
-                start: moment(booking.startTime, 'h:mm a'),
-                end: moment(booking.endTime, 'h:mm a')
-            });
-        });
-
-        // 2. Generate potential slots and check them against the booked intervals
-        timeDropdown.innerHTML = ''; // Clear loading message
-        const lessonType = document.querySelector('#booking-type-tabs .tab-link.active').dataset.lessonType;
-        const lessonDurationHours = lessonType.includes('2-hour') ? 2 : (lessonType.includes('test-package') ? 2.5 : 1);
+    while (timeSlot.clone().add(lessonDurationHours, 'hours').isSameOrBefore(endTime)) {
+        const timeString = timeSlot.format('h:mm a');
+        const option = document.createElement('option');
+        option.value = timeString;
+        option.textContent = timeString;
+        timeDropdown.appendChild(option);
         
-        const operatingStart = moment(availabilityForDay[0].start, 'HH:mm');
-        const operatingEnd = moment(availabilityForDay[0].end, 'HH:mm');
-        
-        let potentialSlotStart = operatingStart.clone();
-        let slotsAdded = 0;
+        slotsAdded++;
+        timeSlot.add(30, 'minutes'); // Check for a new slot every 30 minutes
+    }
 
-        while (potentialSlotStart.clone().add(lessonDurationHours, 'hours').isSameOrBefore(operatingEnd)) {
-            const potentialSlotEnd = potentialSlotStart.clone().add(lessonDurationHours, 'hours');
-            let isOverlapping = false;
-
-            // 3. Check for overlaps with any existing bookings
-            for (const booked of bookedIntervals) {
-                if (potentialSlotStart.isBefore(booked.end) && potentialSlotEnd.isAfter(booked.start)) {
-                    isOverlapping = true;
-                    break; // Found an overlap, so this slot is unavailable
-                }
-            }
-
-            // 4. If the slot is not booked, add it to the dropdown
-            if (!isOverlapping) {
-                const timeString = potentialSlotStart.format('h:mm a');
-                const option = document.createElement('option');
-                option.value = timeString;
-                option.textContent = timeString;
-                timeDropdown.appendChild(option);
-                slotsAdded++;
-            }
-
-            potentialSlotStart.add(30, 'minutes'); // Check for the next potential slot
-        }
-
-        if (slotsAdded === 0) {
-            timeDropdown.innerHTML = '<option value="">No available times today</option>';
-        }
-
-    } catch (error) {
-        console.error("Error fetching available times:", error);
-        timeDropdown.innerHTML = '<option value="">Error loading times</option>';
+    if (slotsAdded === 0) {
+        timeDropdown.innerHTML = '<option value="">No availability on this day</option>';
     }
 }
 // --- END: FINAL OVERRIDE SCRIPT ---
