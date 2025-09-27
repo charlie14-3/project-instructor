@@ -10643,34 +10643,52 @@ async function displayInstructorProfile(instructorId) {
         }
 
         // --- FETCH AND RENDER UPCOMING BOOKINGS FOR INSTRUCTOR DASHBOARD ---
-        function renderUpcomingBookings(uid) {
-            const upcomingContent = document.getElementById('upcoming-booking-content');
-            if (!upcomingContent) return;
+        /**
+ * Fetches and renders the instructor's upcoming bookings, filtering out past appointments.
+ * @param {string} uid - The UID of the logged-in instructor.
+ */
+function renderUpcomingBookings(uid) {
+    const upcomingContent = document.getElementById('upcoming-booking-content');
+    if (!upcomingContent) return;
 
-            // Clear any previous bookings
-            upcomingContent.innerHTML = '<p>Loading upcoming bookings...</p>';
+    upcomingContent.innerHTML = '<p>Loading upcoming bookings...</p>';
 
-            // Listen for real-time updates to bookings for the current instructor
-            db.collection('bookings').where('instructorId', '==', uid).where('status', '==', 'CONFIRMED').onSnapshot(querySnapshot => {
-                if (querySnapshot.empty) {
-                    upcomingContent.innerHTML = '<p>You have no upcoming bookings.</p>';
-                    return;
-                }
+    // This is a real-time listener. It will automatically update if a new booking is made.
+    db.collection('bookings')
+      .where('instructorId', '==', uid)
+      .where('status', '==', 'CONFIRMED')
+      .onSnapshot(querySnapshot => {
+        
+        let upcomingBookingsHTML = '';
+        let hasUpcomingBookings = false;
+        const today = moment().startOf('day');
 
-                upcomingContent.innerHTML = ''; // Clear the loading message
+        querySnapshot.forEach(doc => {
+            const booking = doc.data();
+            const bookingId = doc.id;
 
-                querySnapshot.forEach(doc => {
-                    const booking = doc.data();
-                    const bookingId = doc.id;
+            // This new block robustly handles both string and timestamp dates from the database
+            let bookingDate;
+            if (booking.date && typeof booking.date.toDate === 'function') { // Handles Firestore Timestamp
+                bookingDate = moment(booking.date.toDate());
+            } else if (typeof booking.date === 'string') { // Handles String date like "Sat, 27 Sep 2025"
+                bookingDate = moment(booking.date, 'ddd, D MMM YYYY');
+            } else {
+                return; // Skip bookings with invalid or missing dates
+            }
 
-                    // Construct the HTML for each booking item
-                    const bookingItemHTML = `
+            // This is the crucial new check: only show bookings from today onwards
+            if (bookingDate.isSameOrAfter(today)) {
+                hasUpcomingBookings = true; // Mark that we found at least one
+                const displayDate = bookingDate.format('ddd, D MMM YYYY');
+                
+                const bookingItemHTML = `
                 <div class="card">
                     <div class="booking-item">
                         <div class="booking-item-main">
                             <div class="booking-item-section">
                                 <p>Booking Details</p>
-<span><i class="fas fa-calendar-alt"></i> ${moment(booking.date, 'ddd, D MMM YYYY').format('ddd, D MMM YYYY')}</span><br>
+                                <span><i class="fas fa-calendar-alt"></i> ${displayDate}</span><br>
                                 <span><i class="fas fa-clock"></i> ${booking.startTime} - ${booking.endTime}</span>
                             </div>
                             <div class="booking-item-section">
@@ -10680,8 +10698,8 @@ async function displayInstructorProfile(instructorId) {
                             <div class="booking-item-section">
                                 <p>Learner Details</p>
                                 <div class="learner-details">
-                                    <img src="https://placehold.co/100x100?text=${booking.learnerName.charAt(0)}" alt="Learner">
-                                    <h5>${booking.learnerName}</h5>
+                                    <img src="https://placehold.co/100x100?text=${(booking.learnerName || '?').charAt(0)}" alt="Learner">
+                                    <h5>${booking.learnerName || 'N/A'}</h5>
                                 </div>
                             </div>
                         </div>
@@ -10693,11 +10711,24 @@ async function displayInstructorProfile(instructorId) {
                         <span><i class="fas fa-map-marker-alt"></i> ${booking.pickupLocation}</span>
                     </div>
                 </div>
-            `;
-                    upcomingContent.insertAdjacentHTML('beforeend', bookingItemHTML);
-                });
-            });
+                `;
+                upcomingBookingsHTML += bookingItemHTML;
+            }
+        });
+
+        // After checking all bookings, update the HTML.
+        if (hasUpcomingBookings) {
+            upcomingContent.innerHTML = upcomingBookingsHTML;
+        } else {
+            upcomingContent.innerHTML = '<p>You have no upcoming bookings.</p>';
         }
+
+    }, error => {
+        // This will log any errors from Firestore (e.g., permission denied) to the console
+        console.error("Error fetching upcoming bookings: ", error);
+        upcomingContent.innerHTML = '<p style="color:red;">Could not load bookings.</p>';
+    });
+}
 
         // --- BOOKING PAGE LOGIC ---
         const bookingPage = document.getElementById('booking-page');
@@ -13112,6 +13143,101 @@ function populateAvailableTimesForDate(selectedDateString) {
         currentCalendarDate = moment();
         updateCalendarView(currentCalendarDate);
     }
+</script>
+
+<script>
+// --- START: INSTRUCTOR BOOKING TABS FIX ---
+
+/**
+ * Fetches and renders the instructor's past bookings (completed or cancelled).
+ * @param {string} uid The UID of the logged-in instructor.
+ */
+async function renderInstructorBookingHistory(uid) {
+    const historyContainer = document.getElementById('booking-history-content');
+    if (!historyContainer) return;
+
+    const historyTable = historyContainer.querySelector('.history-table');
+    // Display a loading message while fetching data
+    historyTable.innerHTML = `<p style="text-align: center; padding: 20px;">Loading booking history...</p>`;
+
+    try {
+        const snapshot = await db.collection('bookings')
+            .where('instructorId', '==', uid)
+            .where('status', 'in', ['COMPLETED', 'CANCELLED'])
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        // Re-create the table structure with the header
+        let tableHTML = `
+            <div class="history-table-header">
+                <div>Booking</div>
+                <div>Learner</div>
+                <div>Date</div>
+                <div>Time</div>
+                <div>Location</div>
+                <div>Status</div>
+                <div>Payment</div>
+            </div>`;
+
+        if (snapshot.empty) {
+            tableHTML += `<div style="text-align: center; padding: 20px;">No booking history found.</div>`;
+        } else {
+            snapshot.forEach(doc => {
+                const booking = doc.data();
+                const statusClass = booking.status === 'COMPLETED' ? 'status-completed' : 'status-cancelled'; // Use a different class for cancelled
+                
+                // Note: Fetching learner photo for each row could be slow on long lists.
+                // Using an initial is a good performance choice here.
+const learnerInitial = (booking.learnerName && typeof booking.learnerName === 'string') ? booking.learnerName.charAt(0).toUpperCase() : '?';
+                tableHTML += `
+                    <div class="history-table-row">
+                        <div><a href="#" class="booking-id-link">#${doc.id.substring(0, 7)}</a></div>
+                        <div class="learner-cell">
+                            <img src="https://placehold.co/100x100?text=${learnerInitial}" alt="Learner">
+                            <span>${booking.learnerName || 'N/A'}</span>
+                        </div>
+                        <div>${booking.date}</div>
+                        <div>${booking.startTime}</div>
+                        <div>${booking.pickupLocation}</div>
+                        <div><span class="status-badge ${statusClass}">${booking.status}</span></div>
+                        <div><span class="status-badge status-processed">PROCESSED</span></div>
+                    </div>
+                `;
+            });
+        }
+        historyTable.innerHTML = tableHTML;
+
+    } catch (error) {
+        console.error("Error fetching instructor booking history:", error);
+        historyTable.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Could not load booking history.</p>`;
+    }
+}
+
+
+// Add a dedicated event listener for the instructor booking tabs
+document.addEventListener('DOMContentLoaded', () => {
+    const instructorBookingTabs = document.querySelector('#instructor-dashboard-view .tabs');
+    if (instructorBookingTabs) {
+        instructorBookingTabs.addEventListener('click', (e) => {
+            const clickedTab = e.target.closest('.tab-link');
+            if (!clickedTab || !auth.currentUser) return;
+
+            const targetId = clickedTab.dataset.target;
+
+            // When the "Upcoming" tab is clicked, re-run the function to get the latest bookings
+            if (targetId === 'upcoming-booking-content') {
+                renderUpcomingBookings(auth.currentUser.uid);
+            }
+
+            // When the "Booking history" tab is clicked, run the new function
+            if (targetId === 'booking-history-content') {
+                renderInstructorBookingHistory(auth.currentUser.uid);
+            }
+        });
+    }
+});
+
+// --- END: INSTRUCTOR BOOKING TABS FIX ---
 </script>
 </body>
 
